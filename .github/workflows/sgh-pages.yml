@@ -20,7 +20,7 @@ jobs:
 
       # Publish the site
       - name: Publish
-        run: dotnet publish TousouMemo/TousouMemo.csproj -p:GHPages=true -c:Release -o:public
+        run: dotnet publish PQCalculator/PQCalculator.csproj -p:GHPages=true -c:Release -o:public
 
       # Deploy the site
       - name: Deploy
