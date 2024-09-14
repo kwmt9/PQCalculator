@@ -201,16 +201,21 @@
 
     public async Task GetUnitStates() {
         if (AutoCompleteInput?.InputValue == null) { return; }
+        PQPlayerUnit = null;
         PQPlayerUnit = PQPlayerUnits?.FirstOrDefault(u => u.Name == AutoCompleteInput?.InputValue);
-        InputStatus = new(0, 0, 
+        Console.WriteLine(PQPlayerUnit.Name);
+        Console.WriteLine(PQPlayerUnit.Status.Meet);
+        Console.WriteLine(PQPlayerUnit.Status.Power);
+        Console.WriteLine(PQPlayerUnit.Status.RunPower);
+
+        InputStatus = new(0, 0,
             PQPlayerUnit.Status.Meet,
             PQPlayerUnit.Status.Power,
             PQPlayerUnit.Status.RunPower,
             PQPlayerUnit.Status.ShoulderPower,
             PQPlayerUnit.Status.Fielding,
             PQPlayerUnit.Status.Catching);
-        //sateiPQ = await Http.GetFromJsonAsync<List<SateiPQ>>($"api/Pq/satei/p");
-        //StateHasChanged();
+            StateHasChanged();
     }
 
     public async Task CaluculateCoach() {
@@ -412,7 +417,6 @@
         DeckLimit.ShoulderPower += unit.Limit.ShoulderPower;
         DeckLimit.Fielding += unit.Limit.Fielding;
         DeckLimit.Catching += unit.Limit.Catching;
-
     }
     //101優先上げ
     public async Task CaluculateLimitCoachMode1(List<PQAbility> excludedAbilitys) {
