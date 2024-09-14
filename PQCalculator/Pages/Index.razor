@@ -17,31 +17,32 @@
             <PlayerPositionComponent Position="PQPlayerUnit.Position"></PlayerPositionComponent>
             <AbilityListComponent Abilitys="PQPlayerUnit.Abilities"></AbilityListComponent>
         }
+        @(InputStatus.Meet)
         <div id="calculationForm">
             <div>
                 <div class="input-group mb-1">
                     <span class="input-group-text fw-bold">ミート</span>
-                    <input type="number" id="typeNumber" class="form-control fw-bold" min="1" max="100" value="@(InputStatus.Meet)">
+                    <input type="number" id="typeNumber" class="form-control fw-bold" min="1" max="100" value="@(InputStatus.Meet)" @oninput="((e) => InputStatus.Meet = int.Parse(e.Value.ToString()))">
                 </div>
                 <div class="input-group mb-1">
                     <span class="input-group-text fw-bold">パワー</span>
-                    <input type="number" id="typeNumber" class="form-control fw-bold" min="1" max="100" value="@(InputStatus.Power)">
+                    <input type="number" id="typeNumber" class="form-control fw-bold" min="1" max="100" value="@(InputStatus.Power)" @oninput="((e) => InputStatus.Power = int.Parse(e.Value.ToString()))">
                 </div>
                 <div class="input-group mb-1">
                     <span class="input-group-text fw-bold">走力　</span>
-                    <input type="number" id="typeNumber" class="form-control fw-bold" min="1" max="100" value="@(InputStatus.RunPower)">
+                    <input type="number" id="typeNumber" class="form-control fw-bold" min="1" max="100" value="@(InputStatus.RunPower)" @oninput="((e) => InputStatus.RunPower = int.Parse(e.Value.ToString()))">
                 </div>
                 <div class="input-group mb-1">
                     <span class="input-group-text fw-bold">肩力　</span>
-                    <input type="number" id="typeNumber" class="form-control fw-bold" min="1" max="100" value="@(InputStatus.ShoulderPower)">
+                    <input type="number" id="typeNumber" class="form-control fw-bold" min="1" max="100" value="@(InputStatus.ShoulderPower)" @oninput="((e) => InputStatus.ShoulderPower = int.Parse(e.Value.ToString()))">
                 </div>
                 <div class="input-group mb-1">
                     <span class="input-group-text fw-bold">守備力</span>
-                    <input type="number" id="typeNumber" class="form-control fw-bold" min="1" max="100" value="@(InputStatus.Fielding)">
+                    <input type="number" id="typeNumber" class="form-control fw-bold" min="1" max="100" value="@(InputStatus.Fielding)" @oninput="((e) => InputStatus.Fielding = int.Parse(e.Value.ToString()))">
                 </div>
                 <div class="input-group mb-2">
                     <span class="input-group-text fw-bold">捕球　</span>
-                    <input type="number" id="typeNumber" class="form-control fw-bold" min="1" max="100" value="@(InputStatus.Catching)">
+                    <input type="number" id="typeNumber" class="form-control fw-bold" min="1" max="100" value="@(InputStatus.Catching)" @oninput="((e) => InputStatus.Catching = int.Parse(e.Value.ToString()))">
                 </div>
             </div>
             <div class="input-group mb-2">
@@ -201,15 +202,25 @@
     public async Task GetUnitStates() {
         if (AutoCompleteInput?.InputValue == null) { return; }
         PQPlayerUnit = PQPlayerUnits?.FirstOrDefault(u => u.Name == AutoCompleteInput?.InputValue);
-        InputStatus = PQPlayerUnit.Status;
+        InputStatus = new(0, 0, 
+            PQPlayerUnit.Status.Meet,
+            PQPlayerUnit.Status.Power,
+            PQPlayerUnit.Status.RunPower,
+            PQPlayerUnit.Status.ShoulderPower,
+            PQPlayerUnit.Status.Fielding,
+            PQPlayerUnit.Status.Catching);
         //sateiPQ = await Http.GetFromJsonAsync<List<SateiPQ>>($"api/Pq/satei/p");
-        StateHasChanged();
+        //StateHasChanged();
     }
 
     public async Task CaluculateCoach() {
         if (PQPlayerUnit == null) {
             return;
         }
+        Console.WriteLine(InputStatus.Meet);
+        Console.WriteLine(InputStatus.Power);
+        Console.WriteLine(InputStatus.RunPower);
+
         //とりあえず野手
         var canLearnAbilitys = PQAbilitys.Where(x => x.PlayerType == 1).ToList();
         
@@ -420,12 +431,12 @@
                     (5,InputStatus.Fielding , DeckLimit.Fielding),
                     (6,InputStatus.Catching , DeckLimit.Catching),
                 };
-                var targetStatus = AA.Where(x => x.status + x.limit <= 101 && x.limit < 50)
+                var targetStatus = AA.Where(x => x.status >= 51 && x.status + x.limit <= 101 && x.limit < 50)
                 .OrderByDescending(x => x.status + x.limit)
                 .FirstOrDefault();
 
                 IEnumerable<PQEventUnit> GetOrdered() {
-                    Console.WriteLine(targetStatus.id);
+                    //Console.WriteLine(targetStatus.id);
                     switch (targetStatus.id) {
                         case 1:
                             return unitPool.OrderByDescending(x => x.Limit.Meet);
@@ -440,10 +451,9 @@
                         case 6:
                             return unitPool.OrderByDescending(x => x.Limit.Catching);
                     }
-                    return unitPool;
+                    return BalancedOrder(unitPool);
                 }
                 unitPool = GetOrdered();
-                unitPool = BalancedOrder(unitPool);
 
                 var unit = unitPool.First();
                 await AddtoDeck(deck, unit);
