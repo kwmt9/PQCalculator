@@ -5,6 +5,7 @@
                @onkeydown="OnKeyDown"
                @onfocusout="FocusOut"
                @onfocusin="FocusIn"
+               placeholder="@Placeholder"
                type="search" class="form-control input-width" />
     </div>
     @if (IsOpen) {
@@ -24,6 +25,8 @@
     public List<string>? StringList { get; set; }
     [Parameter]
     public EventCallback<string> TextChanged { get; set; }
+    [Parameter]
+    public string? Placeholder { get; set; }
 
     List<string>? AutoComplete { get; set; }
     public string? InputValue { get; set; }

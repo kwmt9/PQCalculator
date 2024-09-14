@@ -1,17 +1,18 @@
 ﻿@using System.Text.Json
 @inject HttpClient Http
 @page "/"
-<PageTitle>コーチ計算機(仮)</PageTitle>
+<PageTitle>パワクエコーチ計算機(仮)</PageTitle>
 
 <div class="container d-flex flex-column align-items-center width-clamp">
-    <h1 class="mb-5">コーチ計算機(仮)</h1>
+    <h1 class="mb-5">パワクエコーチ計算機(仮)</h1>
+    <h2 class="mb-5">まだ野手のみ(仮)</h2>
 
     @if (EventUnits != null) {
         <div class="mb-3">
-            <AutoCompleteInput @ref="AutoCompleteInput" StringList="Suggest"></AutoCompleteInput>
+            <AutoCompleteInput @ref="AutoCompleteInput" StringList="Suggest" Placeholder="契約書キャラ選択"></AutoCompleteInput>
         </div>
         <button @onclick="GetUnitStates" class="btn btn-primary mb-3">選択</button>
-        <h3>契約書能力</h3>
+        <h3>契約書能力設定</h3>
         if (PQPlayerUnit != null) {
             <PlayerPositionComponent Position="PQPlayerUnit.Position"></PlayerPositionComponent>
             <AbilityListComponent Abilitys="PQPlayerUnit.Abilities"></AbilityListComponent>
@@ -192,15 +193,14 @@
         PQPlayerUnits = await Http.GetFromJsonAsync<List<PQPlayerUnit>>($"json/playerUnit.json");
         PQAbilitys = await Http.GetFromJsonAsync<List<PQAbility>>($"json/satei.json");
 
-        Suggest = EventUnits?.Select(u => u.Name).ToList();
+        Suggest = PQPlayerUnits?.OrderByDescending(x => x.Id).Select(u => u.Name).ToList();
         InputStatus = new(0, 0, 50, 50, 50, 50, 50, 50);
         await LoadLastDeck();
     }
 
     public async Task GetUnitStates() {
-        var unit = EventUnits?.FirstOrDefault(u => u.Name == AutoCompleteInput?.InputValue);
-
-        PQPlayerUnit = PQPlayerUnits.First();
+        if (AutoCompleteInput?.InputValue == null) { return; }
+        PQPlayerUnit = PQPlayerUnits?.FirstOrDefault(u => u.Name == AutoCompleteInput?.InputValue);
         InputStatus = PQPlayerUnit.Status;
         //sateiPQ = await Http.GetFromJsonAsync<List<SateiPQ>>($"api/Pq/satei/p");
         StateHasChanged();
