@@ -1,0 +1,24 @@
+﻿.autocomplete {
+	position: absolute;
+	margin: 0 !important;
+	padding: 0 !important;
+	text-align: left;
+	z-index: 100;
+	top: 100%;
+	left: 0px;
+	right: auto;
+	width: 100%;
+	display: block;
+	background-color: #fff;
+	list-style: none;
+	min-width: 220px;
+	max-height: 600px;
+	overflow-y: scroll;
+}
+.hover {
+	background-color: #0d6efd;
+	color:white;
+}
+.input-width {
+	width: 240px;
+}

@@ -1,0 +1,29 @@
+﻿@if(Ability != null){
+    <span @onclick="OnClick" class="@ButtonColor m-1 p-1 rounded">@Ability.Name</span>
+}
+@code {
+    [Parameter]
+    public PQAbility Ability { get; set; }
+    [Parameter]
+    public bool canSelect { get; set; } = false;
+
+    public bool isSelected { get; set; }
+    public string ButtonColor
+    {
+        get
+        {
+            return isSelected ? $"btn-gray" : $"btn-{(PQAbility.Color)Ability.ColorType}";
+        }
+    }
+
+    public void OnClick(){
+        if (canSelect)
+        {
+            isSelected = !isSelected;
+        }
+    }
+
+    public void Reset() {
+        isSelected = false;
+    }
+}

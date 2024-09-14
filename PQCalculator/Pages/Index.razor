@@ -1,0 +1,507 @@
+﻿@using System.Text.Json
+@inject HttpClient Http
+@page "/"
+<PageTitle>コーチ計算機(仮)</PageTitle>
+
+<div class="container d-flex flex-column align-items-center width-clamp">
+    <h1 class="mb-5">コーチ計算機(仮)</h1>
+
+    @if (EventUnits != null) {
+        <div class="mb-3">
+            <AutoCompleteInput @ref="AutoCompleteInput" StringList="Suggest"></AutoCompleteInput>
+        </div>
+        <button @onclick="GetUnitStates" class="btn btn-primary mb-3">選択</button>
+        <h3>契約書能力</h3>
+        if (PQPlayerUnit != null) {
+            <PlayerPositionComponent Position="PQPlayerUnit.Position"></PlayerPositionComponent>
+            <AbilityListComponent Abilitys="PQPlayerUnit.Abilities"></AbilityListComponent>
+        }
+        <div id="calculationForm">
+            <div>
+                <div class="input-group mb-1">
+                    <span class="input-group-text fw-bold">ミート</span>
+                    <input type="number" id="typeNumber" class="form-control fw-bold" min="1" max="100" value="@(InputStatus.Meet)">
+                </div>
+                <div class="input-group mb-1">
+                    <span class="input-group-text fw-bold">パワー</span>
+                    <input type="number" id="typeNumber" class="form-control fw-bold" min="1" max="100" value="@(InputStatus.Power)">
+                </div>
+                <div class="input-group mb-1">
+                    <span class="input-group-text fw-bold">走力　</span>
+                    <input type="number" id="typeNumber" class="form-control fw-bold" min="1" max="100" value="@(InputStatus.RunPower)">
+                </div>
+                <div class="input-group mb-1">
+                    <span class="input-group-text fw-bold">肩力　</span>
+                    <input type="number" id="typeNumber" class="form-control fw-bold" min="1" max="100" value="@(InputStatus.ShoulderPower)">
+                </div>
+                <div class="input-group mb-1">
+                    <span class="input-group-text fw-bold">守備力</span>
+                    <input type="number" id="typeNumber" class="form-control fw-bold" min="1" max="100" value="@(InputStatus.Fielding)">
+                </div>
+                <div class="input-group mb-2">
+                    <span class="input-group-text fw-bold">捕球　</span>
+                    <input type="number" id="typeNumber" class="form-control fw-bold" min="1" max="100" value="@(InputStatus.Catching)">
+                </div>
+            </div>
+            <div class="input-group mb-2">
+                <span class="input-group-text fw-bold">コーチ人数　</span>
+                <input type="number" id="typeNumber" class="form-control fw-bold" min="0" max="4" @bind="CoarchCount">
+            </div>
+        </div>
+        <div class="mb-2">
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" @onchange='(e) => OnRadioChange("1")' checked>
+                <label class="form-check-label" for="flexRadioDefault1">
+                    能力101優先上げ
+                </label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3" @onchange='(e) => OnRadioChange("3")'>
+                <label class="form-check-label" for="flexRadioDefault3">
+                    バランス上げ
+                </label>
+            </div>
+        </div>
+        <button @onclick="CaluculateCoach" class="btn btn-primary mb-5">計算開始</button>
+    }
+    </div>
+@if (decks != null)
+{
+    <div class="d-flex justify-content-center flex-column align-items-center">
+        <h3>計算結果</h3>
+           <StatusComponent FielderStatus="DeckLimit"></StatusComponent>
+       </div>
+    <div class="d-flex flex-wrap justify-content-start justify-content-xl-center">
+        @for (int i = 0; i < decks.Count; i++)
+        {
+            var deck = decks[i];
+            <div class="d-inline-flex flex-column col-12 col-lg-6 col-xl-3 align-items-baseline border rounded">
+                <h3>デッキ @(i + 1)</h3>
+                <div class="mb-3">
+                    @foreach (var unit in deck) {
+                    <div style="display: flex;">
+                        <div>@unit.Name</div>
+                        <button type="button" class="btn-close" aria-label="Close" @onclick="() => AddNotOwnedUnit(unit.Id)"></button>
+                    </div>
+                    }
+                </div>
+                <div class="mb-3">
+                    @if (deckAbilites != null) {
+                        @foreach (var ab in deckAbilites[i]) {
+                            <div class="mb-2">
+                                <AbilityComponent Ability="@ab"></AbilityComponent>
+                                <span class="fw-bold">@ab.SateiMain</span>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        }
+    </div>
+}
+
+@if (notOwnedUnits.Count > 0) {
+    <Liner></Liner>
+    <h3>持ってないキャラ</h3>
+    @foreach (var id in notOwnedUnits) {
+        <div style="display: flex;">
+            <div>@(EventUnits.FirstOrDefault(x => x.Id == id).Name)</div>
+            <button type="button" class="btn-close" aria-label="Close" @onclick="() => RemoveNotOwnedUnit(id)"></button>
+        </div>
+    }
+    <button @onclick="RemoveNotOwnedUnitAll" class="btn btn-primary mb-3">リセット</button>
+}
+
+@code {
+    [Inject]
+    private IJSRuntime JSRuntime { get; set; }
+
+    public List<string>? Suggest { get; set; }
+    public List<PQEventUnit>? RemovedUnits;
+    public List<PQEventUnit>? EventUnits;
+
+    AutoCompleteInput? AutoCompleteInput;
+    PQPlayerUnit? PQPlayerUnit;
+    List<PQAbility>? PQAbilitys;
+
+    List<PQPlayerUnit>? PQPlayerUnits;
+
+    HashSet<int> notOwnedUnits = new();
+    private void AddNotOwnedUnit(int id) {
+        notOwnedUnits.Add(id);
+        SetLastDeck();
+        CaluculateCoach();
+    }
+    private void RemoveNotOwnedUnit(int id) {
+        notOwnedUnits.Remove(id);
+        SetLastDeck();
+        CaluculateCoach();
+    }
+    private void RemoveNotOwnedUnitAll() {
+        notOwnedUnits = new();
+        SetLastDeck();
+        CaluculateCoach();
+    }
+    //ローカルストレージから取得
+    public async Task LoadLastDeck() {
+        try {
+            var json = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "notOwnUnit");
+
+            if (!string.IsNullOrEmpty(json)) {
+                notOwnedUnits = JsonSerializer.Deserialize<int[]>(json)?.ToHashSet() ?? new HashSet<int>();
+            }
+            else {
+                notOwnedUnits = new HashSet<int>();  // デフォルト値を設定
+            }
+        }
+        catch (Exception ex) {
+            // エラーハンドリング
+            Console.WriteLine($"Error loading data from localStorage: {ex.Message}");
+            notOwnedUnits = new HashSet<int>();  // 失敗した場合もデフォルト値を設定
+        }
+    }
+
+    //ローカルストレージに保存
+    private async Task SetLastDeck() {
+        await JSRuntime.InvokeVoidAsync(
+            "localStorage.setItem",
+            "notOwnUnit",
+            JsonSerializer.Serialize(
+                notOwnedUnits.ToArray()
+        )
+        );
+    }
+
+    List<List<PQEventUnit>>? decks;
+    List<List<PQAbility>>? deckAbilites;
+
+    UnitFielderStatus InputStatus = new(0, 0, 50, 50, 50, 50, 50, 50);
+    UnitFielderStatus DeckLimit = new(0, 0, 0, 0, 0, 0, 0, 0);
+
+    int CoarchCount = 3;
+
+    int CalucMode = 1;
+    private void OnRadioChange(string newValue) {
+        int ValueInt = int.Parse(newValue);
+        CalucMode = ValueInt;
+    }
+
+    protected override async Task OnInitializedAsync() {
+        EventUnits = await Http.GetFromJsonAsync<List<PQEventUnit>>("json/eventUnit.json");
+        PQPlayerUnits = await Http.GetFromJsonAsync<List<PQPlayerUnit>>($"json/playerUnit.json");
+        PQAbilitys = await Http.GetFromJsonAsync<List<PQAbility>>($"json/satei.json");
+
+        Suggest = EventUnits?.Select(u => u.Name).ToList();
+        InputStatus = new(0, 0, 50, 50, 50, 50, 50, 50);
+        await LoadLastDeck();
+    }
+
+    public async Task GetUnitStates() {
+        var unit = EventUnits?.FirstOrDefault(u => u.Name == AutoCompleteInput?.InputValue);
+
+        PQPlayerUnit = PQPlayerUnits.First();
+        InputStatus = PQPlayerUnit.Status;
+        //sateiPQ = await Http.GetFromJsonAsync<List<SateiPQ>>($"api/Pq/satei/p");
+        StateHasChanged();
+    }
+
+    public async Task CaluculateCoach() {
+        if (PQPlayerUnit == null) {
+            return;
+        }
+        //とりあえず野手
+        var canLearnAbilitys = PQAbilitys.Where(x => x.PlayerType == 1).ToList();
+        
+        decks = new();
+        deckAbilites = new();
+        DeckLimit = new(0, 0, 0, 0, 0, 0, 0, 0);
+
+        //所持している能力、同時取得できないを消す
+        var pqAbilityes = await RemoveOwnedAbilities(canLearnAbilitys);
+        pqAbilityes = await RemoveNonConcurrentAbilities(pqAbilityes);
+        //ポジションに応じて能力を消す
+        pqAbilityes = await RemovePositionSpecificAbilities(pqAbilityes);
+        pqAbilityes = await SumLowRankSatei(pqAbilityes);
+        RemovedUnits = await RemoveNotOwnEventUnit();
+        pqAbilityes = pqAbilityes.OrderByDescending(s => s.SateiMain).ToList();
+        //金徳入れる
+        pqAbilityes = await AddGoldAbility(pqAbilityes);
+        //威圧感
+        pqAbilityes = await AddIatsukan(pqAbilityes);
+        //能力上限を計算
+        switch (CalucMode) {
+            case 1:
+                await CaluculateLimitCoachMode1(pqAbilityes);
+                break;
+            case 2:
+                await CaluculateLimitCoachMode3(pqAbilityes);
+                break;
+            case 3:
+                await CaluculateLimitCoachMode3(pqAbilityes);
+                break;
+        }
+        //deckAbilitesの中の金特を除外
+        pqAbilityes = await RemoveDeckAbilities(pqAbilityes);
+        //青特を高い順でで取る
+        await AddBlueAbility(pqAbilityes);
+    }
+    public async Task<List<PQAbility>> AddGoldAbility(List<PQAbility> pqAbilityes) {
+
+        //金徳入れる
+        int skipCount = 0;
+        for (int i = 0; i < CoarchCount; i++) {
+            List<PQEventUnit> deck = new();
+            List<PQAbility> abilitys = new();
+            for (int k = 0; 2 > deck.Count; k++) {
+                var ability = pqAbilityes.Skip(skipCount).First();
+                skipCount++;
+                var unit = RemovedUnits.FirstOrDefault(x => x.Abilities.Any(a => a.Id == ability.Id));
+                if (unit == null) {
+                    continue;
+                }
+                await AddtoDeck(deck, unit);
+                abilitys.Add(ability);
+            }
+            decks.Add(deck);
+            deckAbilites.Add(abilitys);
+        }
+        return pqAbilityes;
+    }
+
+    public async Task<List<PQAbility>> AddIatsukan(List<PQAbility> pqAbilityes) {
+        //威圧感を入れる
+        //すでに入れたUnitは除外する
+        var unitPool = RemovedUnits.Where(u => !decks.SelectMany(x => x).Any(d => d.Id == u.Id));
+        PQAbility iatukan = pqAbilityes.First(s => s.Name.Contains("威圧感"));
+        var havingIatukanUnit = unitPool?.FirstOrDefault(x => x.Abilities.Any(a => a.Id == iatukan.Id));
+        if (havingIatukanUnit != null) {
+            decks.First().Add(havingIatukanUnit);
+            deckAbilites.First().Add(iatukan);
+        }
+        else {
+            pqAbilityes = pqAbilityes.Where(x => !x.Name.Contains("威圧感")).ToList();
+        }
+        return pqAbilityes;
+    }
+
+    public async Task AddBlueAbility(List<PQAbility> pqAbilityes) {
+        var OrderedBlueAbilities = pqAbilityes
+        .Where(x => x.ColorType == 2)
+        .GroupBy(a => a.GroupId)
+        .Select(g => g.OrderByDescending(a => a.Rank).First())
+        .OrderByDescending(x => x.SateiMain)
+        .ToList();
+
+        for (int i = 0; i < CoarchCount; i++){
+            for (int k = 0; deckAbilites[i].Count < 5; k++){
+                var abilitiys = deckAbilites[i];
+                var blueAbility = OrderedBlueAbilities.First();
+                abilitiys.Add(blueAbility);
+                OrderedBlueAbilities = await RemoveNonConcurrentAbility(OrderedBlueAbilities, blueAbility);
+                OrderedBlueAbilities = await RemoveDeckAbilities(OrderedBlueAbilities);
+            }
+        }
+    }
+
+    public async Task<List<PQAbility>> RemoveDeckAbilities(List<PQAbility> pqAbilityes) {
+        List<PQAbility> aaa = deckAbilites.SelectMany(x => x).ToList();
+        pqAbilityes = pqAbilityes.Where(x => !aaa.Any(a => x.GroupId == a.GroupId)).ToList();
+
+        return pqAbilityes;
+    }
+    //同時取得不可のアビリティを消す
+    public async Task<List<PQAbility>> RemoveNonConcurrentAbilities(List<PQAbility> pqAbilityes) {
+        var ret = pqAbilityes;
+        foreach (var ability in deckAbilites.SelectMany(x => x)) {
+            ret = await RemoveNonConcurrentAbility(pqAbilityes, ability);
+        }
+        foreach (var ability in PQPlayerUnit.Abilities) {
+            ret = await RemoveNonConcurrentAbility(pqAbilityes, ability);
+        }
+        return ret;
+    }
+    public async Task<List<PQAbility>> RemoveNonConcurrentAbility(List<PQAbility> pqAbilityes, PQAbility ability) {
+        var ret = pqAbilityes;
+        // 同時取得不可のアビリティをマッピングするための辞書
+        var nonConcurrentMap = new Dictionary<string, string>{
+        { "パワーヒッター", "ラインドライブ" },
+        { "ローボールヒッター", "ハイボールヒッター" },
+        { "インコース◯", "アウトコース◯" },
+        { "広角打法", "プルヒッター" },
+        { "対ストレート○", "対変化球○" }
+        };
+        // 削除対象のグループIDに含まれないアビリティをフィルタリング
+        if (nonConcurrentMap.TryGetValue(ability.Name, out var counterpart))
+        {
+            var targetAbility = pqAbilityes.FirstOrDefault(x => x.Name == counterpart);
+            if (targetAbility != null)
+            {
+                ret = pqAbilityes.Where(x => targetAbility.GroupId != x.GroupId).ToList();
+            }
+        }
+        else if (nonConcurrentMap.ContainsValue(ability.Name))
+        {
+            var targetAbility = pqAbilityes.FirstOrDefault(x => nonConcurrentMap.ContainsKey(x.Name) && nonConcurrentMap[x.Name] == ability.Name);
+            if (targetAbility != null)
+            {
+                ret = pqAbilityes.Where(x => targetAbility.GroupId != x.GroupId).ToList();
+            }
+        }
+        return ret;
+    }
+    public async Task<List<PQAbility>> RemovePositionSpecificAbilities(List<PQAbility> pqAbilityes) {
+        // TODO: キャラのポジションで、至高とかを除外する。
+        List<(string name, int pos)> excludedInfo = new List<(string, int)>() {
+            ("球界の頭脳",2),
+            ("キャッチャー◯",2),
+            ("至高の一塁手",3),
+            ("ファースト○",3),
+            ("至高の二塁手",4),
+            ("セカンド○",4),
+            ("至高の遊撃手",5),
+            ("ショート○",5),
+            ("至高の三塁手",6),
+            ("サード○",6),
+            ("至高の外野手",7),
+            ("アウトフィールダー○",7),
+            ("高速レーザー", 7),
+            ("レーザービーム", 7),
+        };
+        var excludedAbilityData = excludedInfo.Select(a => (PQAbilitys.First(x => x.Name == a.name).Id, a.pos));
+        IEnumerable<PQAbility> excludedAbilitys = pqAbilityes.Where(x => !excludedAbilityData.Where(z => z.pos != PQPlayerUnit.Position).Any(z => z.Id == x.Id));
+        //
+        return excludedAbilitys.ToList();
+    }
+    public async Task<List<PQEventUnit>> RemoveNotOwnEventUnit() {
+        var removedUnits = EventUnits.Where(x => !notOwnedUnits.Any(i => i == x.Id));
+        return removedUnits.ToList();
+    }
+    public async Task<List<PQAbility>> RemoveOwnedAbilities(List<PQAbility> pqAbilityes) {
+        var playerUnitAbilityes = pqAbilityes.Where(g => PQPlayerUnit.Abilities.Any(a => a.Id == g.Id));
+        //グループではない || 上位金特
+        var removedPQAbilities = pqAbilityes.Where(x => !playerUnitAbilityes.Any(item => x.GroupId == item.GroupId && x.Rank <= item.Rank));
+        return removedPQAbilities.ToList();
+    }
+    public async Task<List<PQAbility>> SumLowRankSatei(List<PQAbility> pqAbilityes) {
+        List<PQAbility> ret = new(); 
+
+        foreach (var item in pqAbilityes) {
+            //下位込みで査定を計算
+            var sumSatei = pqAbilityes.Where(x => x.GroupId == item.GroupId && 0 < x.Rank && x.Rank <= item.Rank).Sum(x => x.SateiMain);
+            ret.Add(new PQAbility(item.Id, item.Name, item.ColorType, item.PlayerType, item.GroupId, item.Rank, sumSatei));
+        }
+        return ret;
+    }
+    public async Task AddtoDeck(List<PQEventUnit> deck, PQEventUnit unit) {
+        deck.Add(unit);
+        DeckLimit.Meet += unit.Limit.Meet;
+        DeckLimit.Power += unit.Limit.Power;
+        DeckLimit.RunPower += unit.Limit.RunPower;
+        DeckLimit.ShoulderPower += unit.Limit.ShoulderPower;
+        DeckLimit.Fielding += unit.Limit.Fielding;
+        DeckLimit.Catching += unit.Limit.Catching;
+
+    }
+    //101優先上げ
+    public async Task CaluculateLimitCoachMode1(List<PQAbility> excludedAbilitys) {
+        for (int i = 0; i < CoarchCount; i++) {
+            List<PQEventUnit> deck = decks[i];
+            //すでに入れたUnitは除外する
+            var unitPool = RemovedUnits.Where(u => !deck.Any(d => d.Id == u.Id));
+            const int DECK_MAX_COUNT = 9;
+            for (int k = 0; deck.Count < DECK_MAX_COUNT; k++) {
+                //最も高い能力を優先する
+                List<(int id, int status, int limit)> AA = new() {
+                    (1,InputStatus.Meet , DeckLimit.Meet),
+                    (2,InputStatus.Power , DeckLimit.Power),
+                    (3,InputStatus.RunPower , DeckLimit.RunPower),
+                    (4,InputStatus.ShoulderPower , DeckLimit.ShoulderPower),
+                    (5,InputStatus.Fielding , DeckLimit.Fielding),
+                    (6,InputStatus.Catching , DeckLimit.Catching),
+                };
+                var targetStatus = AA.Where(x => x.status + x.limit <= 101 && x.limit < 50)
+                .OrderByDescending(x => x.status + x.limit)
+                .FirstOrDefault();
+
+                IEnumerable<PQEventUnit> GetOrdered() {
+                    Console.WriteLine(targetStatus.id);
+                    switch (targetStatus.id) {
+                        case 1:
+                            return unitPool.OrderByDescending(x => x.Limit.Meet);
+                        case 2:
+                            return unitPool.OrderByDescending(x => x.Limit.Power);
+                        case 3:
+                            return unitPool.OrderByDescending(x => x.Limit.RunPower);
+                        case 4:
+                            return unitPool.OrderByDescending(x => x.Limit.ShoulderPower);
+                        case 5:
+                            return unitPool.OrderByDescending(x => x.Limit.Fielding);
+                        case 6:
+                            return unitPool.OrderByDescending(x => x.Limit.Catching);
+                    }
+                    return unitPool;
+                }
+                unitPool = GetOrdered();
+                unitPool = BalancedOrder(unitPool);
+
+                var unit = unitPool.First();
+                await AddtoDeck(deck, unit);
+            }
+        }
+    }
+    //50優先上げ
+    public async Task CaluculateLimitCoachMode2(List<PQAbility> excludedAbilitys) {
+        
+    }
+    //バランス上げ
+    public async Task CaluculateLimitCoachMode3(IEnumerable<PQAbility> excludedAbilitys)
+    {
+        for (int i = 0; i < CoarchCount; i++)
+        {
+            List<PQEventUnit> deck = decks[i];
+
+            //すでに入れたUnitは除外する
+            var unitPool = RemovedUnits.Where(u => !deck.Any(d => d.Id == u.Id));
+
+            const int DECK_MAX_COUNT = 9;
+            for (int k = 0; deck.Count < DECK_MAX_COUNT; k++)
+            {
+                //上限をこえているか
+                var sumLimitUnits = BalancedOrder(unitPool);
+
+                var unit = sumLimitUnits.First();
+                await AddtoDeck(deck, unit);
+            }
+        }
+
+    }
+
+    public IEnumerable<PQEventUnit> BalancedOrder(IEnumerable<PQEventUnit> unitPool) {
+        //上限をこえているか
+        var sumLimitUnits = unitPool
+            .OrderByDescending(x => {
+                int sum = 0;
+                sum += DeckLimit.Meet < 50 ? x.Limit.Meet : 0;
+                sum += DeckLimit.Power < 50 ? x.Limit.Power : 0;
+                sum += DeckLimit.RunPower < 50 ? x.Limit.RunPower : 0;
+                sum += DeckLimit.ShoulderPower < 50 ? x.Limit.ShoulderPower : 0;
+                sum += DeckLimit.Fielding < 50 ? x.Limit.Fielding : 0;
+                sum += DeckLimit.Catching < 50 ? x.Limit.Catching : 0;
+                return sum;
+            }).ThenByDescending(x => GetMinValue(x));
+
+            return sumLimitUnits;
+
+        int GetMinValue(PQEventUnit unit) {
+            var values = new[] {
+                unit.Limit.Meet,
+                unit.Limit.Power,
+                unit.Limit.RunPower,
+                unit.Limit.ShoulderPower,
+                unit.Limit.Fielding,
+                unit.Limit.Catching};
+            return values.Min();
+        }
+    }
+}

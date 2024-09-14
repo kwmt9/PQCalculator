@@ -1,0 +1,25 @@
+﻿@if (Abilitys != null) {
+    <div class="d-flex flex-wrap justify-content-center width-clamp">
+        @foreach (var item in Abilitys) {
+            <AbilityComponent @ref="AbilityComponent" Ability=@item canSelect=@canSelect></AbilityComponent>
+        }
+    </div>
+}
+@code {
+    [Parameter]
+    public List<PQAbility> Abilitys { get; set; }
+    [Parameter]
+    public bool canSelect { get; set; } = false;
+
+    List<AbilityComponent> AbilityComponents { get; set; } = new();
+    AbilityComponent AbilityComponent {
+        set {
+            AbilityComponents.Add(value);
+        } 
+    }
+    public void AllReset() {
+        foreach (var ac in AbilityComponents){
+            ac.Reset();
+        }
+    }
+}

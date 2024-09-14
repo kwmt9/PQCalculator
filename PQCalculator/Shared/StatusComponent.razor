@@ -1,0 +1,64 @@
+﻿<div class="d-flex flex-column">
+    @if (FielderStatus != null || PitcherStatus != null) {
+        <div class="mx-1 width-clamp">
+            <table class="table table-bordered">
+                <thead>
+                    <tr class="col2">
+                        @if (FielderStatus != null) {
+                            <th scope="col" class="bg-light">@("ミート".Substring(0, 2))</th>
+                            <th scope="col" class="">@("パワー".Substring(0, 2))</th>
+                            <th scope="col" class="">@("走力".Substring(0, 2))</th>
+                            <th scope="col" class="">@("肩力".Substring(0, 2))</th>
+                            <th scope="col" class="">@("守備力".Substring(0, 2))</th>
+                            <th scope="col" class="">@("捕球".Substring(0, 2))</th>
+                        }
+                        @if (PitcherStatus != null) {
+                            <th scope="col" class="">@("球速".Substring(0, 2))</th>
+                            <th scope="col" class="">@("コントロール".Substring(0, 2))</th>
+                            <th scope="col" class="">@("スタミナ".Substring(0, 2))</th>
+                        }
+                        else {
+                            <td class="@("disabled")">-</td>
+                            <td class="@("disabled")">-</td>
+                            <td class="@("disabled")">-</td>
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="col2">
+                        @if (FielderStatus != null) {
+                            <td >@FielderStatus.Meet</td>
+                            <td>@FielderStatus.Power</td>
+                            <td >@FielderStatus.RunPower</td>
+                            <td >@FielderStatus.ShoulderPower</td>
+                            <td>@FielderStatus.Fielding</td>
+                            <td>@FielderStatus.Catching</td>
+                        }
+                        @if (PitcherStatus != null) {
+                            <td>@PitcherStatus.BallSpeed</td>
+                            <td>@PitcherStatus.BallControl</td>
+                            <td>@PitcherStatus.Stamina</td>
+                        }
+                        else {
+                            <td class="@("disabled")">-</td>
+                            <td class="@("disabled")">-</td>
+                            <td class="@("disabled")">-</td>
+                        }
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public UnitPitcherStatus PitcherStatus { get; set; }
+    [Parameter]
+    public UnitFielderStatus FielderStatus { get; set; }
+    [Parameter]
+    public bool EnableFielder { get; set; } = true;
+    [Parameter]
+    public bool EnablePicher { get; set; } = true;
+
+}

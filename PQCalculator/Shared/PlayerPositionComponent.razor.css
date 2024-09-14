@@ -1,0 +1,20 @@
+﻿.bg-pitcher {
+	background-color: #ffaea7;
+}
+
+.bg-chatcher {
+	background-color: #80eaff;
+}
+
+.bg-infielder {
+	background-color: #ffec74;
+}
+
+.bg-outfielder {
+	background-color: #84e480;
+}
+.bg-pitcher, .bg-chatcher, .bg-infielder, .bg-outfielder {
+	width: 2rem;
+	height: 2rem;
+	text-align: center;
+}

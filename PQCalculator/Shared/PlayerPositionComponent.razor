@@ -1,0 +1,14 @@
+﻿<div>
+    <div class="btn-any m-1 p-1 rounded @($"{bgs[Position]}")">@YakuwariNames[Position]</div>
+</div>
+@code {
+    [Parameter]
+    public int Position { get; set; }
+
+    List<string> YakuwariNames = new() {
+        "","投","捕","一","二","遊","三","外",
+    };
+    List<string> bgs = new() {
+        "","bg-pitcher","bg-chatcher","bg-infielder","bg-infielder","bg-infielder","bg-infielder","bg-outfielder"
+    };
+}

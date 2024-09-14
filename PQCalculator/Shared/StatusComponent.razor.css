@@ -1,0 +1,9 @@
+﻿th {
+	background-color: #e9ecef !important;
+}
+
+table {
+	text-align: center;
+	border-collapse: collapse;
+	table-layout: fixed;
+}
