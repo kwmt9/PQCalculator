@@ -5,8 +5,6 @@
 
 <div class="container d-flex flex-column align-items-center width-clamp">
     <h1 class="mb-5">パワクエコーチ計算機(仮)</h1>
-    <h2 class="mb-5">まだ野手のみ(仮)</h2>
-
     @if (EventUnits != null) {
         <div class="mb-3">
             <AutoCompleteInput @ref="AutoCompleteInput" StringList="Suggest" Placeholder="契約書キャラ選択" TextChanged="@((s) => GetUnitStates())"></AutoCompleteInput>
@@ -64,19 +62,20 @@
             </div>
         </div>
         <div class="mb-2">
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" @onchange='(e) => OnRadioChange("1")' checked>
-                <label class="form-check-label" for="flexRadioDefault1">
-                    能力101優先上げ
-                </label>
-            </div>
-
+            @if (PQPlayerUnit?.Position != 1) {
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" @onchange='(e) => OnRadioChange("1")' checked>
+                    <label class="form-check-label" for="flexRadioDefault1">
+                        能力101優先上げ
+                    </label>
+                </div>
             <div class="form-check">
                 <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3" @onchange='(e) => OnRadioChange("3")'>
                 <label class="form-check-label" for="flexRadioDefault3">
                     バランス上げ
                 </label>
             </div>
+            }
         </div>
         <button @onclick="CaluculateCoach" class="btn btn-primary mb-5">計算開始</button>
     }
@@ -85,7 +84,13 @@
 {
     <div class="d-flex justify-content-center flex-column align-items-center">
         <h3>計算結果</h3>
-        <StatusComponent FielderStatus="DeckLimit" PitcherStatus="DeckPitcherLimit"></StatusComponent>
+        @if (PQPlayerUnit?.Position == 1) {
+            <StatusComponent FielderStatus="DeckLimit" PitcherStatus="DeckPitcherLimit"></StatusComponent>
+        }else {
+            <StatusComponent FielderStatus="DeckLimit"></StatusComponent>
+        }
+
+
     </div>
     <div class="d-flex flex-wrap justify-content-start justify-content-xl-center">
         @for (int i = 0; i < decks.Count; i++)
@@ -217,7 +222,7 @@
         PQPlayerUnits = await Http.GetFromJsonAsync<List<PQPlayerUnit>>($"json/playerUnit.json");
         PQAbilitys = await Http.GetFromJsonAsync<List<PQAbility>>($"json/satei.json");
 
-        Suggest = PQPlayerUnits?.OrderByDescending(x => x.Id).Select(u => u.Name).ToList();
+        Suggest = PQPlayerUnits?.Where(x => x.Position != 0).OrderByDescending(x => x.Id).Select(u => u.Name).ToList();
         InputStatus = new(0, 0, 50, 50, 50, 50, 50, 50);
         InputPitcherStatus = new(0, 120, 50, 50);
         await LoadLastDeck();
@@ -276,26 +281,31 @@
         //威圧感
         pqAbilityes = await AddIatsukan(pqAbilityes);
         //能力上限を計算
-        switch (CalucMode) {
-            case 1:
-                await CaluculateLimitCoachMode1(pqAbilityes);
-                break;
-            case 2:
-                await CaluculateLimitCoachMode3(pqAbilityes);
-                break;
-            case 3:
-                await CaluculateLimitCoachMode3(pqAbilityes);
-                break;
+        if (PQPlayerUnit.Position != 1)
+        {
+            switch (CalucMode)
+            {
+                case 1:
+                    await CaluculateLimitCoachMode1(pqAbilityes);
+                    break;
+                case 2:
+                    await CaluculateLimitCoachMode3(pqAbilityes);
+                    break;
+                case 3:
+                    await CaluculateLimitCoachMode3(pqAbilityes);
+                    break;
+            }
         }
+        else {
+            await CaluculateLimitCoachMode3(pqAbilityes);
+        }
+
         //deckAbilitesの中の金特を除外
         pqAbilityes = await RemoveDeckAbilities(pqAbilityes);
         //青特を高い順でで取る
         await AddBlueAbility(pqAbilityes);
     }
     public async Task<List<PQAbility>> AddGoldAbility(List<PQAbility> pqAbilityes) {
-        foreach (var item in pqAbilityes) {
-            Console.WriteLine(item.Name);
-        }
         //金徳入れる
         int skipCount = 0;
         for (int i = 0; i < CoarchCount; i++) {
