@@ -64,13 +64,13 @@
         <div class="mb-2">
             @if (PQPlayerUnit?.Position != 1) {
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" @onchange='(e) => OnRadioChange("1")' checked>
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" @onchange='(e) => OnRadioChange("1")'>
                     <label class="form-check-label" for="flexRadioDefault1">
                         能力101優先上げ
                     </label>
                 </div>
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3" @onchange='(e) => OnRadioChange("3")'>
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3" @onchange='(e) => OnRadioChange("3")' checked>
                 <label class="form-check-label" for="flexRadioDefault3">
                     バランス上げ
                 </label>
@@ -269,7 +269,7 @@
 
         //所持している能力、同時取得できないを消す
         var pqAbilityes = await RemoveOwnedAbilities(canLearnAbilitys);
-        pqAbilityes = await RemoveNonConcurrentAbilities(pqAbilityes);
+        pqAbilityes = RemoveNonConcurrentAbilities(pqAbilityes);
         //ポジションに応じて能力を消す
         pqAbilityes = await RemovePositionSpecificAbilities(pqAbilityes);
         pqAbilityes = await SumLowRankSatei(pqAbilityes);
@@ -301,7 +301,7 @@
         }
 
         //deckAbilitesの中の金特を除外
-        pqAbilityes = await RemoveDeckAbilities(pqAbilityes);
+        pqAbilityes = RemoveDeckAbilities(pqAbilityes);
         //青特を高い順でで取る
         await AddBlueAbility(pqAbilityes);
     }
@@ -332,7 +332,8 @@
         //威圧感を入れる
         //すでに入れたUnitは除外する
         var unitPool = RemoveAddedUnits.Where(u => !decks.SelectMany(x => x).Any(d => d.Id == u.Id));
-        PQAbility iatukan = pqAbilityes.First(s => s.Name.Contains("威圧感"));
+        PQAbility iatukan = pqAbilityes.FirstOrDefault(s => s.Name.Contains("威圧感"));
+        if (iatukan == null) return pqAbilityes;
         var havingIatukanUnit = unitPool?.FirstOrDefault(x => x.Abilities.Any(a => a.Id == iatukan.Id));
         if (havingIatukanUnit != null) {
             decks.First().Add(havingIatukanUnit);
@@ -357,30 +358,30 @@
                 var abilitiys = deckAbilites[i];
                 var blueAbility = OrderedBlueAbilities.First();
                 abilitiys.Add(blueAbility);
-                OrderedBlueAbilities = await RemoveNonConcurrentAbility(OrderedBlueAbilities, blueAbility);
-                OrderedBlueAbilities = await RemoveDeckAbilities(OrderedBlueAbilities);
+                OrderedBlueAbilities = RemoveNonConcurrentAbility(OrderedBlueAbilities, blueAbility);
+                OrderedBlueAbilities = RemoveDeckAbilities(OrderedBlueAbilities);
             }
         }
     }
 
-    public async Task<List<PQAbility>> RemoveDeckAbilities(List<PQAbility> pqAbilityes) {
+    public List<PQAbility> RemoveDeckAbilities(List<PQAbility> pqAbilityes) {
         List<PQAbility> aaa = deckAbilites.SelectMany(x => x).ToList();
         pqAbilityes = pqAbilityes.Where(x => !aaa.Any(a => x.GroupId == a.GroupId)).ToList();
 
         return pqAbilityes;
     }
     //同時取得不可のアビリティを消す
-    public async Task<List<PQAbility>> RemoveNonConcurrentAbilities(List<PQAbility> pqAbilityes) {
+    public List<PQAbility> RemoveNonConcurrentAbilities(List<PQAbility> pqAbilityes) {
         var ret = pqAbilityes;
         foreach (var ability in deckAbilites.SelectMany(x => x)) {
-            ret = await RemoveNonConcurrentAbility(pqAbilityes, ability);
+            ret = RemoveNonConcurrentAbility(pqAbilityes, ability);
         }
         foreach (var ability in PQPlayerUnit.Abilities) {
-            ret = await RemoveNonConcurrentAbility(pqAbilityes, ability);
+            ret = RemoveNonConcurrentAbility(pqAbilityes, ability);
         }
         return ret;
     }
-    public async Task<List<PQAbility>> RemoveNonConcurrentAbility(List<PQAbility> pqAbilityes, PQAbility ability) {
+    public List<PQAbility> RemoveNonConcurrentAbility(List<PQAbility> pqAbilityes, PQAbility ability) {
         var ret = pqAbilityes;
         // 同時取得不可のアビリティをマッピングするための辞書
         var nonConcurrentMap = new Dictionary<string, string>{
@@ -465,7 +466,7 @@
         DeckPitcherLimit.BallControl += unit.Limit.BallControl;
         DeckPitcherLimit.Stamina += unit.Limit.Stamina;
     }
-    //101優先上げ
+    //101優先上げ(???)
     public async Task CaluculateLimitCoachMode1(List<PQAbility> excludedAbilitys) {
         for (int i = 0; i < CoarchCount; i++) {
             List<PQEventUnit> deck = decks[i];
@@ -493,20 +494,28 @@
             }
         }
     }
-    //50優先上げ
+    //上げ上げ上げ(山登り(?))
     public async Task CaluculateLimitCoachMode2(List<PQAbility> excludedAbilitys) {
+        int maxIterations = 100;
+
+
+
+
+
+
+
+
+
 
     }
-    //バランス上げ
+    //バランス上げ(貪欲(?))
     public async Task CaluculateLimitCoachMode3(IEnumerable<PQAbility> excludedAbilitys)
     {
         for (int i = 0; i < CoarchCount; i++)
         {
             List<PQEventUnit> deck = decks[i];
-
             //すでに入れたUnitは除外する
             var unitPool = RemoveAddedUnits.Where(u => !deck.Any(d => d.Id == u.Id));
-
             const int DECK_MAX_COUNT = 9;
             for (int k = 0; deck.Count < DECK_MAX_COUNT; k++)
             {
@@ -521,7 +530,6 @@
 
     }
     IOrderedEnumerable<PQEventUnit> TargetLimitByIdOrder(IEnumerable<PQEventUnit> unitPool,int id) {
-        //Console.WriteLine(targetStatus.id);
         switch (id) {
             case 1:
                 return unitPool.OrderByDescending(x => x.Limit.Meet);
@@ -566,16 +574,16 @@
         }
         else{
             sumLimitUnits = unitPool.OrderByDescending(x =>
-                  {
-                      int sum = 0;
-                      sum += DeckLimit.Meet < 50 ? x.Limit.Meet : 0;
-                      sum += DeckLimit.Power < 50 ? x.Limit.Power : 0;
-                      sum += DeckLimit.RunPower < 50 ? x.Limit.RunPower : 0;
-                      sum += DeckLimit.ShoulderPower < 50 ? x.Limit.ShoulderPower : 0;
-                      sum += DeckLimit.Fielding < 50 ? x.Limit.Fielding : 0;
-                      sum += DeckLimit.Catching < 50 ? x.Limit.Catching : 0;
-                      return sum;
-                  })
+            {
+                int sum = 0;
+                sum += DeckLimit.Meet < 50 ? x.Limit.Meet : 0;
+                sum += DeckLimit.Power < 50 ? x.Limit.Power : 0;
+                sum += DeckLimit.RunPower < 50 ? x.Limit.RunPower : 0;
+                sum += DeckLimit.ShoulderPower < 50 ? x.Limit.ShoulderPower : 0;
+                sum += DeckLimit.Fielding < 50 ? x.Limit.Fielding : 0;
+                sum += DeckLimit.Catching < 50 ? x.Limit.Catching : 0;
+                return sum;
+            })
                   .ThenByDescending(x => GetFielderMinValue(x));
         }
         return sumLimitUnits;
