@@ -6,7 +6,7 @@
 <div class="container d-flex flex-column align-items-center width-clamp">
     <h1 class="mb-1">パワクエコーチ計算機(仮)</h1>
     <div class="mb-3">
-        <Collapse  Title="説明">
+        <Collapse Title="説明">
             <ol>
                 <li>契約書キャラを入力する</li>
                 <li>能力を調整する</li>
@@ -289,6 +289,7 @@
         pqAbilityes = pqAbilityes.OrderByDescending(s => s.SateiMain).ToList();
         //金徳入れる
         pqAbilityes = await AddGoldAbility(pqAbilityes);
+        pqAbilityes = RemoveNonConcurrentAbilities(pqAbilityes);
         //威圧感
         pqAbilityes = await AddIatsukan(pqAbilityes);
         //能力上限を計算
@@ -386,10 +387,10 @@
     public List<PQAbility> RemoveNonConcurrentAbilities(List<PQAbility> pqAbilityes) {
         var ret = pqAbilityes;
         foreach (var ability in deckAbilites.SelectMany(x => x)) {
-            ret = RemoveNonConcurrentAbility(pqAbilityes, ability);
+            ret = RemoveNonConcurrentAbility(ret, ability);
         }
         foreach (var ability in PQPlayerUnit.Abilities) {
-            ret = RemoveNonConcurrentAbility(pqAbilityes, ability);
+            ret = RemoveNonConcurrentAbility(ret, ability);
         }
         return ret;
     }
@@ -398,15 +399,20 @@
         // 同時取得不可のアビリティをマッピングするための辞書
         var nonConcurrentMap = new Dictionary<string, string>{
             { "パワーヒッター", "ラインドライブ" },
+            { "アーチスト", "ラインドライブ" },
             { "ローボールヒッター", "ハイボールヒッター" },
+            { "低球必打", "高球必打" },
             { "インコース◯", "アウトコース◯" },
+            { "内角必打", "外角必打" },
             { "広角打法", "プルヒッター" },
-            { "対ストレート○", "対変化球○" }
+            { "広角砲", "伝説の引っ張り屋" },
+            { "対ストレート○", "対変化球○" },
+            { "ストレートキラー", "対変化球○" }
         };
         // 削除対象のグループIDに含まれないアビリティをフィルタリング
         if (nonConcurrentMap.TryGetValue(ability.Name, out var counterpart))
         {
-            var targetAbility = pqAbilityes.FirstOrDefault(x => x.Name == counterpart);
+            var targetAbility = PQAbilitys.FirstOrDefault(x => x.Name == counterpart);
             if (targetAbility != null)
             {
                 ret = pqAbilityes.Where(x => targetAbility.GroupId != x.GroupId).ToList();
@@ -533,7 +539,6 @@
         //一旦デッキ決める
         await CaluculateLimitCoachMode3();
         int oldScore = EvaluateDeckLmitcore(DeckLimit, DeckPitcherLimit);
-        Console.WriteLine(oldScore);
         var newUnitPool = new List<PQEventUnit>(RemoveAddedUnits);
         //いい感じにする
         for (int i = 0; i < maxIterations; i++) {
