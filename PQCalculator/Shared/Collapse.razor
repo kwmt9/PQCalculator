@@ -1,0 +1,26 @@
+﻿<div class="rounded-3 accordion-item w-100 my-2" style="border:none;">
+    <div class="rounded-3 accordion-header" id="headingOne">
+        <button @onclick="ToggleCollapase" class="rounded-3 accordion-button @(IsShow ? "" : "collapsed")" style="background-color:#e9ecef;font-weight: 700; color:#090909;padding: 0.4rem 1rem;"
+        type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="@IsShow" aria-controls="collapseOne">
+            @Title
+        </button>
+    </div>
+    <div id="collapseOne" class="accordion-collapse collapse @(IsShow ? "show" :"")" aria-labelledby="headingOne">
+        <div class="p-0 width-clamp accordion-body">
+            @ChildContent
+        </div>
+    </div>
+</div>
+
+@code{
+    [Parameter]
+    public bool IsShow { get; set; }
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+    [Parameter]
+    public string Title{ get; set; }
+
+    public void ToggleCollapase() {
+        IsShow = !IsShow;
+    }
+}
