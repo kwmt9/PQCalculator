@@ -541,14 +541,14 @@
             replaceablDeckUnits
             //50未満の上限を持っていない
             .Where(x => 
-                !(DeckLimit.Meet < 50 && x.unit.Limit.Meet > 0) &&
-                !(DeckLimit.Power < 50 && x.unit.Limit.Power > 0) &&
-                !(DeckLimit.RunPower < 50 && x.unit.Limit.RunPower > 0) &&
-                !(DeckLimit.ShoulderPower < 50 && x.unit.Limit.ShoulderPower > 0) &&
-                !(DeckLimit.Fielding < 50 && x.unit.Limit.Fielding > 0) &&
-                !(DeckLimit.Catching < 50 && x.unit.Limit.Catching > 0) &&
-                !(DeckPitcherLimit.BallControl < 50 && x.unit.Limit.BallControl > 0) &&
-                !(DeckPitcherLimit.Stamina < 50 && x.unit.Limit.Stamina > 0));
+                !(DeckLimit.Meet <= 50 && x.unit.Limit.Meet > 0) &&
+                !(DeckLimit.Power <= 50 && x.unit.Limit.Power > 0) &&
+                !(DeckLimit.RunPower <= 50 && x.unit.Limit.RunPower > 0) &&
+                !(DeckLimit.ShoulderPower <= 50 && x.unit.Limit.ShoulderPower > 0) &&
+                !(DeckLimit.Fielding <= 50 && x.unit.Limit.Fielding > 0) &&
+                !(DeckLimit.Catching <= 50 && x.unit.Limit.Catching > 0) &&
+                !(DeckPitcherLimit.BallControl <= 50 && x.unit.Limit.BallControl > 0) &&
+                !(DeckPitcherLimit.Stamina <= 50 && x.unit.Limit.Stamina > 0));
 
             //上限が足りていないところを優先する。
             List<(int id, int status, int limit)> statusLimitIds = new() {
@@ -585,7 +585,7 @@
             }
             var rep = copiedDecks.FirstOrDefault(x => x.Ability == null && x.unit.Id == oldUnit.unit.Id);
             if (rep != null){
-                Console.WriteLine($"入替 {oldUnit.deckNumber} check:{oldUnit.unit.Name}→ {newUnit.Name}");
+                //Console.WriteLine($"入替 {oldUnit.deckNumber} check:{oldUnit.unit.Name}→ {newUnit.Name}");
                 rep.unit = newUnit;
             }
             // 入れ替えデッキ
@@ -594,7 +594,7 @@
             newUnitPool = newUnitPool.Where(u => u.Id != newUnit.Id).ToList();
             // スコアが高ければ入れ替え
             if (oldScore < newScore) {
-                Console.WriteLine($"{oldScore}→{newScore}");
+                //Console.WriteLine($"{oldScore}→{newScore}");
                 //プールをリセット
                 newUnitPool = new List<PQEventUnit>(RemoveAddedUnits);
                 i = 0;
