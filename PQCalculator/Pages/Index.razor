@@ -65,7 +65,6 @@
                         <input type="number" id="typeNumber" class="form-control fw-bold" min="1" max="100" value="@(InputPitcherStatus.Stamina)" @oninput="((e) => InputPitcherStatus.Stamina = int.Parse(e.Value.ToString()))">
                     </div>
                 }
-
             </div>
             <div class="input-group mb-2">
                 <span class="input-group-text fw-bold">コーチ人数　</span>
@@ -297,7 +296,7 @@
 
         //ポジションに応じて能力を消す
         pqAbilityes = await RemovePositionSpecificAbilities(pqAbilityes);
-        pqAbilityes = await SumLowRankSatei(pqAbilityes);
+        pqAbilityes = SumLowRankSatei(pqAbilityes);
         //もってないキャラを除外
         RemoveAddedUnits = await RemoveNotOwnEventUnit();
         pqAbilityes = pqAbilityes.OrderByDescending(s => s.SateiMain).ToList();
@@ -484,7 +483,7 @@
 
         return removedPQAbilities.ToList();
     }
-    public async Task<List<PQAbility>> SumLowRankSatei(List<PQAbility> pqAbilityes) {
+    public List<PQAbility> SumLowRankSatei(List<PQAbility> pqAbilityes) {
         List<PQAbility> ret = new();
 
         foreach (var item in pqAbilityes) {
@@ -598,7 +597,7 @@
                 }
                 var rep = copiedDecks.FirstOrDefault(x => x.Ability == null && x.unit.Id == oldUnit.unit.Id);
                 if (rep != null) {
-                   // Console.WriteLine($"入替 {oldUnit.deckNumber} check:{oldUnit.unit.Name}→ {newUnit.Name}");
+                    // Console.WriteLine($"入替 {oldUnit.deckNumber} check:{oldUnit.unit.Name}→ {newUnit.Name}");
                     rep.unit = newUnit;
                 }
                 // 入れ替えデッキ
@@ -632,6 +631,7 @@
                 //一番少ないとこから入れてく
                 int num = tempDecks.GroupBy(x => x.deckNumber)
                     .OrderBy(x => x.Count())
+                    .Where(x => !x.Any(z => z.unit.Id == item2.unit.Id))
                     .First().Key;
                 tempDecks.Add(new Deck(item2.unit, item2.Ability, num));
             }
@@ -770,14 +770,13 @@
         //重複無いようにする
         List<Deck> tempDecks = decks.Where(x => x.Ability != null).ToList();
         var g = decks.Where(x => x.Ability == null).GroupBy(x => x.unit.Name).OrderByDescending(x => x.Count());
-        foreach (var item in g)
-        {
-            for (int k = 0; k < item.Count(); k++)
-            {
+        foreach (var item in g) {
+            for (int k = 0; k < item.Count(); k++) {
                 var item2 = item.ElementAt(k);
                 //一番少ないとこから入れてく
                 int num = tempDecks.GroupBy(x => x.deckNumber)
                     .OrderBy(x => x.Count())
+                    .Where(x => !x.Any(z => z.unit.Id == item2.unit.Id))
                     .First().Key;
                 tempDecks.Add(new Deck(item2.unit, item2.Ability, num));
             }
@@ -804,57 +803,68 @@
 
     public int EvaluateDeckStatusScore(UnitFielderStatus fstatus, UnitPitcherStatus pstatus, UnitFielderStatus flimit, UnitPitcherStatus plimit) {
         int score = 0;
-        score += CalucScoreByStatus(fstatus.Meet, flimit.Meet);
-        score += CalucScoreByStatus(fstatus.Power, flimit.Power);
-        score += CalucScoreByStatus(fstatus.RunPower, flimit.RunPower);
-        score += CalucScoreByStatus(fstatus.ShoulderPower, flimit.ShoulderPower);
-        score += CalucScoreByStatus(fstatus.Fielding, flimit.Fielding);
-        score += CalucScoreByStatus(fstatus.Catching, flimit.Catching);
+        score += CalucScoreByStatus(fstatus.Meet + flimit.Meet);
+        score += CalucScoreByStatus(fstatus.Power + flimit.Power);
+        score += CalucScoreByStatus(fstatus.RunPower + flimit.RunPower);
+        score += CalucScoreByStatus(fstatus.ShoulderPower + flimit.ShoulderPower);
+        score += CalucScoreByStatus(fstatus.Fielding + flimit.Fielding);
+        score += CalucScoreByStatus(fstatus.Catching+ flimit.Catching);
         if (PQPlayerUnit.Position == 1) {
             //score += CalucScore(pitcherStatus.BallSpeed);
-            score += CalucScoreByStatus(pstatus.BallControl, plimit.BallControl, 5);
-            score += CalucScoreByStatus(pstatus.Stamina, plimit.Stamina, 5);
+            score += CalucScoreByStatus(pstatus.BallControl+ plimit.BallControl, 5);
+            score += CalucScoreByStatus(pstatus.Stamina + plimit.Stamina, 5);
         }
 
         return score;
     }
-    int CalucScoreByStatus(int status,int limit, int multiplier = 1) {
+    int CalucScoreByStatus(int status, int multiplier = 1) {
         int score = 0;
-        var limit2 = limit >= 50 ? 50 : limit;
-        int let = status + limit2;
-        for (int input = 1; input <= let; input++){
-            if (input == 101)
-                score += 105;
-            if (input == 90)
-                score += 55;
-            if (input == 80)
-                score += 55;
-            if (input == 70)
-                score += 30;
-            if (input == 60)
-                score += 15;
-            if (input == 50)
-                score += 15;
-            if (input == 40)
-                score += 10;
-            
-            if (input == 95)
-                score += 105;
-            if (input == 85)
-                score += 55;
-            if (input == 75)
-                score += 55;
-            if (input == 65)
-                score += 30;
+        int input = status;
 
-            else
-                score += 5;
-
+        int baseScore = 5;
+        if (input >= 101) {
+            score += (105 - baseScore);
+        }
+        if (input >= 90) {
+            score += (55 - baseScore);
+        }
+        if (input >= 80) {
+            score += (55 - baseScore);
+        }
+        if (input >= 70) {
+            score += (30 - baseScore);
+        }
+        if (input >= 60) {
+            score += (15 - baseScore);
+        }
+        if (input >= 50) {
+            score += (15 - baseScore);
+        }
+        if (input >= 40){
+            score += (10 - baseScore);
+        }
+        score += baseScore * input;
+        //1分
+        score-= (baseScore);
+        return score;
+    }
+    int CalucScoreByDandou(int statsu) {
+        int score = (statsu - 1) * 50; 
+        return score;
+    }
+    int CalucScoreByAbikity(params PQAbility[] unitAbilitys) {
+        var sumed = SumLowRankSatei(PQAbilitys);
+        var satei = unitAbilitys
+        .Select(x => sumed.FirstOrDefault(c => c.Id == x.Id))
+        .Where(x => x != null);
+        int score = 0;
+        foreach (var item in satei) {
+            score += (int)item.SateiMain;
         }
         return score;
     }
     int CalucScoreByLimit(int limit, int multiplier = 1) {
-        int PLUSSCORE = 11;
+        int PLUSSCORE = 5;
         int MINUSSCORE = 3;
         int score = 0;
         if (limit <= 50)
@@ -993,5 +1003,18 @@
                 unit.Limit.BallControl,
                 unit.Limit.Stamina};
         return values.Max();
+    }
+
+    int SumScore() {
+        int s = 0;
+        s += CalucScoreByStatus(InputStatus.Meet + 50);
+        s += CalucScoreByStatus(InputStatus.Power + 50);
+        s += CalucScoreByStatus(InputStatus.RunPower + 50);
+        s += CalucScoreByStatus(InputStatus.ShoulderPower + 50);
+        s += CalucScoreByStatus(InputStatus.Fielding + 50);
+        s += CalucScoreByStatus(InputStatus.Catching + 50);
+        s += CalucScoreByDandou(PQPlayerUnit.Status.Dandou);
+        s += CalucScoreByAbikity(PQPlayerUnit.Abilities.ToArray());
+        return s;
     }
 }
