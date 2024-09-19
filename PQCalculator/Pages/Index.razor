@@ -314,7 +314,7 @@
         //    switch (CalucMode)
         //    {
         //        case 1:
-        //            await CaluculateLimitCoachMode2();
+        //            await CaluculateLimitCoachMode101();
         //            break;
         //        case 2:
         //            await CaluculateLimitCoachMode2();
@@ -514,6 +514,131 @@
         }
         return (fLimit, pLimit);
     }
+    public async Task CaluculateLimitCoachMode101() {
+        int maxIterations = 30;
+        int maxChange = 15;
+        //一旦デッキ決める
+        await CaluculateLimitCoachMode3();
+        //int oldScore = EvaluateDeckLmitScore(DeckLimit, DeckPitcherLimit);
+        int oldScore = EvaluateDeckStatusScore(InputStatus, InputPitcherStatus, DeckLimit, DeckPitcherLimit);
+
+        List<PQEventUnit> CLed = new();
+        //いい感じにする
+        for (int j = 0; j < maxChange; j++) {
+            var newUnitPool = new List<PQEventUnit>(RemoveAddedUnits);
+            var aaaaaaaaaa = decks.Where(x => x.Ability == null).Where(x => !CLed.Any(v => v.Id == x.unit.Id)).ToList();
+            for (int i = 0; i < maxIterations; i++) {
+                //Console.WriteLine(j);
+                //50以下が存在しないとき、やらない
+                if (DeckLimit.Meet + InputStatus.Meet >= 101 &&
+                    DeckLimit.Power + InputStatus.Power >= 101 &&
+                    DeckLimit.RunPower + InputStatus.RunPower >= 101 &&
+                    DeckLimit.ShoulderPower + InputStatus.ShoulderPower >= 101 &&
+                    DeckLimit.Fielding + InputStatus.Fielding >= 101 &&
+                    DeckLimit.Catching + InputStatus.Catching >= 101) {
+                    if (PQPlayerUnit.Position == 1) {
+                        if (DeckPitcherLimit.BallControl >= 101 + InputPitcherStatus.BallControl &&
+                            DeckPitcherLimit.Stamina >= 101 + InputPitcherStatus.Stamina) {
+                            break;
+                        }
+                    }
+                    else {
+                        break;
+                    }
+                };
+                //アビ要員はいれかえない
+                var replaceablDeckUnits = aaaaaaaaaa;
+                // 50以下か。抜いたときに、50以下にならない。
+                replaceablDeckUnits = replaceablDeckUnits
+                //50未満の上限を持っていない
+                .Where(x =>
+                    !(DeckLimit.Meet + InputStatus.Meet <= 101 && x.unit.Limit.Meet > 0) &&
+                    !(DeckLimit.Power + InputStatus.Power <= 101 && x.unit.Limit.Power > 0) &&
+                    !(DeckLimit.RunPower + InputStatus.RunPower <= 101 && x.unit.Limit.RunPower > 0) &&
+                    !(DeckLimit.ShoulderPower + InputStatus.ShoulderPower <= 101 && x.unit.Limit.ShoulderPower > 0) &&
+                    !(DeckLimit.Fielding + InputStatus.Fielding <= 101 && x.unit.Limit.Fielding > 0) &&
+                    !(DeckLimit.Catching + InputStatus.Catching <= 101 && x.unit.Limit.Catching > 0) &&
+                    !(DeckPitcherLimit.BallControl + DeckPitcherLimit.BallControl <= 101 && x.unit.Limit.BallControl > 0) &&
+                    !(DeckPitcherLimit.Stamina + DeckPitcherLimit.Stamina <= 101 && x.unit.Limit.Stamina > 0))
+                    .ToList();
+
+                //上限が足りていないところを優先する。
+                List<(int id, int status, int limit)> statusLimitIds = new() {
+                    (1,InputStatus.Meet , DeckLimit.Meet),
+                    (2,InputStatus.Power , DeckLimit.Power),
+                    (3,InputStatus.RunPower , DeckLimit.RunPower),
+                    (4,InputStatus.ShoulderPower , DeckLimit.ShoulderPower),
+                    (5,InputStatus.Fielding , DeckLimit.Fielding),
+                    (6,InputStatus.Catching , DeckLimit.Catching),
+                };
+                var targetStatus = statusLimitIds.Where(x => x.limit + x.status < 101)
+                    .OrderByDescending(x => x.limit + x.status)
+                    .FirstOrDefault();
+                //Console.WriteLine(targetStatus);
+
+                // 対象の上限が少ない順
+                var oldUnit = TargetLimitByIdOrder(replaceablDeckUnits, targetStatus.id)
+                    // 野手上限合計が、一番低いやつ
+                    .ThenBy(x => x.unit.Limit.SumFielder)
+                    .ThenBy(x => x.unit.Limit.SumPicher)
+                    .FirstOrDefault();
+                if (oldUnit == null) break;
+                CLed.Add(oldUnit.unit);
+
+                //すでにコーチ人数分入れたUnitは除外する
+                newUnitPool = newUnitPool.Where(u => decks.Where(d => d.unit.Id == u.Id).Count() < CoarchCount).ToList();
+
+                newUnitPool = BalancedOrder(newUnitPool, PQPlayerUnit.Position).ToList();
+                var newUnit = newUnitPool.First();
+                // デッキをコピーする
+                List<Deck> copiedDecks = new List<Deck>();
+                foreach (Deck item in decks) {
+                    var deckUnit = item;
+                    copiedDecks.Add(deckUnit.Copy());
+                }
+                var rep = copiedDecks.FirstOrDefault(x => x.Ability == null && x.unit.Id == oldUnit.unit.Id);
+                if (rep != null) {
+                   // Console.WriteLine($"入替 {oldUnit.deckNumber} check:{oldUnit.unit.Name}→ {newUnit.Name}");
+                    rep.unit = newUnit;
+                }
+                // 入れ替えデッキ
+                var limits = CalucDeckLmit(copiedDecks);
+                //int newScore = EvaluateDeckLmitScore(limits.fLimit, limits.pLimit);
+                int newScore = EvaluateDeckStatusScore(InputStatus, InputPitcherStatus, limits.fLimit, limits.pLimit);
+                //Console.WriteLine($"{oldScore}→{newScore}");
+                newUnitPool = newUnitPool.Where(u => u.Id != newUnit.Id).ToList();
+                // スコアが高ければ入れ替え
+                if (oldScore < newScore) {
+                    //Console.WriteLine($"入替したよお　{oldScore}→{newScore}");
+                    //プールをリセット
+                    newUnitPool = new List<PQEventUnit>(RemoveAddedUnits);
+                    aaaaaaaaaa = new();
+                    i = 0;
+                    j = 0;
+                    //
+                    decks = copiedDecks;
+                    DeckLimit = limits.fLimit;
+                    DeckPitcherLimit = limits.pLimit;
+                    oldScore = newScore;
+                }
+            }
+        }
+        //重複無いようにする
+        List<Deck> tempDecks = decks.Where(x => x.Ability != null).ToList();
+        var g = decks.Where(x => x.Ability == null).GroupBy(x => x.unit.Name).OrderByDescending(x => x.Count());
+        foreach (var item in g) {
+            for (int k = 0; k < item.Count(); k++) {
+                var item2 = item.ElementAt(k);
+                //一番少ないとこから入れてく
+                int num = tempDecks.GroupBy(x => x.deckNumber)
+                    .OrderBy(x => x.Count())
+                    .First().Key;
+                tempDecks.Add(new Deck(item2.unit, item2.Ability, num));
+            }
+        }
+        decks = tempDecks;
+    }
+
     //上げ上げ山
     public async Task CaluculateLimitCoachMode2() {
         int maxIterations = 30;
@@ -523,11 +648,11 @@
         int oldScore = EvaluateDeckLmitScore(DeckLimit, DeckPitcherLimit);
         //int oldScore = EvaluateDeckStatusScore(PQPlayerUnit.Status, PQPlayerUnit.PitcherStatus, DeckLimit, DeckPitcherLimit);
 
-        var newUnitPool = new List<PQEventUnit>(RemoveAddedUnits);
         List<PQEventUnit> CLed = new(); 
         //いい感じにする
         for (int j = 0; j < maxChange; j++)
         {
+            var newUnitPool = new List<PQEventUnit>(RemoveAddedUnits);
             var aaaaaaaaaa = decks.Where(x => x.Ability == null).Where(x => !CLed.Any(v => v.Id == x.unit.Id)).ToList();
             for (int i = 0; i < maxIterations; i++)
             {
@@ -695,8 +820,9 @@
     }
     int CalucScoreByStatus(int status,int limit, int multiplier = 1) {
         int score = 0;
-        int a = status + limit;
-        for (int input = 1; input <= a; input++){
+        var limit2 = limit >= 50 ? 50 : limit;
+        int let = status + limit2;
+        for (int input = 1; input <= let; input++){
             if (input == 101)
                 score += 105;
             if (input == 90)
@@ -711,8 +837,19 @@
                 score += 15;
             if (input == 40)
                 score += 10;
+            
+            if (input == 95)
+                score += 105;
+            if (input == 85)
+                score += 55;
+            if (input == 75)
+                score += 55;
+            if (input == 65)
+                score += 30;
+
             else
                 score += 5;
+
         }
         return score;
     }
@@ -726,7 +863,7 @@
             score += PLUSSCORE * 50;// - (status - 50) * MINUSSCORE;
         return score * multiplier;
     }
-    //バランス上げ(貪欲(?))
+    //とりあえず貪欲
     public async Task CaluculateLimitCoachMode3()
     {
         for (int i = 0; i < CoarchCount; i++)
