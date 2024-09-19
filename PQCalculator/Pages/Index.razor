@@ -73,6 +73,14 @@
             </div>
         </div>
         <div class="mb-2">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="check1" @onchange='(e) => isSubPosition = (bool)e.Value'>
+                <label class="form-check-label" for="check1">
+                    サブポジ運用
+                </label>
+            </div>
+        </div>
+        <div class="mb-2">
             @if (false) {
                 <div class="form-check">
                     <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" @onchange='(e) => OnRadioChange("1")'>
@@ -166,6 +174,8 @@
     List<PQAbility>? PQAbilitys;
 
     List<PQPlayerUnit>? PQPlayerUnits;
+
+    bool isSubPosition = false;
 
     HashSet<int> notOwnedUnits = new();
     private void AddNotOwnedUnit(int id) {
@@ -412,7 +422,9 @@
             { "広角打法", "プルヒッター" },
             { "広角砲", "伝説の引っ張り屋" },
             { "対ストレート○", "対変化球○" },
-            { "ストレートキラー", "対変化球○" }
+            { "ストレートキラー", "対変化球○" },
+            { "ポーカーフェイス", "闘志" },
+            { "鉄仮面", "闘魂" }
         };
         // 削除対象のグループIDに含まれないアビリティをフィルタリング
         if (nonConcurrentMap.TryGetValue(ability.Name, out var counterpart))
@@ -454,6 +466,9 @@
         var excludedAbilityData = excludedInfo.Select(a => (PQAbilitys.First(x => x.Name == a.name).Id, a.pos));
         IEnumerable<PQAbility> excludedAbilitys = pqAbilityes.Where(x => !excludedAbilityData.Where(z => z.pos != PQPlayerUnit.Position).Any(z => z.Id == x.Id));
         //
+        if (isSubPosition){
+            excludedAbilitys = pqAbilityes.Where(x => !excludedAbilityData.Any(z => z.Id == x.Id));
+        }
         return excludedAbilitys.ToList();
     }
     public async Task<List<PQEventUnit>> RemoveNotOwnEventUnit() {
@@ -499,10 +514,10 @@
     }
     //上げ上げ山
     public async Task CaluculateLimitCoachMode2() {
-        int maxIterations = 200;
+        int maxIterations = 30;
         //一旦デッキ決める
         await CaluculateLimitCoachMode3();
-        int oldScore = EvaluateDeckLmitcore(DeckLimit, DeckPitcherLimit);
+        int oldScore = EvaluateDeckLmitScore(DeckLimit, DeckPitcherLimit);
 
         var newUnitPool = new List<PQEventUnit>(RemoveAddedUnits);
         //いい感じにする
@@ -570,17 +585,20 @@
             }
             var rep = copiedDecks.FirstOrDefault(x => x.Ability == null && x.unit.Id == oldUnit.unit.Id);
             if (rep != null){
-                //Console.WriteLine($"入替 {oldUnit.deckNumber} check:{oldUnit.unit.Name}→ {newUnit.Name}");
+                Console.WriteLine($"入替 {oldUnit.deckNumber} check:{oldUnit.unit.Name}→ {newUnit.Name}");
                 rep.unit = newUnit;
             }
             // 入れ替えデッキ
             var limits = CalucDeckLmit(copiedDecks);
-            int newScore = EvaluateDeckLmitcore(limits.fLimit, limits.pLimit);
+            int newScore = EvaluateDeckLmitScore(limits.fLimit, limits.pLimit);
             newUnitPool = newUnitPool.Where(u => u.Id != newUnit.Id).ToList();
             // スコアが高ければ入れ替え
             if (oldScore < newScore) {
-                //Console.WriteLine($"{oldScore}→{newScore}");
+                Console.WriteLine($"{oldScore}→{newScore}");
+                //プールをリセット
                 newUnitPool = new List<PQEventUnit>(RemoveAddedUnits);
+                i = 0;
+                //
                 decks = copiedDecks;
                 DeckLimit = limits.fLimit;
                 DeckPitcherLimit = limits.pLimit;
@@ -604,32 +622,36 @@
         }
         decks = copiedDecks2;
     }
-    public int EvaluateDeckLmitcore(UnitFielderStatus fielderStatus,UnitPitcherStatus pitcherStatus){
+    public int EvaluateDeckLmitScore(UnitFielderStatus flimit,UnitPitcherStatus plimit){
         int score = 0;
 
-        int CalucScore(int status, int multiplier = 1) {
-            int PLUSSCORE = 11;
-            int MINUSSCORE = 3;
-            int ret = 0;
-            if (status <= 50) 
-                ret += PLUSSCORE * status;
-            else 
-                ret += PLUSSCORE * 50;// - (status - 50) * MINUSSCORE;
-            return ret * multiplier;
-        }
-        score += CalucScore(fielderStatus.Meet);
-        score += CalucScore(fielderStatus.Power);
-        score += CalucScore(fielderStatus.RunPower);
-        score += CalucScore(fielderStatus.ShoulderPower);
-        score += CalucScore(fielderStatus.Fielding);
-        score += CalucScore(fielderStatus.Catching);
+        score += CalucScoreByLimit(flimit.Meet);
+        score += CalucScoreByLimit(flimit.Power);
+        score += CalucScoreByLimit(flimit.RunPower);
+        score += CalucScoreByLimit(flimit.ShoulderPower);
+        score += CalucScoreByLimit(flimit.Fielding);
+        score += CalucScoreByLimit(flimit.Catching);
         if (PQPlayerUnit.Position == 1) { 
             //score += CalucScore(pitcherStatus.BallSpeed);
-            score += CalucScore(pitcherStatus.BallControl, 5);
-            score += CalucScore(pitcherStatus.Stamina, 5);
+            score += CalucScoreByLimit(plimit.BallControl, 5);
+            score += CalucScoreByLimit(plimit.Stamina, 5);
         }
 
         return score;
+    }
+    int CalucScoreByStatus(int status, int multiplier = 1) {
+        int ret = 0;
+        return ret;
+    }
+    int CalucScoreByLimit(int limit, int multiplier = 1) {
+        int PLUSSCORE = 11;
+        int MINUSSCORE = 3;
+        int ret = 0;
+        if (limit <= 50)
+            ret += PLUSSCORE * limit;
+        else
+            ret += PLUSSCORE * 50;// - (status - 50) * MINUSSCORE;
+        return ret * multiplier;
     }
     //バランス上げ(貪欲(?))
     public async Task CaluculateLimitCoachMode3()
