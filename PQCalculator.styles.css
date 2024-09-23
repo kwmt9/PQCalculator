@@ -1,0 +1,138 @@
+/* /Shared/AutoCompleteInput.razor.rz.scp.css */
+.autocomplete[b-cmlutr42j5] {
+	position: absolute;
+	margin: 0 !important;
+	padding: 0 !important;
+	text-align: left;
+	z-index: 100;
+	top: 100%;
+	left: 0px;
+	right: auto;
+	width: 100%;
+	display: block;
+	background-color: #fff;
+	list-style: none;
+	min-width: 220px;
+	max-height: 600px;
+	overflow-y: scroll;
+}
+.hover[b-cmlutr42j5] {
+	background-color: #0d6efd;
+	color:white;
+}
+.input-width[b-cmlutr42j5] {
+	width: 240px;
+}
+/* /Shared/MainLayout.razor.rz.scp.css */
+.page[b-i3qldzekqi] {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+main[b-i3qldzekqi] {
+    flex: 1;
+}
+
+.sidebar[b-i3qldzekqi] {
+    background-image: linear-gradient(180deg, rgb(5, 39, 103) 0%, #3a0647 70%);
+}
+
+.top-row[b-i3qldzekqi] {
+    background-color: #f7f7f7;
+    border-bottom: 1px solid #d6d5d5;
+    justify-content: flex-end;
+    height: 3.5rem;
+    display: flex;
+    align-items: center;
+}
+
+    .top-row[b-i3qldzekqi]  a, .top-row[b-i3qldzekqi]  .btn-link {
+        white-space: nowrap;
+        margin-left: 1.5rem;
+        text-decoration: none;
+    }
+
+    .top-row[b-i3qldzekqi]  a:hover, .top-row[b-i3qldzekqi]  .btn-link:hover {
+        text-decoration: underline;
+    }
+
+    .top-row[b-i3qldzekqi]  a:first-child {
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+@media (max-width: 640.98px) {
+    .top-row:not(.auth)[b-i3qldzekqi] {
+        display: none;
+    }
+
+    .top-row.auth[b-i3qldzekqi] {
+        justify-content: space-between;
+    }
+
+    .top-row[b-i3qldzekqi]  a, .top-row[b-i3qldzekqi]  .btn-link {
+        margin-left: 0;
+    }
+}
+
+@media (min-width: 641px) {
+    .page[b-i3qldzekqi] {
+        flex-direction: row;
+    }
+
+    .sidebar[b-i3qldzekqi] {
+        width: 250px;
+        height: 100vh;
+        position: sticky;
+        top: 0;
+    }
+
+    .top-row[b-i3qldzekqi] {
+        position: sticky;
+        top: 0;
+        z-index: 1;
+    }
+
+    .top-row.auth[b-i3qldzekqi]  a:first-child {
+        flex: 1;
+        text-align: right;
+        width: 0;
+    }
+
+    .top-row[b-i3qldzekqi], article[b-i3qldzekqi] {
+        padding-left: 2rem !important;
+        padding-right: 1.5rem !important;
+    }
+}
+/* /Shared/PlayerPositionComponent.razor.rz.scp.css */
+.bg-pitcher[b-amf78x3wi5] {
+	background-color: #ffaea7;
+}
+
+.bg-chatcher[b-amf78x3wi5] {
+	background-color: #80eaff;
+}
+
+.bg-infielder[b-amf78x3wi5] {
+	background-color: #ffec74;
+}
+
+.bg-outfielder[b-amf78x3wi5] {
+	background-color: #84e480;
+}
+.bg-pitcher[b-amf78x3wi5], .bg-chatcher[b-amf78x3wi5], .bg-infielder[b-amf78x3wi5], .bg-outfielder[b-amf78x3wi5] {
+	width: 2rem;
+	height: 2rem;
+	text-align: center;
+}
+/* /Shared/StatusComponent.razor.rz.scp.css */
+th[b-1p4ie30sdi] {
+	background-color: #e9ecef !important;
+}
+
+table[b-1p4ie30sdi] {
+	text-align: center;
+	border-collapse: collapse;
+	table-layout: fixed;
+}
