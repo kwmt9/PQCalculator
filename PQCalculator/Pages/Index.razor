@@ -9,7 +9,10 @@
         <Collapse Title="説明">
             <ol>
                 <li>契約書キャラを入力する</li>
-                <li>能力を調整する</li>
+                @if (false)
+                {
+                    <li >能力を調整する</li>
+                }
                 <li>コーチ人数を入力</li>
                 <li>計算開始を押す</li>
                 <li>持ってないキャラはバツを押す</li>
@@ -24,8 +27,10 @@
         if (PQPlayerUnit != null) {
             <PlayerPositionComponent Position="PQPlayerUnit.Position"></PlayerPositionComponent>
             <AbilityListComponent Abilitys="PQPlayerUnit.Abilities"></AbilityListComponent>
+            <div class="mb-2"></div>
         }
         <div id="calculationForm">
+            @if (false) { 
             <div>
                 <div class="input-group mb-1">
                     <span class="input-group-text fw-bold">ミート</span>
@@ -66,6 +71,7 @@
                     </div>
                 }
             </div>
+            }
             <div class="input-group mb-2">
                 <span class="input-group-text fw-bold">コーチ人数　</span>
                 <input type="number" id="typeNumber" class="form-control fw-bold" min="0" max="4" @bind="CoarchCount">
@@ -76,6 +82,12 @@
                 <input class="form-check-input" type="checkbox" id="check1" @onchange='(e) => isSubPosition = (bool)e.Value'>
                 <label class="form-check-label" for="check1">
                     サブポジ運用
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="check2" @onchange='(e) => isBench = (bool)e.Value'>
+                <label class="form-check-label" for="check2">
+                    ベンチ運用
                 </label>
             </div>
         </div>
@@ -137,7 +149,7 @@
                         @foreach (var ab in deckAbilites[i]) {
                             <div class="mb-2">
                                 <AbilityComponent Ability="@ab"></AbilityComponent>
-                                <span class="fw-bold">@ab.SateiMain</span>
+                                <span class="fw-bold">@(isBench ? ab.SateiSub : ab.SateiMain)</span>
                             </div>
                         }
                     }
@@ -177,6 +189,7 @@
     List<PQPlayerUnit>? PQPlayerUnits;
 
     bool isSubPosition = false;
+    bool isBench = false;
 
     HashSet<int> notOwnedUnits = new();
     private void AddNotOwnedUnit(int id) {
@@ -299,7 +312,7 @@
         pqAbilityes = SumLowRankSatei(pqAbilityes);
         //もってないキャラを除外
         RemoveAddedUnits = await RemoveNotOwnEventUnit();
-        pqAbilityes = pqAbilityes.OrderByDescending(s => s.SateiMain).ToList();
+        pqAbilityes = pqAbilityes.OrderByDescending(s => isBench ? s.SateiSub : s.SateiMain).ToList();
         //金徳入れる
 
 
@@ -379,7 +392,7 @@
         .Where(x => x.ColorType == 2)
         .GroupBy(a => a.GroupId)
         .Select(g => g.OrderByDescending(a => a.Rank).First())
-        .OrderByDescending(x => x.SateiMain)
+        .OrderByDescending(x => isBench ? x.SateiSub : x.SateiMain)
         .ToList();
 
         for (int i = 0; i < CoarchCount; i++) {
@@ -489,7 +502,8 @@
         foreach (var item in pqAbilityes) {
             //下位込みで査定を計算
             var sumSatei = pqAbilityes.Where(x => x.GroupId == item.GroupId && 0 < x.Rank && x.Rank <= item.Rank).Sum(x => x.SateiMain);
-            ret.Add(new PQAbility(item.Id, item.Name, item.ColorType, item.PlayerType, item.GroupId, item.Rank, sumSatei));
+            var sumSateiSub = pqAbilityes.Where(x => x.GroupId == item.GroupId && 0 < x.Rank && x.Rank <= item.Rank).Sum(x => x.SateiSub);
+            ret.Add(new PQAbility(item.Id, item.Name, item.ColorType, item.PlayerType, item.GroupId, item.Rank, sumSatei, sumSateiSub));
         }
         return ret;
     }
@@ -1005,16 +1019,28 @@
         return values.Max();
     }
 
-    int SumScore() {
+    int SumPlayerUnitScore() {
         int s = 0;
-        s += CalucScoreByStatus(InputStatus.Meet + 50);
-        s += CalucScoreByStatus(InputStatus.Power + 50);
-        s += CalucScoreByStatus(InputStatus.RunPower + 50);
-        s += CalucScoreByStatus(InputStatus.ShoulderPower + 50);
-        s += CalucScoreByStatus(InputStatus.Fielding + 50);
-        s += CalucScoreByStatus(InputStatus.Catching + 50);
+        s += CalucScoreByStatus(InputStatus.Meet);
+        s += CalucScoreByStatus(InputStatus.Power);
+        s += CalucScoreByStatus(InputStatus.RunPower);
+        s += CalucScoreByStatus(InputStatus.ShoulderPower);
+        s += CalucScoreByStatus(InputStatus.Fielding);
+        s += CalucScoreByStatus(InputStatus.Catching);
         s += CalucScoreByDandou(PQPlayerUnit.Status.Dandou);
         s += CalucScoreByAbikity(PQPlayerUnit.Abilities.ToArray());
         return s;
     }
+    int SumDeckScore() {
+        int s = 0;
+        s += CalucScoreByStatus(DeckLimit.Meet);
+        s += CalucScoreByStatus(DeckLimit.Power);
+        s += CalucScoreByStatus(DeckLimit.RunPower);
+        s += CalucScoreByStatus(DeckLimit.ShoulderPower);
+        s += CalucScoreByStatus(DeckLimit.Fielding );
+        s += CalucScoreByStatus(DeckLimit.Catching );
+        s += CalucScoreByAbikity(deckAbilites.SelectMany(x => x).ToArray());
+        return s;
+    }
+
 }

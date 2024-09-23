@@ -6,8 +6,9 @@
     public int GroupId { get; set; }
     public int Rank { get; set; }
     public double SateiMain { get; set; }
+    public double SateiSub { get; set; }
 
-    public PQAbility(int id, string name, int colorType, int playerType, int groupId, int rank, double sateiMain) {
+    public PQAbility(int id, string name, int colorType, int playerType, int groupId, int rank, double sateiMain, double sateiSub) {
         Id = id;
         Name = name;
         ColorType = colorType;
@@ -15,6 +16,7 @@
         GroupId = groupId;
         Rank = rank;
         SateiMain = sateiMain;
+        SateiSub = sateiSub;
     }
     public enum Color {
         red = 1,
