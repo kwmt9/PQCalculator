@@ -120,14 +120,14 @@
 </div>
 @if (decks != null)
 {
-   <div class="container d-flex flex-column align-items-center width-clamp">
+    <div class="container d-flex flex-column align-items-center width-clamp">
         @if (PQPlayerUnit != null && isCalucSatei)
         {
             <h3>査定</h3>
             <h4>@(SumPlayerBase_DeckScore())</h4>
             <Collapse Title="内訳">
                 <div class="container d-flex flex-column align-items-center width-clamp">
-                    <span>※野手の投手特能、投手の野手特能、緑特能は計算されません</span>
+                    <span>※野手の投手特能、投手の野手特能、緑特能の計算は未実装</span>
                     @if (sateiInfos.Count > 0)
                     {
                         sateiInfos = sateiInfos.OrderByDescending(x => x.Ability?.SateiMain ?? 100000).ToList();
@@ -924,15 +924,12 @@
         //1分
         score-= (baseScore);
 
-        //ピッチャの時 1/5
-        if(true){
-            score = (int)Math.Floor(score * multiplier);
-        }
+        score = (int)Math.Floor(score * multiplier);
         sateiInfos.Add(new SateiInfo($"{label}({input})", score));
         //Console.WriteLine(score);
         return score;
     }
-    int CalucScoreByStatusPitcher(int status, int multiplier = 1, string label = "")
+    int CalucScoreByStatusPitcher(int status, float multiplier = 1, string label = "")
     {
         int score = 0;
         int input = status;
@@ -971,11 +968,13 @@
         //1分
         score -= (baseScore);
 
+        score = (int)Math.Floor(score * multiplier);
+
         sateiInfos.Add(new SateiInfo($"{label}({input})", score));
         //Console.WriteLine(score);
         return score;
     }
-    int CalucScoreByStatusSpeed(int status, int multiplier = 1){
+    int CalucScoreByStatusSpeed(int status, float multiplier = 1){
         int score = 0;
         int SPEED_MAX = 180;
         int SPEED_START = 100;
@@ -1009,6 +1008,8 @@
         }
         score += baseScore * (input - SPEED_START);
         score -= (baseScore);
+        
+        score = (int)Math.Floor(score * multiplier);
         sateiInfos.Add(new SateiInfo($"球速({input})", score));
 
         //Console.WriteLine($"{input} {score}");
@@ -1232,9 +1233,11 @@
             s += CalucScoreByStatusFielder(Math.Min(DeckLimit.Fielding, 50) + InputStatus.Fielding, mulutiply, label: "守備力");
             s += CalucScoreByStatusFielder(Math.Min(DeckLimit.Catching, 50) + InputStatus.Catching, mulutiply, label: "捕球");
 
-            s += CalucScoreByStatusSpeed(50 + InputPitcherStatus.BallSpeed);
-            s += CalucScoreByStatusPitcher(Math.Min(DeckPitcherLimit.BallControl, 50) + InputPitcherStatus.BallControl, label: "コントロール");
-            s += CalucScoreByStatusPitcher(Math.Min(DeckPitcherLimit.BallControl, 50) + InputPitcherStatus.Stamina, label: "スタミナ");
+            mulutiply = 1;
+
+            s += CalucScoreByStatusSpeed(50 + InputPitcherStatus.BallSpeed, !isBench ? mulutiply : 1f / 2f);
+            s += CalucScoreByStatusPitcher(Math.Min(DeckPitcherLimit.BallControl, 50) + InputPitcherStatus.BallControl, !isBench ? mulutiply : 1f / 2f, label: "コントロール");
+            s += CalucScoreByStatusPitcher(Math.Min(DeckPitcherLimit.BallControl, 50) + InputPitcherStatus.Stamina, !isBench ? mulutiply : 1f / 2f, label: "スタミナ");
             s += CalucScoreByCurves(PQPlayerUnit.Curves);
         }
         else { 
