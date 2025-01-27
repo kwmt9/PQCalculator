@@ -30,7 +30,33 @@
             <div class="mb-2"></div>
         }
         <div id="calculationForm">
-            @if (false) { 
+            <div class="input-group mb-2">
+                <span class="input-group-text fw-bold">コーチ人数　</span>
+                <input type="number" id="typeNumber" class="form-control fw-bold" min="0" max="4" @bind="CoarchCount">
+            </div>
+        </div>
+        <div class="mb-2">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="check1" @onchange='(e) => isSubPosition = (bool)e.Value'>
+                <label class="form-check-label" for="check1">
+                    サブポジ運用
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="check2" @onchange='(e) => isBench = (bool)e.Value'>
+                <label class="form-check-label" for="check2">
+                    ベンチ運用
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="check3" @onchange='(e) => isCalucSatei = (bool)e.Value'>
+                <label class="form-check-label" for="check3">
+                    査定を計算
+                </label>
+            </div>
+        </div>
+        @if (isCalucSatei)
+        {
             <div>
                 <div class="input-group mb-1">
                     <span class="input-group-text fw-bold">ミート</span>
@@ -56,7 +82,8 @@
                     <span class="input-group-text fw-bold">捕球　</span>
                     <input type="number" id="typeNumber" class="form-control fw-bold" min="1" max="100" value="@(InputStatus.Catching)" @oninput="((e) => InputStatus.Catching = int.Parse(e.Value.ToString()))">
                 </div>
-                @if (PQPlayerUnit?.Position == 1) {
+                @if (PQPlayerUnit?.Position == 1)
+                {
                     <div class="input-group mb-2">
                         <span class="input-group-text fw-bold">球速　</span>
                         <input type="number" id="typeNumber" class="form-control fw-bold" min="1" max="100" value="@(InputPitcherStatus.BallSpeed)" @oninput="((e) => InputPitcherStatus.BallSpeed = int.Parse(e.Value.ToString()))">
@@ -71,26 +98,7 @@
                     </div>
                 }
             </div>
-            }
-            <div class="input-group mb-2">
-                <span class="input-group-text fw-bold">コーチ人数　</span>
-                <input type="number" id="typeNumber" class="form-control fw-bold" min="0" max="4" @bind="CoarchCount">
-            </div>
-        </div>
-        <div class="mb-2">
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="check1" @onchange='(e) => isSubPosition = (bool)e.Value'>
-                <label class="form-check-label" for="check1">
-                    サブポジ運用
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="check2" @onchange='(e) => isBench = (bool)e.Value'>
-                <label class="form-check-label" for="check2">
-                    ベンチ運用
-                </label>
-            </div>
-        </div>
+        }
         <div class="mb-2">
             @if (false) {
                 <div class="form-check">
@@ -99,12 +107,12 @@
                         能力101優先上げ
                     </label>
                 </div>
-            <div class="form-check">
+                <div class="form-check">
                     <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3" @onchange='(e) => OnRadioChange("3")' checked>
-                <label class="form-check-label" for="flexRadioDefault3">
-                    バランス上げ
-                </label>
-            </div>
+                    <label class="form-check-label" for="flexRadioDefault3">
+                        バランス上げ
+                    </label>
+                </div>
             }
         </div>
         <button @onclick="CaluculateCoach" class="btn btn-primary mb-5">計算開始</button>
@@ -112,6 +120,37 @@
 </div>
 @if (decks != null)
 {
+   <div class="container d-flex flex-column align-items-center width-clamp">
+        @if (PQPlayerUnit != null && isCalucSatei)
+        {
+            <h3>査定</h3>
+            <h4>@(SumPlayerBase_DeckScore())</h4>
+            <Collapse Title="内訳">
+                <div class="container d-flex flex-column align-items-center width-clamp">
+                    <span>※野手の投手特能、投手の野手特能、緑特能は計算されません</span>
+                    @if (sateiInfos.Count > 0)
+                    {
+                        sateiInfos = sateiInfos.OrderByDescending(x => x.Ability?.SateiMain ?? 100000).ToList();
+                        @foreach (var satei in sateiInfos)
+                        {
+                            <span class="mb-1">
+                                @if (satei.Ability != null)
+                                {
+                                    <AbilityComponent Ability="@satei.Ability"></AbilityComponent>
+                                }
+                                else
+                                {
+                                    @satei.Label
+                                }
+                                : @satei.Score
+                            </span>
+                        }
+                    }
+                </div>
+
+            </Collapse>
+        }
+    </div>
     <div class="d-flex justify-content-center flex-column align-items-center">
         <h3>計算結果</h3>
         @if (PQPlayerUnit?.Position == 1) {
@@ -119,11 +158,9 @@
         }else {
             <StatusComponent FielderStatus="DeckLimit"></StatusComponent>
         }
-
-
     </div>
     <div class="d-flex flex-wrap justify-content-start justify-content-xl-center">
-        
+
         @for (int i = 0; i < decks.GroupBy(x => x.deckNumber).Count(); i++)
         {
             var deck = decks.GroupBy(x => x.deckNumber).Where(x => x.Key == i);
@@ -137,13 +174,13 @@
                         <div style="display: flex;">
                             <div>@unit.Name</div>
                             <!--
-                                <div>@($"{unit.Limit.Meet} {unit.Limit.Power} {unit.Limit.RunPower} {unit.Limit.ShoulderPower} {unit.Limit.Fielding} {unit.Limit.Catching} {unit.Limit.BallControl} {unit.Limit.Stamina}")</div>
+                            <div>@($"{unit.Limit.Meet} {unit.Limit.Power} {unit.Limit.RunPower} {unit.Limit.ShoulderPower} {unit.Limit.Fielding} {unit.Limit.Catching} {unit.Limit.BallControl} {unit.Limit.Stamina}")</div>
                             -->
                             <button type="button" class="btn-close" aria-label="Close" @onclick="() => AddNotOwnedUnit(unit.Id)"></button>
                         </div>
                     }
                 </div>
-                    
+
                 <div class="mb-3">
                     @if (deckAbilites != null) {
                         @foreach (var ab in deckAbilites[i]) {
@@ -165,9 +202,7 @@
     <h3>持ってないキャラ</h3>
     @foreach (var id in notOwnedUnits) {
         <div style="display: flex;">
-            <div>@(
-           EventUnits.FirstOrDefault(x => x.Id == id).Name
-           )</div>
+            <div>@(EventUnits.FirstOrDefault(x => x.Id == id).Name)</div>
             <button type="button" class="btn-close" aria-label="Close" @onclick="() => RemoveNotOwnedUnit(id)"></button>
         </div>
     }
@@ -188,8 +223,23 @@
 
     List<PQPlayerUnit>? PQPlayerUnits;
 
+    List<SateiInfo> sateiInfos = new();
+    struct SateiInfo {
+        public string Label { get; set; }
+        public double Score { get; set; }
+        public PQAbility Ability { get; set; }
+
+        public SateiInfo(string label, double score ,PQAbility ability = null)
+        {
+            Label = label;
+            Score = score;
+            Ability = ability;
+        }
+    }
+
     bool isSubPosition = false;
     bool isBench = false;
+    bool isCalucSatei = false;
 
     HashSet<int> notOwnedUnits = new();
     private void AddNotOwnedUnit(int id) {
@@ -246,7 +296,7 @@
     UnitPitcherStatus InputPitcherStatus = new(0, 120, 50, 50);
     UnitPitcherStatus DeckPitcherLimit = new(0, 0, 0, 0);
 
-    int CoarchCount = 3;
+    int CoarchCount = 4;
 
     int CalucMode = 1;
     private void OnRadioChange(string newValue) {
@@ -309,7 +359,10 @@
 
         //ポジションに応じて能力を消す
         pqAbilityes = await RemovePositionSpecificAbilities(pqAbilityes);
+        //下位込みの査定を計算
         pqAbilityes = SumLowRankSatei(pqAbilityes);
+        //赤特を持っている場合は、上位の青特を削除する。
+        pqAbilityes = await RemoveBlueIfHaveRed(pqAbilityes);
         //もってないキャラを除外
         RemoveAddedUnits = await RemoveNotOwnEventUnit();
         pqAbilityes = pqAbilityes.OrderByDescending(s => isBench ? s.SateiSub : s.SateiMain).ToList();
@@ -490,12 +543,21 @@
         return removedUnits.ToList();
     }
     public async Task<List<PQAbility>> RemoveOwnedAbilities(List<PQAbility> pqAbilityes) {
-        var playerUnitAbilityes = pqAbilityes.Where(g => PQPlayerUnit.Abilities.Any(a => a.Id == g.Id));
+        var playerUnitAbilityes = pqAbilityes.Where(x => PQPlayerUnit.Abilities.Any(p => p.Id == x.Id));
         //グループではない || 上位金特
-        var removedPQAbilities = pqAbilityes.Where(x => !playerUnitAbilityes.Any(item => x.GroupId == item.GroupId && x.Rank <= item.Rank));
+        var removedPQAbilities = pqAbilityes.Where(x => !playerUnitAbilityes.Any(p => x.GroupId == p.GroupId && x.Rank <= p.Rank));
 
         return removedPQAbilities.ToList();
     }
+
+    public async Task<List<PQAbility>> RemoveBlueIfHaveRed(List<PQAbility> pqAbilityes)
+    {
+        //赤特は青特では消せない。金特では消せる？
+        var ret = pqAbilityes.Where(x => !(PQPlayerUnit.Abilities.Any(p => p.ColorType == 1 && x.GroupId == p.GroupId) && x.ColorType == 2));
+        return ret.ToList();
+    }
+
+
     public List<PQAbility> SumLowRankSatei(List<PQAbility> pqAbilityes) {
         List<PQAbility> ret = new();
 
@@ -817,25 +879,26 @@
 
     public int EvaluateDeckStatusScore(UnitFielderStatus fstatus, UnitPitcherStatus pstatus, UnitFielderStatus flimit, UnitPitcherStatus plimit) {
         int score = 0;
-        score += CalucScoreByStatus(fstatus.Meet + flimit.Meet);
-        score += CalucScoreByStatus(fstatus.Power + flimit.Power);
-        score += CalucScoreByStatus(fstatus.RunPower + flimit.RunPower);
-        score += CalucScoreByStatus(fstatus.ShoulderPower + flimit.ShoulderPower);
-        score += CalucScoreByStatus(fstatus.Fielding + flimit.Fielding);
-        score += CalucScoreByStatus(fstatus.Catching+ flimit.Catching);
+        score += CalucScoreByStatusFielder(fstatus.Meet + flimit.Meet);
+        score += CalucScoreByStatusFielder(fstatus.Power + flimit.Power);
+        score += CalucScoreByStatusFielder(fstatus.RunPower + flimit.RunPower);
+        score += CalucScoreByStatusFielder(fstatus.ShoulderPower + flimit.ShoulderPower);
+        score += CalucScoreByStatusFielder(fstatus.Fielding + flimit.Fielding);
+        score += CalucScoreByStatusFielder(fstatus.Catching+ flimit.Catching);
         if (PQPlayerUnit.Position == 1) {
             //score += CalucScore(pitcherStatus.BallSpeed);
-            score += CalucScoreByStatus(pstatus.BallControl+ plimit.BallControl, 5);
-            score += CalucScoreByStatus(pstatus.Stamina + plimit.Stamina, 5);
+            score += CalucScoreByStatusFielder(pstatus.BallControl+ plimit.BallControl, 5);
+            score += CalucScoreByStatusFielder(pstatus.Stamina + plimit.Stamina, 5);
         }
 
         return score;
     }
-    int CalucScoreByStatus(int status, int multiplier = 1) {
+    int CalucScoreByStatusFielder(int status, float multiplier = 1,string label = "") {
         int score = 0;
         int input = status;
 
         int baseScore = 5;
+
         if (input >= 101) {
             score += (105 - baseScore);
         }
@@ -860,20 +923,137 @@
         score += baseScore * input;
         //1分
         score-= (baseScore);
+
+        //ピッチャの時 1/5
+        if(true){
+            score = (int)Math.Floor(score * multiplier);
+        }
+        sateiInfos.Add(new SateiInfo($"{label}({input})", score));
+        //Console.WriteLine(score);
         return score;
     }
-    int CalucScoreByDandou(int statsu) {
-        int score = (statsu - 1) * 50; 
+    int CalucScoreByStatusPitcher(int status, int multiplier = 1, string label = "")
+    {
+        int score = 0;
+        int input = status;
+
+        int baseScore = 6;
+
+        if (input >= 101)
+        {
+            score += (126 - baseScore);
+        }
+        if (input >= 90)
+        {
+            score += (66 - baseScore);
+        }
+        if (input >= 80)
+        {
+            score += (66 - baseScore);
+        }
+        if (input >= 70)
+        {
+            score += (36 - baseScore);
+        }
+        if (input >= 60)
+        {
+            score += (18 - baseScore);
+        }
+        if (input >= 50)
+        {
+            score += (18 - baseScore);
+        }
+        if (input >= 40)
+        {
+            score += (12 - baseScore);
+        }
+        score += baseScore * input;
+        //1分
+        score -= (baseScore);
+
+        sateiInfos.Add(new SateiInfo($"{label}({input})", score));
+        //Console.WriteLine(score);
         return score;
     }
+    int CalucScoreByStatusSpeed(int status, int multiplier = 1){
+        int score = 0;
+        int SPEED_MAX = 180;
+        int SPEED_START = 100;
+        int input = Math.Min(status, SPEED_MAX);
+
+        int baseScore = 12;
+
+        if (input >= 171)
+        {
+            score += (132 - baseScore);
+        }
+        if (input >= 156)
+        {
+            score += (72 - baseScore);
+        }
+        if (input >= 148)
+        {
+            score += (42 - baseScore);
+        }
+        if (input >= 144)
+        {
+            score += (24 - baseScore);
+        }
+        if (input >= 141)
+        {
+            score += (24 - baseScore);
+        }
+        if (input >= 138)
+        {
+            score += (18 - baseScore);
+        }
+        score += baseScore * (input - SPEED_START);
+        score -= (baseScore);
+        sateiInfos.Add(new SateiInfo($"球速({input})", score));
+
+        //Console.WriteLine($"{input} {score}");
+        return score;
+    }
+
+    int CalucScoreByDandou(int statsu,float mulutiply = 1) {
+        int score = (statsu - 1) * 50;
+        score = (int)Math.Floor(score * mulutiply);
+
+        sateiInfos.Add(new SateiInfo($"弾道({statsu})", score));
+        return score;
+    }
+    int CalucScoreByCurves(List<UnitStatusCurveBall> curves) {
+        int score = 0;
+        int count = 0;
+        foreach (var curve in curves){
+            if (curve.Amount != 0) 
+                count += 7;
+        }
+        score = count * 24;
+
+        sateiInfos.Add(new SateiInfo($"変化({count})", score));
+        //Console.WriteLine($"変化球{score}");
+        return score;
+    }
+
     int CalucScoreByAbikity(params PQAbility[] unitAbilitys) {
-        var sumed = SumLowRankSatei(PQAbilitys);
-        var satei = unitAbilitys
+        var canLearnAbilitys = PQAbilitys.Where(x => x.PlayerType == 1).ToList();
+        //投手
+        if (PQPlayerUnit.Position == 1) {
+            canLearnAbilitys = PQAbilitys.Where(x => x.PlayerType == 2).ToList();
+        }
+        var sumed = SumLowRankSatei(canLearnAbilitys);
+        var sateiAbilitys = unitAbilitys
         .Select(x => sumed.FirstOrDefault(c => c.Id == x.Id))
         .Where(x => x != null);
         int score = 0;
-        foreach (var item in satei) {
-            score += (int)item.SateiMain;
+        foreach (var item in sateiAbilitys) {
+            int satei = !isBench ? (int)item.SateiMain : (int)item.SateiSub;
+
+            //Console.WriteLine($"{item.Name} {item.SateiMain}");
+            sateiInfos.Add(new SateiInfo($"{item.Name}", satei, item));
+
+            score += satei;
         }
         return score;
     }
@@ -1021,26 +1201,63 @@
 
     int SumPlayerUnitScore() {
         int s = 0;
-        s += CalucScoreByStatus(InputStatus.Meet);
-        s += CalucScoreByStatus(InputStatus.Power);
-        s += CalucScoreByStatus(InputStatus.RunPower);
-        s += CalucScoreByStatus(InputStatus.ShoulderPower);
-        s += CalucScoreByStatus(InputStatus.Fielding);
-        s += CalucScoreByStatus(InputStatus.Catching);
+        s += CalucScoreByStatusFielder(InputStatus.Meet);
+        s += CalucScoreByStatusFielder(InputStatus.Power);
+        s += CalucScoreByStatusFielder(InputStatus.RunPower);
+        s += CalucScoreByStatusFielder(InputStatus.ShoulderPower);
+        s += CalucScoreByStatusFielder(InputStatus.Fielding);
+        s += CalucScoreByStatusFielder(InputStatus.Catching);
         s += CalucScoreByDandou(PQPlayerUnit.Status.Dandou);
         s += CalucScoreByAbikity(PQPlayerUnit.Abilities.ToArray());
         return s;
     }
-    int SumDeckScore() {
+    int SumPlayerBase_DeckScore()
+    {
+        sateiInfos = new();
+
         int s = 0;
-        s += CalucScoreByStatus(DeckLimit.Meet);
-        s += CalucScoreByStatus(DeckLimit.Power);
-        s += CalucScoreByStatus(DeckLimit.RunPower);
-        s += CalucScoreByStatus(DeckLimit.ShoulderPower);
-        s += CalucScoreByStatus(DeckLimit.Fielding );
-        s += CalucScoreByStatus(DeckLimit.Catching );
-        s += CalucScoreByAbikity(deckAbilites.SelectMany(x => x).ToArray());
+        float mulutiply = 1;
+
+        if (PQPlayerUnit.Position == 1)
+        {
+            mulutiply = 1f / 5f;
+
+            //弾道の査定
+            s += CalucScoreByDandou(PQPlayerUnit.Status.Dandou, mulutiply);
+            //デッキの上限とキャラの能力を合わせた査定
+            s += CalucScoreByStatusFielder(Math.Min(DeckLimit.Meet, 50) + InputStatus.Meet, mulutiply, label: "ミート");
+            s += CalucScoreByStatusFielder(Math.Min(DeckLimit.Power, 50) + InputStatus.Power, mulutiply, label: "パワー");
+            s += CalucScoreByStatusFielder(Math.Min(DeckLimit.RunPower, 50) + InputStatus.RunPower, mulutiply, label: "走力");
+            s += CalucScoreByStatusFielder(Math.Min(DeckLimit.ShoulderPower, 50) + InputStatus.ShoulderPower, mulutiply, label: "肩力");
+            s += CalucScoreByStatusFielder(Math.Min(DeckLimit.Fielding, 50) + InputStatus.Fielding, mulutiply, label: "守備力");
+            s += CalucScoreByStatusFielder(Math.Min(DeckLimit.Catching, 50) + InputStatus.Catching, mulutiply, label: "捕球");
+
+            s += CalucScoreByStatusSpeed(50 + InputPitcherStatus.BallSpeed);
+            s += CalucScoreByStatusPitcher(Math.Min(DeckPitcherLimit.BallControl, 50) + InputPitcherStatus.BallControl, label: "コントロール");
+            s += CalucScoreByStatusPitcher(Math.Min(DeckPitcherLimit.BallControl, 50) + InputPitcherStatus.Stamina, label: "スタミナ");
+            s += CalucScoreByCurves(PQPlayerUnit.Curves);
+        }
+        else { 
+            s += CalucScoreByDandou(PQPlayerUnit.Status.Dandou, !isBench ? mulutiply : 1f / 5f);
+
+            s += CalucScoreByStatusFielder(Math.Min(DeckLimit.Meet, 50) + InputStatus.Meet, !isBench ? mulutiply : 1f / 5f, label: "ミート");
+            s += CalucScoreByStatusFielder(Math.Min(DeckLimit.Power, 50) + InputStatus.Power, !isBench ? mulutiply : 1f / 5f, label: "パワー");
+            s += CalucScoreByStatusFielder(Math.Min(DeckLimit.RunPower, 50) + InputStatus.RunPower, !isBench ? mulutiply : 2f / 5f, label: "走力");
+            s += CalucScoreByStatusFielder(Math.Min(DeckLimit.ShoulderPower, 50) + InputStatus.ShoulderPower, !isBench ? mulutiply : 1f / 5f, label: "肩力");
+            s += CalucScoreByStatusFielder(Math.Min(DeckLimit.Fielding, 50) + InputStatus.Fielding, !isBench ? mulutiply : 1f / 5f, label: "守備力");
+            s += CalucScoreByStatusFielder(Math.Min(DeckLimit.Catching, 50) + InputStatus.Catching, !isBench ? mulutiply : 1f / 5f, label: "捕球");
+        }
+
+        //特殊能力の計算
+        List<PQAbility> abilities = new();
+        abilities.AddRange(PQPlayerUnit.Abilities);
+        abilities.AddRange(deckAbilites.SelectMany(x => x));
+        abilities = abilities.GroupBy(a => a.GroupId)
+            .Select(g => g.OrderByDescending(a => a.Rank).First())
+            .ToList();
+
+        s += CalucScoreByAbikity(abilities.ToArray());
+
         return s;
     }
-
 }
