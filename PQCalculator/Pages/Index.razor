@@ -9,13 +9,15 @@
         <Collapse Title="説明">
             <ol>
                 <li>契約書キャラを入力する</li>
-                @if (false)
-                {
-                    <li >能力を調整する</li>
-                }
                 <li>コーチ人数を入力</li>
                 <li>計算開始を押す</li>
                 <li>持ってないキャラはバツを押す</li>
+                
+                @if (false)
+                {
+                    <span>※上限はPSR覚醒ありの値です。ない場合はバツで消してください。</span>
+                    <span>※同じキャラが含まれる場合はどちらかをバツで消してください。</span>
+                }
             </ol>
         </Collapse>
     </div>
@@ -127,7 +129,6 @@
             <h4>@(SumPlayerBase_DeckScore())</h4>
             <Collapse Title="内訳">
                 <div class="container d-flex flex-column align-items-center width-clamp">
-                    <span>※野手の投手特能、投手の野手特能、緑特能の計算は未実装</span>
                     @if (sateiInfos.Count > 0)
                     {
                         sateiInfos = sateiInfos.OrderByDescending(x => x.Ability?.SateiMain ?? 100000).ToList();
@@ -165,23 +166,28 @@
         {
             var deck = decks.GroupBy(x => x.deckNumber).Where(x => x.Key == i);
             <div class="d-inline-flex flex-column col-12 col-lg-6 col-xl-3 align-items-baseline border rounded">
-                <h3>デッキ @(
-            i + 1
-            )</h3>
+                <h3>デッキ @(i + 1)</h3>
                 <div class="mb-3">
                     @foreach (var units in deck.First()) {
                         var unit = units.unit;
-                        <div style="display: flex;">
-                            <div>@unit.Name</div>
+                        <div class="px-2" style="display: flex;">
+                            <div>
+                                @unit.Name
+                            </div>
                             <!--
                             <div>@($"{unit.Limit.Meet} {unit.Limit.Power} {unit.Limit.RunPower} {unit.Limit.ShoulderPower} {unit.Limit.Fielding} {unit.Limit.Catching} {unit.Limit.BallControl} {unit.Limit.Stamina}")</div>
                             -->
                             <button type="button" class="btn-close" aria-label="Close" @onclick="() => AddNotOwnedUnit(unit.Id)"></button>
+                            <div>
+                                @if (units.Ability != null){
+                                    <AbilityComponent Ability="@units.Ability"></AbilityComponent>
+                                }
+                            </div>
                         </div>
                     }
                 </div>
 
-                <div class="mb-3">
+                <div class="mb-3 px-2">
                     @if (deckAbilites != null) {
                         @foreach (var ab in deckAbilites[i]) {
                             <div class="mb-2">
@@ -563,9 +569,14 @@
 
         foreach (var item in pqAbilityes) {
             //下位込みで査定を計算
-            var sumSatei = pqAbilityes.Where(x => x.GroupId == item.GroupId && 0 < x.Rank && x.Rank <= item.Rank).Sum(x => x.SateiMain);
-            var sumSateiSub = pqAbilityes.Where(x => x.GroupId == item.GroupId && 0 < x.Rank && x.Rank <= item.Rank).Sum(x => x.SateiSub);
-            ret.Add(new PQAbility(item.Id, item.Name, item.ColorType, item.PlayerType, item.GroupId, item.Rank, sumSatei, sumSateiSub));
+            var someGroups = pqAbilityes.Where(x => x.GroupId == item.GroupId && 0 < x.Rank && x.Rank <= item.Rank);
+
+            var sumSatei = someGroups.Sum(x => x.SateiMain);
+            var sumSateiSub = someGroups.Sum(x => x.SateiSub);
+            var sumPF = someGroups.Sum(x => x.PF);
+            var sumFP = someGroups.Sum(x => x.FP);
+
+            ret.Add(new PQAbility(item.Id, item.Name, item.ColorType, item.PlayerType, item.GroupId, item.Rank, sumSatei, sumSateiSub, sumPF, sumFP));
         }
         return ret;
     }
@@ -729,6 +740,7 @@
         for (int j = 0; j < maxChange; j++)
         {
             var newUnitPool = new List<PQEventUnit>(RemoveAddedUnits);
+            //アビ要員
             var aaaaaaaaaa = decks.Where(x => x.Ability == null).Where(x => !CLed.Any(v => v.Id == x.unit.Id)).ToList();
             for (int i = 0; i < maxIterations; i++)
             {
@@ -1008,7 +1020,7 @@
         }
         score += baseScore * (input - SPEED_START);
         score -= (baseScore);
-        
+
         score = (int)Math.Floor(score * multiplier);
         sateiInfos.Add(new SateiInfo($"球速({input})", score));
 
@@ -1037,25 +1049,45 @@
         return score;
     }
 
-    int CalucScoreByAbikity(params PQAbility[] unitAbilitys) {
-        var canLearnAbilitys = PQAbilitys.Where(x => x.PlayerType == 1).ToList();
-        //投手
-        if (PQPlayerUnit.Position == 1) {
-            canLearnAbilitys = PQAbilitys.Where(x => x.PlayerType == 2).ToList();
-        }
-        var sumed = SumLowRankSatei(canLearnAbilitys);
+    int CalucScoreByAbility(params PQAbility[] unitAbilitys) {
+        //上位以下の査定を足す
+        var sumed = SumLowRankSatei(PQAbilitys);
+
         var sateiAbilitys = unitAbilitys
         .Select(x => sumed.FirstOrDefault(c => c.Id == x.Id))
         .Where(x => x != null);
         int score = 0;
-        foreach (var item in sateiAbilitys) {
-            int satei = !isBench ? (int)item.SateiMain : (int)item.SateiSub;
-
-            //Console.WriteLine($"{item.Name} {item.SateiMain}");
-            sateiInfos.Add(new SateiInfo($"{item.Name}", satei, item));
-
+        foreach (var ability in sateiAbilitys) {
+            //ベンチのときサブ、メイン
+            int satei = isBench ? (int)ability.SateiSub : (int)ability.SateiMain;
+            //野手の投手能力、投手の野手能力
+            int type = PQPlayerUnit.Position == 1 ? 2 : 1;
+            if (ability.PlayerType != type){
+                satei = type == 1 ? (int)ability.PF : (int)ability.FP;
+            }
+            if (satei != 0){
+                sateiInfos.Add(new SateiInfo($"{ability.Name}", satei, ability));
+                score += satei;
+            }
+        }
+        //直書きしたろ
+        var t = unitAbilitys.FirstOrDefault(x => x.Name == "調子安定");
+        if (t != null)
+        {
+            int satei;
+            if (PQPlayerUnit.Position == 1)
+            {
+                satei = isBench ? 3 : 6;
+            }
+            else
+            {
+                satei = isBench ? 4 : 15;
+            }
+            sateiInfos.Add(new SateiInfo($"{t.Name}", satei, t));
             score += satei;
         }
+        //
+
         return score;
     }
     int CalucScoreByLimit(int limit, int multiplier = 1) {
@@ -1209,7 +1241,7 @@
         s += CalucScoreByStatusFielder(InputStatus.Fielding);
         s += CalucScoreByStatusFielder(InputStatus.Catching);
         s += CalucScoreByDandou(PQPlayerUnit.Status.Dandou);
-        s += CalucScoreByAbikity(PQPlayerUnit.Abilities.ToArray());
+        s += CalucScoreByAbility(PQPlayerUnit.Abilities.ToArray());
         return s;
     }
     int SumPlayerBase_DeckScore()
@@ -1250,16 +1282,15 @@
             s += CalucScoreByStatusFielder(Math.Min(DeckLimit.Fielding, 50) + InputStatus.Fielding, !isBench ? mulutiply : 1f / 5f, label: "守備力");
             s += CalucScoreByStatusFielder(Math.Min(DeckLimit.Catching, 50) + InputStatus.Catching, !isBench ? mulutiply : 1f / 5f, label: "捕球");
         }
-
-        //特殊能力の計算
+        //キャラの能力と、コーチの能力を合わせて上位のみにする。
         List<PQAbility> abilities = new();
         abilities.AddRange(PQPlayerUnit.Abilities);
         abilities.AddRange(deckAbilites.SelectMany(x => x));
         abilities = abilities.GroupBy(a => a.GroupId)
             .Select(g => g.OrderByDescending(a => a.Rank).First())
             .ToList();
-
-        s += CalucScoreByAbikity(abilities.ToArray());
+        //特殊能力の計算
+        s += CalucScoreByAbility(abilities.ToArray());
 
         return s;
     }

@@ -7,18 +7,22 @@
     public int Rank { get; set; }
     public double SateiMain { get; set; }
     public double SateiSub { get; set; }
+	public double? PF { get; set; }
+	public double? FP { get; set; }
 
-    public PQAbility(int id, string name, int colorType, int playerType, int groupId, int rank, double sateiMain, double sateiSub) {
-        Id = id;
-        Name = name;
-        ColorType = colorType;
-        PlayerType = playerType;
-        GroupId = groupId;
-        Rank = rank;
-        SateiMain = sateiMain;
-        SateiSub = sateiSub;
-    }
-    public enum Color {
+	public PQAbility(int id, string name, int colorType, int playerType, int groupId, int rank, double sateiMain, double sateiSub, double? pf, double? fp) {
+		Id = id;
+		Name = name;
+		ColorType = colorType;
+		PlayerType = playerType;
+		GroupId = groupId;
+		Rank = rank;
+		SateiMain = sateiMain;
+		SateiSub = sateiSub;
+		PF = pf;
+		FP = fp;
+	}
+	public enum Color {
         red = 1,
         blue = 2,
         gold = 3,
