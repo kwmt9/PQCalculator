@@ -61,42 +61,46 @@
         {
             <div>
                 <div class="input-group mb-1">
+                    <span class="input-group-text fw-bold">契約書Lv</span>
+                    <input type="number" id="typeNumber" class="form-control fw-bold" min="1" max="100" value="@(Level)" @oninput="((e) => {if(!int.TryParse(e.Value?.ToString(),out int o)){return;}; Level = o;AutoCompleteStatusFromLevel(Level);})">
+                </div>
+                <div class="input-group mb-1">
                     <span class="input-group-text fw-bold">ミート</span>
-                    <input type="number" id="typeNumber" class="form-control fw-bold" min="1" max="100" value="@(InputStatus.Meet)" @oninput="((e) => InputStatus.Meet = int.Parse(e.Value.ToString()))">
+                    <input type="number" id="typeNumber" class="form-control fw-bold" min="1" max="100" value="@(InputStatus.Meet)" @oninput="((e) => {if(!int.TryParse(e.Value?.ToString(),out int o)){return;} InputStatus.Meet = o;})">
                 </div>
                 <div class="input-group mb-1">
                     <span class="input-group-text fw-bold">パワー</span>
-                    <input type="number" id="typeNumber" class="form-control fw-bold" min="1" max="100" value="@(InputStatus.Power)" @oninput="((e) => InputStatus.Power = int.Parse(e.Value.ToString()))">
+                    <input type="number" id="typeNumber" class="form-control fw-bold" min="1" max="100" value="@(InputStatus.Power)" @oninput="((e) => {if(!int.TryParse(e.Value?.ToString(),out int o)){return;} InputStatus.Power = o;})">
                 </div>
                 <div class="input-group mb-1">
                     <span class="input-group-text fw-bold">走力　</span>
-                    <input type="number" id="typeNumber" class="form-control fw-bold" min="1" max="100" value="@(InputStatus.RunPower)" @oninput="((e) => InputStatus.RunPower = int.Parse(e.Value.ToString()))">
+                    <input type="number" id="typeNumber" class="form-control fw-bold" min="1" max="100" value="@(InputStatus.RunPower)" @oninput="((e) => {if(!int.TryParse(e.Value?.ToString(),out int o)){return;} InputStatus.RunPower = o;})">
                 </div>
                 <div class="input-group mb-1">
                     <span class="input-group-text fw-bold">肩力　</span>
-                    <input type="number" id="typeNumber" class="form-control fw-bold" min="1" max="100" value="@(InputStatus.ShoulderPower)" @oninput="((e) => InputStatus.ShoulderPower = int.Parse(e.Value.ToString()))">
+                    <input type="number" id="typeNumber" class="form-control fw-bold" min="1" max="100" value="@(InputStatus.ShoulderPower)" @oninput="((e) => {if(!int.TryParse(e.Value?.ToString(),out int o)){return;} InputStatus.ShoulderPower = o;})">
                 </div>
                 <div class="input-group mb-1">
                     <span class="input-group-text fw-bold">守備力</span>
-                    <input type="number" id="typeNumber" class="form-control fw-bold" min="1" max="100" value="@(InputStatus.Fielding)" @oninput="((e) => InputStatus.Fielding = int.Parse(e.Value.ToString()))">
+                    <input type="number" id="typeNumber" class="form-control fw-bold" min="1" max="100" value="@(InputStatus.Fielding)" @oninput="((e) => {if(!int.TryParse(e.Value?.ToString(),out int o)){return;} InputStatus.Fielding = o;})">
                 </div>
                 <div class="input-group mb-2">
                     <span class="input-group-text fw-bold">捕球　</span>
-                    <input type="number" id="typeNumber" class="form-control fw-bold" min="1" max="100" value="@(InputStatus.Catching)" @oninput="((e) => InputStatus.Catching = int.Parse(e.Value.ToString()))">
+                    <input type="number" id="typeNumber" class="form-control fw-bold" min="1" max="100" value="@(InputStatus.Catching)" @oninput="((e) => {if(!int.TryParse(e.Value?.ToString(),out int o)){return;} InputStatus.Catching = o;})">
                 </div>
                 @if (PQPlayerUnit?.Position == 1)
                 {
                     <div class="input-group mb-2">
                         <span class="input-group-text fw-bold">球速　</span>
-                        <input type="number" id="typeNumber" class="form-control fw-bold" min="1" max="180" value="@(InputPitcherStatus.BallSpeed)" @oninput="((e) => InputPitcherStatus.BallSpeed = int.Parse(e.Value.ToString()))">
+                        <input type="number" id="typeNumber" class="form-control fw-bold" min="1" max="180" value="@(InputPitcherStatus.BallSpeed)" @oninput="((e) =>  {if(!int.TryParse(e.Value?.ToString(),out int o)){return;} InputPitcherStatus.BallSpeed = o;})">
                     </div>
                     <div class="input-group mb-2">
                         <span class="input-group-text fw-bold">コン　</span>
-                        <input type="number" id="typeNumber" class="form-control fw-bold" min="1" max="100" value="@(InputPitcherStatus.BallControl)" @oninput="((e) => InputPitcherStatus.BallControl = int.Parse(e.Value.ToString()))">
+                        <input type="number" id="typeNumber" class="form-control fw-bold" min="1" max="100" value="@(InputPitcherStatus.BallControl)" @oninput="((e) =>  {if(!int.TryParse(e.Value?.ToString(),out int o)){return;} InputPitcherStatus.BallControl = o;})">
                     </div>
                     <div class="input-group mb-2">
                         <span class="input-group-text fw-bold">スタ　</span>
-                        <input type="number" id="typeNumber" class="form-control fw-bold" min="1" max="100" value="@(InputPitcherStatus.Stamina)" @oninput="((e) => InputPitcherStatus.Stamina = int.Parse(e.Value.ToString()))">
+                        <input type="number" id="typeNumber" class="form-control fw-bold" min="1" max="100" value="@(InputPitcherStatus.Stamina)" @oninput="((e) =>  {if(!int.TryParse(e.Value?.ToString(),out int o)){return;} InputPitcherStatus.Stamina = o;})">
                     </div>
                 }
             </div>
@@ -269,6 +273,7 @@
     List<Deck>? decks;
     List<List<PQAbility>>? deckAbilites = new();
 
+    int Level { get; set; } = 50;
     UnitFielderStatus InputStatus = new(0, 0, 50, 50, 50, 50, 50, 50);
     UnitFielderStatus DeckLimit = new(0, 0, 0, 0, 0, 0, 0, 0);
 
@@ -842,5 +847,25 @@
         var sateiTaple = SateiCalculator.SumPlayerBase_DeckScore(PQPlayerUnit, PQAbilitys, DeckLimit, InputStatus, DeckPitcherLimit, InputPitcherStatus, deckAbilites, isBench);
         sateiInfos = sateiTaple.sateiInfos;
         return sateiTaple.score;
+    }
+    ///契約書レベルからステータスを計算する
+    int CalucStatusFromLevel(int level,int baseStatus){
+        return (int)Math.Round(baseStatus * (0.5 + 0.01 * level));
+    }
+    ///契約書レベルからステータスを計算する
+    void AutoCompleteStatusFromLevel(int level){
+        if (PQPlayerUnit == null) return;
+
+        InputStatus.Meet = CalucStatusFromLevel(level, PQPlayerUnit.Status.Meet);
+        InputStatus.Power = CalucStatusFromLevel(level, PQPlayerUnit.Status.Power);
+        InputStatus.RunPower = CalucStatusFromLevel(level, PQPlayerUnit.Status.RunPower);
+        InputStatus.ShoulderPower = CalucStatusFromLevel(level, PQPlayerUnit.Status.ShoulderPower);
+        InputStatus.Fielding = CalucStatusFromLevel(level, PQPlayerUnit.Status.Fielding);
+        InputStatus.Catching = CalucStatusFromLevel(level, PQPlayerUnit.Status.Catching);
+
+        if (PQPlayerUnit.PitcherStatus == null) return;
+        InputPitcherStatus.BallSpeed = 100 + CalucStatusFromLevel(level, PQPlayerUnit.PitcherStatus.BallSpeed - 100);
+        InputPitcherStatus.BallControl = CalucStatusFromLevel(level, PQPlayerUnit.PitcherStatus.BallControl);
+        InputPitcherStatus.Stamina = CalucStatusFromLevel(level, PQPlayerUnit.PitcherStatus.Stamina);
     }
 }
