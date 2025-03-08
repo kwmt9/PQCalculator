@@ -1,4 +1,5 @@
-﻿@if (Abilitys != null) {
+﻿@using PQCalculator.Model
+@if (Abilitys != null) {
     <div class="d-flex flex-wrap justify-content-center width-clamp">
         @foreach (var item in Abilitys) {
             <AbilityComponent @ref="AbilityComponent" Ability=@item canSelect=@canSelect></AbilityComponent>

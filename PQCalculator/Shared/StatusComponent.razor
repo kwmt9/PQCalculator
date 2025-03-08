@@ -1,4 +1,6 @@
-﻿<div class="d-flex flex-column">
+﻿@using PQCalculator.Model
+
+<div class="d-flex flex-column">
     @if (FielderStatus != null || PitcherStatus != null) {
         <div class="mx-1 width-clamp">
             <table class="table table-bordered">
@@ -60,5 +62,4 @@
     public bool EnableFielder { get; set; } = true;
     [Parameter]
     public bool EnablePicher { get; set; } = true;
-
 }

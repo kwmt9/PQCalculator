@@ -1,4 +1,5 @@
-﻿@if(Ability != null){
+﻿@using PQCalculator.Model
+@if(Ability != null){
     <span @onclick="OnClick" class="@ButtonColor m-1 p-1 rounded">@Ability.Name</span>
 }
 @code {

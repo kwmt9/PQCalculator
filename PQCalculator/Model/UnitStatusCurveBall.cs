@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
-
-public class UnitStatusCurveBall {
+namespace PQCalculator.Model { 
+	public class UnitStatusCurveBall {
     public UnitStatusCurveBall(int unitId, int curveId, int amount) {
         UnitId = unitId;
         CurveId = curveId;
@@ -12,4 +12,5 @@ public class UnitStatusCurveBall {
 	public int UnitId { get; set; }
     public int CurveId { get; set; }
     public int Amount { get; set; }
+}
 }
