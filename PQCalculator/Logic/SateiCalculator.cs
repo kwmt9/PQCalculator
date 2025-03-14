@@ -67,16 +67,16 @@ namespace PQCalculator.Logic {
 		}
 		public static double EvaluateDeckStatusScore(int position , UnitFielderStatus fstatus, UnitPitcherStatus pstatus, UnitFielderStatus flimit, UnitPitcherStatus plimit) {
 			List<SateiInfo> sateiInfos = new();
-			sateiInfos.AddRange(CalucScoreByStatusFielder(fstatus.Meet + flimit.Meet));
-			sateiInfos.AddRange(CalucScoreByStatusFielder(fstatus.Power + flimit.Power));
-			sateiInfos.AddRange(CalucScoreByStatusFielder(fstatus.RunPower + flimit.RunPower));
-			sateiInfos.AddRange(CalucScoreByStatusFielder(fstatus.ShoulderPower + flimit.ShoulderPower));
-			sateiInfos.AddRange(CalucScoreByStatusFielder(fstatus.Fielding + flimit.Fielding));
-			sateiInfos.AddRange(CalucScoreByStatusFielder(fstatus.Catching + flimit.Catching));
+			sateiInfos.AddRange(CalucScoreByStatusFielder(fstatus.Meet + Math.Min(flimit.Meet, 50)));
+			sateiInfos.AddRange(CalucScoreByStatusFielder(fstatus.Power + Math.Min(flimit.Power, 50)));
+			sateiInfos.AddRange(CalucScoreByStatusFielder(fstatus.RunPower + Math.Min(flimit.RunPower, 50)));
+			sateiInfos.AddRange(CalucScoreByStatusFielder(fstatus.ShoulderPower + Math.Min(flimit.ShoulderPower, 50)));
+			sateiInfos.AddRange(CalucScoreByStatusFielder(fstatus.Fielding + Math.Min(flimit.Fielding, 50)));
+			sateiInfos.AddRange(CalucScoreByStatusFielder(fstatus.Catching + Math.Min(flimit.Catching, 50)));
 			if (position == 1) {
-				//score += CalucScore(pitcherStatus.BallSpeed);
-				sateiInfos.AddRange(CalucScoreByStatusFielder(pstatus.BallControl + plimit.BallControl, 5));
-				sateiInfos.AddRange(CalucScoreByStatusFielder(pstatus.Stamina + plimit.Stamina, 5));
+				//sateiInfos.AddRange(CalucScoreByStatusSpeed(50 + pstatus.BallSpeed));
+				sateiInfos.AddRange(CalucScoreByStatusFielder(pstatus.BallControl + Math.Min(plimit.BallControl, 50)));
+				sateiInfos.AddRange(CalucScoreByStatusFielder(pstatus.Stamina + Math.Min(plimit.Stamina, 50)));
 			}
 			double score = 0;
 			foreach (var sateiInfo in sateiInfos) {
