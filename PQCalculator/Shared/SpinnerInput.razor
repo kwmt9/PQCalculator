@@ -1,0 +1,58 @@
+﻿<div class="center input-group">
+    <div class="input-group-text p-0 d-md-none">
+        <button type="button" class="btn" tabindex="-1" data-type="minus" @onpointerdown="StartDecrement" @onpointerup="Stop" @onpointerleave="Stop" @onpointerout="Stop">
+            <span class="fw-bold" style="pointer-events: none;">-</span>
+        </button>
+    </div>
+    @if (Label != null) { 
+        <span class="input-group-text fw-bold">@Label</span>
+    }
+    <input @bind="InputValue" type="number" id="typeNumber" class="form-control fw-bold" min="@Min" max="@Max" @oninput="OnInput">
+    <div class="input-group-text p-0 d-md-none">
+        <button type="button" class="btn" tabindex="-1" data-type="plus" @onpointerdown="StartIncrement" @onpointerup="Stop" @onpointerleave="Stop" @onpointerout="Stop">
+            <span class="fw-bold" style="pointer-events: none;">+</span>
+        </button>
+    </div>
+</div>
+@code {
+    [Parameter]
+    public int? InputValue { get; set; } = 0;
+    [Parameter]
+    public int Min { get; set; } = 0;
+    [Parameter]
+    public int Max { get; set; } = 100;
+    [Parameter]
+    public string? Label { get; set; } = null;
+    [Parameter]
+    public EventCallback<ChangeEventArgs> OnInput { get; set; }
+    [Parameter]
+    public int Interval { get; set; } = 75;
+
+    private System.Threading.Timer? _timer;
+    private System.Threading.Timer? _initialTimer;
+
+    public void ChangeValue(int delta){
+        if (int.TryParse(InputValue?.ToString(), out int i)) {
+            i = Math.Clamp(i + delta, Min, Max);
+            InputValue = i;
+            OnInput.InvokeAsync(new ChangeEventArgs { Value = i });
+            StateHasChanged();
+        }
+    }
+    private void StartIncrement(){
+        ChangeValue(1);
+        _initialTimer = new System.Threading.Timer(_ => {
+            _timer = new System.Threading.Timer(_ => InvokeAsync(() => ChangeValue(1)), null, 0, Interval);
+        }, null, 500, System.Threading.Timeout.Infinite);
+    }
+    private void StartDecrement(){
+        ChangeValue(-1);
+        _initialTimer = new System.Threading.Timer(_ => {
+            _timer = new System.Threading.Timer(_ => InvokeAsync(() => ChangeValue(-1)), null, 0, Interval);
+        }, null, 500, System.Threading.Timeout.Infinite);
+    }
+    private void Stop() {
+        _timer?.Dispose();
+        _initialTimer?.Dispose();
+    }
+}

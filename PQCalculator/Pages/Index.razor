@@ -32,8 +32,7 @@
         }
         <div id="calculationForm">
             <div class="input-group mb-2">
-                <span class="input-group-text fw-bold">コーチ人数　</span>
-                <input type="number" id="typeNumber" class="form-control fw-bold" min="0" max="4" @bind="CoarchCount">
+                <SpinnerInput Label="コーチ人数" Min="0" Max="4" InputValue="@CoarchCount" OnInput="@((e) => {if(!int.TryParse(e.Value?.ToString(),out int o)){return;} CoarchCount = o;})"></SpinnerInput>
             </div>
         </div>
         <div class="mb-2">
@@ -60,46 +59,35 @@
         {
             <div>
                 <div class="input-group mb-1">
-                    <span class="input-group-text fw-bold">契約書Lv</span>
-                    <input type="number" id="typeNumber" class="form-control fw-bold" min="1" max="100" value="@(Level)" @oninput="((e) => {if(!int.TryParse(e.Value?.ToString(),out int o)){return;}; Level = o;AutoCompleteStatusFromLevel(Level);})">
+                    <SpinnerInput Label="契約書Lv" Min="1" Max="100" InputValue="@Level" OnInput="@((e) => {if(!int.TryParse(e.Value?.ToString(),out int o)){return;}; Level = o;AutoCompleteStatusFromLevel(Level);})"></SpinnerInput>
                 </div>
                 <div class="input-group mb-1">
-                    <span class="input-group-text fw-bold">ミート</span>
-                    <input type="number" id="typeNumber" class="form-control fw-bold" min="1" max="100" value="@(InputStatus.Meet)" @oninput="((e) => {if(!int.TryParse(e.Value?.ToString(),out int o)){return;} InputStatus.Meet = o;})">
+                    <SpinnerInput Label="ミート" Min="1" Max="100" InputValue="@InputStatus.Meet" OnInput="@((e) => {if(!int.TryParse(e.Value?.ToString(),out int o)){return;} InputStatus.Meet = o;})"></SpinnerInput>
                 </div>
                 <div class="input-group mb-1">
-                    <span class="input-group-text fw-bold">パワー</span>
-                    <input type="number" id="typeNumber" class="form-control fw-bold" min="1" max="100" value="@(InputStatus.Power)" @oninput="((e) => {if(!int.TryParse(e.Value?.ToString(),out int o)){return;} InputStatus.Power = o;})">
+                    <SpinnerInput Label="パワー" Min="1" Max="100" InputValue="@InputStatus.Power" OnInput="@((e) => {if(!int.TryParse(e.Value?.ToString(),out int o)){return;} InputStatus.Power = o;})"></SpinnerInput>
                 </div>
                 <div class="input-group mb-1">
-                    <span class="input-group-text fw-bold">走力　</span>
-                    <input type="number" id="typeNumber" class="form-control fw-bold" min="1" max="100" value="@(InputStatus.RunPower)" @oninput="((e) => {if(!int.TryParse(e.Value?.ToString(),out int o)){return;} InputStatus.RunPower = o;})">
+                    <SpinnerInput Label="走力" Min="1" Max="100" InputValue="@InputStatus.RunPower" OnInput="@((e) => {if(!int.TryParse(e.Value?.ToString(),out int o)){return;} InputStatus.RunPower = o;})"></SpinnerInput>
                 </div>
                 <div class="input-group mb-1">
-                    <span class="input-group-text fw-bold">肩力　</span>
-                    <input type="number" id="typeNumber" class="form-control fw-bold" min="1" max="100" value="@(InputStatus.ShoulderPower)" @oninput="((e) => {if(!int.TryParse(e.Value?.ToString(),out int o)){return;} InputStatus.ShoulderPower = o;})">
+                    <SpinnerInput Label="肩力" Min="1" Max="100" InputValue="@InputStatus.ShoulderPower" OnInput="@((e) => {if(!int.TryParse(e.Value?.ToString(),out int o)){return;} InputStatus.ShoulderPower = o;})"></SpinnerInput>
                 </div>
                 <div class="input-group mb-1">
-                    <span class="input-group-text fw-bold">守備力</span>
-                    <input type="number" id="typeNumber" class="form-control fw-bold" min="1" max="100" value="@(InputStatus.Fielding)" @oninput="((e) => {if(!int.TryParse(e.Value?.ToString(),out int o)){return;} InputStatus.Fielding = o;})">
+                    <SpinnerInput Label="守備力" Min="1" Max="100" InputValue="@InputStatus.Fielding" OnInput="@((e) => {if(!int.TryParse(e.Value?.ToString(),out int o)){return;} InputStatus.Fielding = o;})"></SpinnerInput>
                 </div>
                 <div class="input-group mb-2">
-                    <span class="input-group-text fw-bold">捕球　</span>
-                    <input type="number" id="typeNumber" class="form-control fw-bold" min="1" max="100" value="@(InputStatus.Catching)" @oninput="((e) => {if(!int.TryParse(e.Value?.ToString(),out int o)){return;} InputStatus.Catching = o;})">
+                    <SpinnerInput Label="捕球" Min="1" Max="100" InputValue="@InputStatus.Catching" OnInput="@((e) => {if(!int.TryParse(e.Value?.ToString(),out int o)){return;} InputStatus.Catching = o;})"></SpinnerInput>
                 </div>
-                @if (PQPlayerUnit?.Position == 1)
-                {
+                @if (PQPlayerUnit?.Position == 1) {
                     <div class="input-group mb-2">
-                        <span class="input-group-text fw-bold">球速　</span>
-                        <input type="number" id="typeNumber" class="form-control fw-bold" min="1" max="180" value="@(InputPitcherStatus.BallSpeed)" @oninput="((e) =>  {if(!int.TryParse(e.Value?.ToString(),out int o)){return;} InputPitcherStatus.BallSpeed = o;})">
+                        <SpinnerInput Label="球速" Min="1" Max="180" InputValue="@InputPitcherStatus.BallSpeed" OnInput="@((e) =>  {if(!int.TryParse(e.Value?.ToString(),out int o)){return;} InputPitcherStatus.BallSpeed = o;})"></SpinnerInput>
                     </div>
                     <div class="input-group mb-2">
-                        <span class="input-group-text fw-bold">コン　</span>
-                        <input type="number" id="typeNumber" class="form-control fw-bold" min="1" max="100" value="@(InputPitcherStatus.BallControl)" @oninput="((e) =>  {if(!int.TryParse(e.Value?.ToString(),out int o)){return;} InputPitcherStatus.BallControl = o;})">
+                        <SpinnerInput Label="コン" Min="1" Max="100" InputValue="@InputPitcherStatus.BallControl" OnInput="@((e) =>  {if(!int.TryParse(e.Value?.ToString(),out int o)){return;} InputPitcherStatus.BallControl = o;})"></SpinnerInput>
                     </div>
                     <div class="input-group mb-2">
-                        <span class="input-group-text fw-bold">スタ　</span>
-                        <input type="number" id="typeNumber" class="form-control fw-bold" min="1" max="100" value="@(InputPitcherStatus.Stamina)" @oninput="((e) =>  {if(!int.TryParse(e.Value?.ToString(),out int o)){return;} InputPitcherStatus.Stamina = o;})">
+                        <SpinnerInput Label="スタ" Min="1" Max="100" InputValue="@InputPitcherStatus.Stamina" OnInput="@((e) =>  {if(!int.TryParse(e.Value?.ToString(),out int o)){return;} InputPitcherStatus.Stamina = o;})"></SpinnerInput>
                     </div>
                 }
             </div>
@@ -322,9 +310,7 @@
     }
 
     public async Task CaluculateCoach() {
-        if (PQPlayerUnit == null) {
-            return;
-        }
+        if (PQPlayerUnit == null) { return; }
         //とりあえず野手
         var canLearnAbilitys = PQAbilitys.Where(x => x.PlayerType == 1).ToList();
         //投手
@@ -335,6 +321,9 @@
         deckAbilites = new();
         DeckLimit = new(0, 0, 0, 0, 0, 0, 0, 0);
         DeckPitcherLimit = new(0, 0, 0, 0);
+
+        if (CoarchCount == 0) { return; }
+
         //所持している能力、同時取得できないを消す
         var pqAbilityes = await RemoveOwnedAbilities(canLearnAbilitys);
         pqAbilityes = RemoveNonConcurrentAbilities(pqAbilityes);
