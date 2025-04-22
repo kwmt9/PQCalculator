@@ -35,31 +35,57 @@
                 <SpinnerInput Label="コーチ人数" Min="0" Max="4" InputValue="@CoarchCount" OnInput="@((e) => {if(!int.TryParse(e.Value?.ToString(),out int o)){return;} CoarchCount = o;})"></SpinnerInput>
             </div>
         </div>
-        <div class="mb-2">
+        <div class="mb-2 d-flex flex-column align-items-center">
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="check1" @onchange='(e) => isSubPosition = (bool)e.Value'>
-                <label class="form-check-label" for="check1">
-                    サブポジ運用
-                </label>
+                <input class="form-check-input" type="checkbox" id="check1" @onchange='(e) => {isSubPosition = (bool)e.Value; GetUnitStates();}'>  
+                <label class="form-check-label" for="check1">  
+                    サブポジ運用  
+                </label>  
             </div>
+            @if (isSubPosition){    
+                <div class="d-flex">
+                    <div class="form-check px-1">
+                        <input class="form-check-input mx-1 " type="radio" id="sub-radio-0" checked name="sub-pos" value="0" @onchange="(e) => {if(!int.TryParse(e.Value?.ToString(),out int o)){return;} SelectedSubpos = o;GetUnitStates();}">
+                        <label class="form-check-label" for="sub-radio-0">
+                            サブポジ
+                        </label>
+                    </div>
+
+                    <div class="form-check px-1">
+                        <input class="form-check-input mx-1" type="radio" id="sub-radio-1" name="sub-pos" value="1" @onchange="(e) => {if(!int.TryParse(e.Value?.ToString(),out int o)){return;} SelectedSubpos = o;GetUnitStates();}">
+                        <label class="form-check-label" for="sub-radio-1">
+                            サブポジ〇
+                        </label>
+                    </div>
+
+                    <div class="form-check px-1">
+                        <input class="form-check-input mx-1" type="radio" id="sub-radio-2" name="sub-pos" value="2" @onchange="(e) => {if(!int.TryParse(e.Value?.ToString(),out int o)){return;} SelectedSubpos = o;GetUnitStates();}">
+                        <label class="form-check-label" for="sub-radio-2">
+                            サブポジ◎
+                        </label>
+                    </div>
+                </div>
+            }
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="check2" @onchange='(e) => isBench = (bool)e.Value'>
-                <label class="form-check-label" for="check2">
-                    ベンチ運用
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="check3" @onchange='(e) => {isCalucSatei = (bool)e.Value;}'>
-                <label class="form-check-label" for="check3">
-                    査定を計算
-                </label>
-            </div>
-        </div>
+                <input class="form-check-input" type="checkbox" id="check2" @onchange='(e) => isBench = (bool)e.Value'>  
+                <label class="form-check-label" for="check2">  
+                    ベンチ運用  
+                </label>  
+            </div>  
+
+            <div class="form-check">  
+                <input class="form-check-input" type="checkbox" id="check3" @onchange='(e) => {isCalucSatei = (bool)e.Value;}'>  
+                <label class="form-check-label" for="check3">  
+                    査定を計算  
+                </label>  
+            </div>  
+        </div>  
+
         @if (isCalucSatei)
         {
             <div>
                 <div class="input-group mb-1">
-                    <SpinnerInput Label="契約書Lv" Min="1" Max="100" InputValue="@Level" OnInput="@((e) => {if(!int.TryParse(e.Value?.ToString(),out int o)){return;}; Level = o;AutoCompleteStatusFromLevel(Level);})"></SpinnerInput>
+                    <SpinnerInput Label="契約書Lv" Min="1" Max="100" InputValue="@Level" OnInput="@((e) => {if(!int.TryParse(e.Value?.ToString(),out int o)){return;}; Level = o;GetUnitStates();})"></SpinnerInput>
                 </div>
                 <div class="input-group mb-1">
                     <SpinnerInput Label="ミート" Min="1" Max="100" InputValue="@InputStatus.Meet" OnInput="@((e) => {if(!int.TryParse(e.Value?.ToString(),out int o)){return;} InputStatus.Meet = o;})"></SpinnerInput>
@@ -211,6 +237,8 @@
     bool isBench = false;
     bool isCalucSatei = false;
 
+    int SelectedSubpos { get; set; } = 0;
+
     HashSet<int> notOwnedUnits = new();
     private void AddNotOwnedUnit(int id) {
         notOwnedUnits.Add(id);
@@ -284,29 +312,6 @@
         InputStatus = new(0, 0, 50, 50, 50, 50, 50, 50);
         InputPitcherStatus = new(0, 120, 50, 50);
         await LoadLastDeck();
-    }
-
-    public async Task GetUnitStates() {
-        if (AutoCompleteInput?.InputValue == null) { return; }
-        PQPlayerUnit = null;
-        PQPlayerUnit = PQPlayerUnits?.FirstOrDefault(u => u.Name == AutoCompleteInput?.InputValue);
-        Console.WriteLine(PQPlayerUnit.Name);
-        if (PQPlayerUnit.Status != null) {
-            InputStatus = new(0, 0,
-                PQPlayerUnit.Status.Meet,
-                PQPlayerUnit.Status.Power,
-                PQPlayerUnit.Status.RunPower,
-                PQPlayerUnit.Status.ShoulderPower,
-                PQPlayerUnit.Status.Fielding,
-                PQPlayerUnit.Status.Catching);
-        }
-        if (PQPlayerUnit.PitcherStatus != null) {
-            InputPitcherStatus = new(0,
-                PQPlayerUnit.PitcherStatus.BallSpeed,
-                PQPlayerUnit.PitcherStatus.BallControl,
-                PQPlayerUnit.PitcherStatus.Stamina);
-        }
-        StateHasChanged();
     }
 
     public async Task CaluculateCoach() {
@@ -483,7 +488,7 @@
         var excludedAbilityData = excludedInfo.Select(a => (PQAbilitys.First(x => x.Name == a.name).Id, a.pos));
         IEnumerable<PQAbility> excludedAbilitys = pqAbilityes.Where(x => !excludedAbilityData.Where(z => z.pos != PQPlayerUnit.Position).Any(z => z.Id == x.Id));
         //
-        if (isSubPosition){
+        if (isSubPosition && SelectedSubpos != 2){
             excludedAbilitys = pqAbilityes.Where(x => !excludedAbilityData.Any(z => z.Id == x.Id));
         }
         return excludedAbilitys.ToList();
@@ -810,20 +815,42 @@
     int CalucStatusFromLevel(int level,int baseStatus){
         return (int)Math.Round(baseStatus * (0.5 + 0.01 * level));
     }
-    ///契約書レベルからステータスを自動で入力するれる
-    void AutoCompleteStatusFromLevel(int level){
-        if (PQPlayerUnit == null) return;
 
-        InputStatus.Meet = CalucStatusFromLevel(level, PQPlayerUnit.Status.Meet);
-        InputStatus.Power = CalucStatusFromLevel(level, PQPlayerUnit.Status.Power);
-        InputStatus.RunPower = CalucStatusFromLevel(level, PQPlayerUnit.Status.RunPower);
-        InputStatus.ShoulderPower = CalucStatusFromLevel(level, PQPlayerUnit.Status.ShoulderPower);
-        InputStatus.Fielding = CalucStatusFromLevel(level, PQPlayerUnit.Status.Fielding);
-        InputStatus.Catching = CalucStatusFromLevel(level, PQPlayerUnit.Status.Catching);
+    public void GetUnitStates() {
+        if (AutoCompleteInput?.InputValue == null) { return; }
+        PQPlayerUnit = null;
+        PQPlayerUnit = PQPlayerUnits?.FirstOrDefault(u => u.Name == AutoCompleteInput?.InputValue);
+        Console.WriteLine(PQPlayerUnit.Name);
 
-        if (PQPlayerUnit.PitcherStatus == null) return;
-        InputPitcherStatus.BallSpeed = 100 + CalucStatusFromLevel(level, PQPlayerUnit.PitcherStatus.BallSpeed - 100);
-        InputPitcherStatus.BallControl = CalucStatusFromLevel(level, PQPlayerUnit.PitcherStatus.BallControl);
-        InputPitcherStatus.Stamina = CalucStatusFromLevel(level, PQPlayerUnit.PitcherStatus.Stamina);
+        float fieldDeclineRate = 1f;
+        if (SelectedSubpos == 0) {
+            fieldDeclineRate = 0.7f;
+        }
+        else if (SelectedSubpos == 1) {
+            fieldDeclineRate = 0.8f;
+        }
+        else if (SelectedSubpos == 2) {
+            fieldDeclineRate = 1f;
+        }
+
+        if (PQPlayerUnit.Status != null) {
+            int fieldTemp = CalucStatusFromLevel(Level, PQPlayerUnit.Status.Fielding);
+
+            InputStatus = new(0, 0,
+            CalucStatusFromLevel(Level, PQPlayerUnit.Status.Meet),
+            CalucStatusFromLevel(Level, PQPlayerUnit.Status.Power),
+            CalucStatusFromLevel(Level, PQPlayerUnit.Status.RunPower),
+            CalucStatusFromLevel(Level, PQPlayerUnit.Status.ShoulderPower),
+            isSubPosition ? (int)Math.Floor(fieldTemp * fieldDeclineRate) : fieldTemp,
+            CalucStatusFromLevel(Level, PQPlayerUnit.Status.Catching));
+        }
+        if (PQPlayerUnit.PitcherStatus != null) {
+            InputPitcherStatus = new(0,
+            100 + CalucStatusFromLevel(Level, PQPlayerUnit.PitcherStatus.BallSpeed - 100),
+            CalucStatusFromLevel(Level, PQPlayerUnit.PitcherStatus.BallControl),
+            CalucStatusFromLevel(Level, PQPlayerUnit.PitcherStatus.Stamina));
+        }
+        StateHasChanged();
     }
+
 }
