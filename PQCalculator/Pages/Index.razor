@@ -107,7 +107,7 @@
                 </div>
                 @if (PQPlayerUnit?.Position == 1) {
                     <div class="input-group mb-2">
-                        <SpinnerInput Label="球速" Min="1" Max="180" InputValue="@InputPitcherStatus.BallSpeed" OnInput="@((e) =>  {if(!int.TryParse(e.Value?.ToString(),out int o)){return;} InputPitcherStatus.BallSpeed = o;})"></SpinnerInput>
+                        <SpinnerInput Label="球速" Min="1" Max="190" InputValue="@InputPitcherStatus.BallSpeed" OnInput="@((e) =>  {if(!int.TryParse(e.Value?.ToString(),out int o)){return;} InputPitcherStatus.BallSpeed = o;})"></SpinnerInput>
                     </div>
                     <div class="input-group mb-2">
                         <SpinnerInput Label="コン" Min="1" Max="100" InputValue="@InputPitcherStatus.BallControl" OnInput="@((e) =>  {if(!int.TryParse(e.Value?.ToString(),out int o)){return;} InputPitcherStatus.BallControl = o;})"></SpinnerInput>
@@ -635,13 +635,11 @@
                 double newScore = SateiCalculator.EvaluateDeckStatusScore(PQPlayerUnit.Position, InputStatus, InputPitcherStatus, limits.fLimit, limits.pLimit);
                 newUnitPool.Remove(newUnit);
                 // スコアが高ければ入れ替え
-                if (oldScore < newScore)
-                {
+                if (oldScore <= newScore) {
                     Console.WriteLine($"{oldScore}→{newScore}");
                     //プールをリセット
                     newUnitPool = new List<PQEventUnit>(RemoveAddedUnits);
                     noAbilityUnits.Clear();
-                    i = 0;
                     //
                     decks = copiedDecks;
                     DeckLimit = limits.fLimit;
@@ -801,7 +799,7 @@
 
     double CalucScore(){
         if (PQPlayerUnit == null){ return 0d; }
-        var sateiTaple = SateiCalculator.SumPlayerBase_DeckScore(PQPlayerUnit, PQAbilitys, DeckLimit, InputStatus, DeckPitcherLimit, InputPitcherStatus, deckAbilites, isBench);
+        var sateiTaple = SateiCalculator.SumPlayerBase_DeckScore(PQPlayerUnit, PQAbilitys, DeckLimit, InputStatus, DeckPitcherLimit, InputPitcherStatus, deckAbilites, isBench, SelectedSubpos);
         sateiInfos = sateiTaple.sateiInfos;
         return sateiTaple.score;
     }
