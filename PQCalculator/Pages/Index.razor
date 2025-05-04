@@ -37,8 +37,8 @@
         </div>
         <div class="mb-2 d-flex flex-column align-items-center">
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="check1" @onchange='(e) => {isSubPosition = (bool)e.Value; GetUnitStates();}'>  
-                <label class="form-check-label" for="check1">  
+                <input class="form-check-input" type="checkbox" id="check1" @onchange='(e) => {isSubPosition = (bool)e.Value; GetUnitStates();}'>
+                <label class="form-check-label" for="check1" style="user-select: none;">
                     サブポジ運用  
                 </label>  
             </div>
@@ -46,21 +46,21 @@
                 <div class="d-flex">
                     <div class="form-check px-1">
                         <input class="form-check-input mx-1 " type="radio" id="sub-radio-0" name="sub-pos" value="0" @onchange="(e) => {if(!int.TryParse(e.Value?.ToString(),out int o)){return;} SelectedSubpos = o;GetUnitStates();CaluculateCoach();}">
-                        <label class="form-check-label" for="sub-radio-0">
+                        <label class="form-check-label" for="sub-radio-0" style="user-select: none;">
                             サブポジ
                         </label>
                     </div>
 
                     <div class="form-check px-1">
                         <input class="form-check-input mx-1" type="radio" id="sub-radio-1" name="sub-pos" value="1" @onchange="(e) => {if(!int.TryParse(e.Value?.ToString(),out int o)){return;} SelectedSubpos = o;GetUnitStates();CaluculateCoach();}">
-                        <label class="form-check-label" for="sub-radio-1">
+                        <label class="form-check-label" for="sub-radio-1" style="user-select: none;">
                             サブポジ〇
                         </label>
                     </div>
 
                     <div class="form-check px-1">
                         <input class="form-check-input mx-1" type="radio" id="sub-radio-2" name="sub-pos" value="2" @onchange="(e) => {if(!int.TryParse(e.Value?.ToString(),out int o)){return;} SelectedSubpos = o;GetUnitStates();CaluculateCoach();}">
-                        <label class="form-check-label" for="sub-radio-2">
+                        <label class="form-check-label" for="sub-radio-2" style="user-select: none;">
                             サブポジ◎
                         </label>
                     </div>
@@ -68,14 +68,35 @@
             }
             <div class="form-check">
                 <input class="form-check-input" type="checkbox" id="check2" @onchange='(e) => {isBench = (bool)e.Value; CaluculateCoach();}'>
-                <label class="form-check-label" for="check2">  
+                <label class="form-check-label" for="check2" style="user-select: none;">
                     ベンチ運用  
                 </label>  
-            </div>  
+            </div>
 
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="check4" @onchange='(e) => {isJukuren = (bool)e.Value; SelectJukurenIndexes=new();}'>
+                <label class="form-check-label" for="check4" style="user-select: none;">
+                    熟練の〇〇持ち
+                </label>
+            </div>
+            @if (isJukuren) {
+                <div class="d-flex">
+                    @for(int i = 0;i < JukurenInfos.Count;i++){
+                        int index = i;
+                        var jukurenInfo = JukurenInfos[index];
+
+                        <div class="form-check px-1">
+                            <input class="form-check-input mx-1 " type="checkbox" id="@($"sub-radio-{index}")" name="jukuren" @onchange="(e) => { if((bool)e.Value == true){SelectJukurenIndexes.Add(index);}else{SelectJukurenIndexes.Remove(index);};}">
+                            <label class="form-check-label" for="@($"sub-radio-{index}")" style="user-select: none;">
+                                @jukurenInfo.Name
+                            </label>
+                        </div>
+                    }
+                </div>
+            }
             <div class="form-check">  
-                <input class="form-check-input" type="checkbox" id="check3" @onchange='(e) => {isCalucSatei = (bool)e.Value;}'>  
-                <label class="form-check-label" for="check3">  
+                <input class="form-check-input" type="checkbox" id="check3" @onchange='(e) => {isCalucSatei = (bool)e.Value;}'>
+                <label class="form-check-label" for="check3" style="user-select: none;">
                     査定を計算  
                 </label>  
             </div>  
@@ -235,9 +256,65 @@
 
     bool isSubPosition = false;
     bool isBench = false;
+    bool isJukuren = false;
     bool isCalucSatei = false;
 
     int SelectedSubpos { get; set; } = 0;
+
+    List<int> SelectJukurenIndexes = new() { };
+    List<Jukuren> JukurenInfos = new(){
+        //熟練の打撃
+        new Jukuren(new UnitFielderStatus(0, 0, 7, 7, 0, 0, 0, 0),Jukuren.JukurenType.Dageki,1),
+        //new Jukuren(new UnitFielderStatus(0, 0, 0, 0, 0, 0, 0, 0),Jukuren.JukurenType.Dageki,2),
+        //new Jukuren(new UnitFielderStatus(0, 0, 0, 0, 0, 0, 0, 0),Jukuren.JukurenType.Dageki,3),
+        //new Jukuren(new UnitFielderStatus(0, 0, 0, 0, 0, 0, 0, 0),Jukuren.JukurenType.Dageki,4),
+        //new Jukuren(new UnitFielderStatus(0, 0, 0, 0, 0, 0, 0, 0),Jukuren.JukurenType.Dageki,5),
+        //熟練の走塁
+        new Jukuren(new UnitFielderStatus(0, 0, 0, 0, 10, 0, 0, 0),Jukuren.JukurenType.Run,1),
+        //new Jukuren(new UnitFielderStatus(0, 0, 0, 0, 0, 0, 0, 0),Jukuren.JukurenType.Run,2),
+        //new Jukuren(new UnitFielderStatus(0, 0, 0, 0, 0, 0, 0, 0),Jukuren.JukurenType.Run,3),
+        //new Jukuren(new UnitFielderStatus(0, 0, 0, 0, 0, 0, 0, 0),Jukuren.JukurenType.Run,4),
+        //new Jukuren(new UnitFielderStatus(0, 0, 0, 0, 0, 0, 0, 0),Jukuren.JukurenType.Run,5),
+        //熟練の守備
+        new Jukuren(new UnitFielderStatus(0, 0, 0, 0, 0, 6, 6, 6),Jukuren.JukurenType.Shubi,1),
+        //new Jukuren(new UnitFielderStatus(0, 0, 0, 0, 0, 8, 8, 8),Jukuren.JukurenType.Shubi,2),
+        //new Jukuren(new UnitFielderStatus(0, 0, 0, 0, 0, 0, 0, 0),Jukuren.JukurenType.Shubi,3),
+        //new Jukuren(new UnitFielderStatus(0, 0, 0, 0, 0, 0, 0, 0),Jukuren.JukurenType.Shubi,4),
+        //new Jukuren(new UnitFielderStatus(0, 0, 0, 0, 0, 0, 0, 0),Jukuren.JukurenType.Shubi,5),
+        //熟練の投手
+        new Jukuren(new UnitPitcherStatus(0, 6, 6, 6),Jukuren.JukurenType.Pitcher,1),
+        //new Jukuren(new UnitPitcherStatus(0, 0, 0, 0),Jukuren.JukurenType.Pitcher,2),
+        //new Jukuren(new UnitPitcherStatus(0, 0, 0, 0),Jukuren.JukurenType.Pitcher,3),
+        //new Jukuren(new UnitPitcherStatus(0, 0, 0, 0),Jukuren.JukurenType.Pitcher,4),
+        //new Jukuren(new UnitPitcherStatus(0, 0, 0, 0),Jukuren.JukurenType.Pitcher,5),
+    };
+    public class Jukuren {
+        public enum JukurenType {
+            Dageki = 0,
+            Run = 1,
+            Shubi = 2,
+            Pitcher = 3,
+        }
+        public UnitFielderStatus UnitFielderStatus { get; set; }
+        public UnitPitcherStatus UnitPitcherStatus { get; set; }
+        public JukurenType Type { get; set; }
+        public int Level { get; set; }
+        public string Name { get { return $"{names[(int)Type]}{Level}"; } }
+        string[] names = new string[4] { "熟練の打撃", "熟練の走塁", "熟練の守備", "熟練の投球" };
+
+        public Jukuren(UnitFielderStatus unitStatus, JukurenType type, int level) {
+            Type = type;
+            Level = level;
+            UnitFielderStatus = unitStatus;
+            UnitPitcherStatus = new(0, 0, 0, 0);
+        }
+        public Jukuren(UnitPitcherStatus unitStatus, JukurenType type, int level) {
+            Type = type;
+            Level = level;
+            UnitFielderStatus = new(0, 0, 0, 0, 0, 0, 0, 0);
+            UnitPitcherStatus = unitStatus;
+        }
+    }
 
     HashSet<int> notOwnedUnits = new();
     private void AddNotOwnedUnit(int id) {
@@ -273,7 +350,6 @@
             notOwnedUnits = new HashSet<int>();  // 失敗した場合もデフォルト値を設定
         }
     }
-
     //ローカルストレージに保存
     private async Task SetLastDeck() {
         await JSRuntime.InvokeVoidAsync(
@@ -324,8 +400,10 @@
         }
         decks = new();
         deckAbilites = new();
-        DeckLimit = new(0, 0, 0, 0, 0, 0, 0, 0);
-        DeckPitcherLimit = new(0, 0, 0, 0);
+
+        var limit = CalucDeckLmit(null);
+        DeckLimit = limit.fLimit;//new(0, 0, 0, 0, 0, 0, 0, 0);
+        DeckPitcherLimit = limit.pLimit;//new(0, 0, 0, 0);
 
         if (CoarchCount == 0) { return; }
 
@@ -514,19 +592,33 @@
     public (UnitFielderStatus fLimit, UnitPitcherStatus pLimit) CalucDeckLmit(List<Deck> pqdecks) {
         UnitFielderStatus fLimit = new(0, 0, 0, 0, 0, 0, 0, 0);
         UnitPitcherStatus pLimit = new(0, 0, 0, 0);
+        //熟練を入れる
+        var jukurenAdds = SelectJukurenIndexes.Select(x => JukurenInfos[x]);
+        foreach (var jukurenAdd in jukurenAdds) {
+            fLimit.Meet += jukurenAdd.UnitFielderStatus.Meet;
+            fLimit.Power += jukurenAdd.UnitFielderStatus.Power;
+            fLimit.RunPower += jukurenAdd.UnitFielderStatus.RunPower;
+            fLimit.ShoulderPower += jukurenAdd.UnitFielderStatus.ShoulderPower;
+            fLimit.Fielding += jukurenAdd.UnitFielderStatus.Fielding;
+            fLimit.Catching += jukurenAdd.UnitFielderStatus.Catching;
+            pLimit.BallControl += jukurenAdd.UnitPitcherStatus.BallControl;
+            pLimit.Stamina += jukurenAdd.UnitPitcherStatus.Stamina;
+            pLimit.BallSpeed += jukurenAdd.UnitPitcherStatus.BallSpeed;
+        }
+        //デッキの上限を計算
+        if (pqdecks != null) {
+            foreach (var deck in pqdecks) {
+                fLimit.Meet += deck.unit.Limit.Meet;
+                fLimit.Power += deck.unit.Limit.Power;
+                fLimit.RunPower += deck.unit.Limit.RunPower;
+                fLimit.ShoulderPower += deck.unit.Limit.ShoulderPower;
+                fLimit.Fielding += deck.unit.Limit.Fielding;
+                fLimit.Catching += deck.unit.Limit.Catching;
 
-        foreach (var deck in pqdecks)
-        {
-            fLimit.Meet += deck.unit.Limit.Meet;
-            fLimit.Power += deck.unit.Limit.Power;
-            fLimit.RunPower += deck.unit.Limit.RunPower;
-            fLimit.ShoulderPower += deck.unit.Limit.ShoulderPower;
-            fLimit.Fielding += deck.unit.Limit.Fielding;
-            fLimit.Catching += deck.unit.Limit.Catching;
-
-            pLimit.BallSpeed += deck.unit.Limit.BallSpeed;
-            pLimit.BallControl += deck.unit.Limit.BallControl;
-            pLimit.Stamina += deck.unit.Limit.Stamina;
+                pLimit.BallSpeed += deck.unit.Limit.BallSpeed;
+                pLimit.BallControl += deck.unit.Limit.BallControl;
+                pLimit.Stamina += deck.unit.Limit.Stamina;
+            }
         }
         return (fLimit, pLimit);
     }
@@ -844,5 +936,4 @@
         }
         StateHasChanged();
     }
-
 }

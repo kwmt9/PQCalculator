@@ -17,7 +17,6 @@ namespace PQCalculator.Model {
         public int Id { get; set; }
         [JsonIgnore]
         public int UnitId { get; set; }
-
         public int Dandou { get; set; }
         public int Meet { get; set; }
         public int Power { get; set; }
