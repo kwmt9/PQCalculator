@@ -624,17 +624,17 @@
     }
     //上げ上げ山
     public async Task CaluculateLimitCoachMode2() {
-        int maxIterations = 30;
-        int maxChange = 15;
+        int maxIterations = 40;
+        int maxChange = 25;
         //一旦デッキ決める
         await CaluculateLimitCoachMode3();
         double oldScore = SateiCalculator.EvaluateDeckStatusScore(PQPlayerUnit.Position,InputStatus, InputPitcherStatus, DeckLimit, DeckPitcherLimit);
 
+        var UnitsWithLimit = RemoveAddedUnits.Where(x => x.Limit.SumFielder != 0 || x.Limit.SumPicher != 0).ToList();
         List<PQEventUnit> changedUnits = new(); 
         //いい感じにする
-        for (int j = 0; j < maxChange; j++)
-        {
-            var newUnitPool = new List<PQEventUnit>(RemoveAddedUnits);
+        for (int j = 0; j < maxChange; j++){
+            var newUnitPool = new List<PQEventUnit>(UnitsWithLimit);
             //アビ要員
             var changedUnitIds = new HashSet<int>(changedUnits.Select(v => v.Id));
             var noAbilityUnits = decks.Where(x => x.Ability == null && !changedUnitIds.Contains(x.unit.Id)).ToList();
@@ -643,50 +643,26 @@
                 //50以下が存在しないとき、やらない
                 if (DeckLimit.Meet >= 50 && DeckLimit.Power >= 50 && DeckLimit.RunPower >= 50 && DeckLimit.ShoulderPower >= 50 && DeckLimit.Fielding >= 50 && DeckLimit.Catching >= 50)
                 {
-                    if (PQPlayerUnit.Position == 1)
-                    {
-                        if (DeckPitcherLimit.BallControl >= 50 && DeckPitcherLimit.Stamina >= 50)
-                        {
-                            break;
-                        }
+                    if (PQPlayerUnit.Position == 1) {
+                        if (DeckPitcherLimit.BallControl >= 50 && DeckPitcherLimit.Stamina >= 50) 
+                        { break; }
                     }
-                    else
-                    {
-                        break;
-                    }
+                    else { break; }
                 };
                 //アビ要員はいれかえない
                 var replaceableDeckUnits = noAbilityUnits;
                 // 50以下か。抜いたときに、50以下にならない。
-                if (true){
-                    replaceableDeckUnits = replaceableDeckUnits
-                    //50未満の上限を持っていない
-                    .Where(x =>
-                        !(DeckLimit.Meet + x.unit.Limit.Meet <= 50 && x.unit.Limit.Meet > 0) &&
-                        !(DeckLimit.Power + x.unit.Limit.Power <= 50 && x.unit.Limit.Power > 0) &&
-                        !(DeckLimit.RunPower + x.unit.Limit.RunPower <= 50 && x.unit.Limit.RunPower > 0) &&
-                        !(DeckLimit.ShoulderPower + x.unit.Limit.ShoulderPower <= 50 && x.unit.Limit.ShoulderPower > 0) &&
-                        !(DeckLimit.Fielding + x.unit.Limit.Fielding <= 50 && x.unit.Limit.Fielding > 0) &&
-                        !(DeckLimit.Catching + x.unit.Limit.Catching <= 50 && x.unit.Limit.Catching > 0) &&
-                        !(DeckPitcherLimit.BallControl + x.unit.Limit.BallControl <= 50 && x.unit.Limit.BallControl > 0) &&
-                        !(DeckPitcherLimit.Stamina + x.unit.Limit.Stamina <= 50 && x.unit.Limit.Stamina > 0))
-                        .ToList();
-                }
-                else
-                {
-                    replaceableDeckUnits = replaceableDeckUnits
-                    //101未満の上限を持っていない
-                    .Where(x =>
-                        !(InputStatus.Meet + DeckLimit.Meet <= 101 && x.unit.Limit.Meet > 0) &&
-                        !(InputStatus.Power + DeckLimit.Power <= 101 && x.unit.Limit.Power > 0) &&
-                        !(InputStatus.RunPower + DeckLimit.RunPower <= 101 && x.unit.Limit.RunPower > 0) &&
-                        !(InputStatus.ShoulderPower + DeckLimit.ShoulderPower <= 101 && x.unit.Limit.ShoulderPower > 0) &&
-                        !(InputStatus.Fielding + DeckLimit.Fielding <= 101 && x.unit.Limit.Fielding > 0) &&
-                        !(InputStatus.Catching + DeckLimit.Catching <= 101 && x.unit.Limit.Catching > 0) &&
-                        !(InputPitcherStatus.BallControl + DeckPitcherLimit.BallControl <= 101 && x.unit.Limit.BallControl > 0) &&
-                        !(InputPitcherStatus.Stamina + DeckPitcherLimit.Stamina <= 101 && x.unit.Limit.Stamina > 0))
+                replaceableDeckUnits = replaceableDeckUnits
+                .Where(x =>
+                    (DeckLimit.Meet >= 50 && x.unit.Limit.Meet > 0) ||
+                    (DeckLimit.Power >= 50 && x.unit.Limit.Power > 0) ||
+                    (DeckLimit.RunPower >= 50 && x.unit.Limit.RunPower > 0) ||
+                    (DeckLimit.ShoulderPower >= 50 && x.unit.Limit.ShoulderPower > 0) ||
+                    (DeckLimit.Fielding >= 50 && x.unit.Limit.Fielding > 0) ||
+                    (DeckLimit.Catching >= 50 && x.unit.Limit.Catching > 0) ||
+                    (DeckPitcherLimit.BallControl >= 50 && x.unit.Limit.BallControl > 0) ||
+                    (DeckPitcherLimit.Stamina >= 50 && x.unit.Limit.Stamina > 0))
                     .ToList();
-                }
 
                 //上限が足りていないところを優先する。
                 List<(int id, int status, int limit)> statusLimitIds = new() {
@@ -696,17 +672,17 @@
                     (4,InputStatus.ShoulderPower , DeckLimit.ShoulderPower),
                     (5,InputStatus.Fielding , DeckLimit.Fielding),
                     (6,InputStatus.Catching , DeckLimit.Catching),
-                    (7,InputPitcherStatus.BallControl, DeckPitcherLimit.BallControl),
-                    (8,InputPitcherStatus.Stamina, DeckPitcherLimit.Stamina),
                 };
-
+                if(PQPlayerUnit.Position == 1){
+                    statusLimitIds.Add((7, InputPitcherStatus.BallControl, DeckPitcherLimit.BallControl));
+                    statusLimitIds.Add((8, InputPitcherStatus.Stamina, DeckPitcherLimit.Stamina));
+                }
                 var targetStatus = statusLimitIds.Where(x => x.limit < 50)
                     .OrderByDescending(x => x.limit)
                     .FirstOrDefault();
                 if (replaceableDeckUnits.Count <= 0 || targetStatus.id == 0){
                     break;
                 }
-
                 // 対象の上限が少ない順
                 var oldUnit = TargetLimitByIdOrder(replaceableDeckUnits, targetStatus.id)
                     // 野手上限合計が、一番低いやつ
