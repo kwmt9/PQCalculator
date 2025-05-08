@@ -662,14 +662,14 @@
                     replaceableDeckUnits = replaceableDeckUnits
                     //50未満の上限を持っていない
                     .Where(x =>
-                        !(DeckLimit.Meet <= 50 && x.unit.Limit.Meet > 0) &&
-                        !(DeckLimit.Power <= 50 && x.unit.Limit.Power > 0) &&
-                        !(DeckLimit.RunPower <= 50 && x.unit.Limit.RunPower > 0) &&
-                        !(DeckLimit.ShoulderPower <= 50 && x.unit.Limit.ShoulderPower > 0) &&
-                        !(DeckLimit.Fielding <= 50 && x.unit.Limit.Fielding > 0) &&
-                        !(DeckLimit.Catching <= 50 && x.unit.Limit.Catching > 0) &&
-                        !(DeckPitcherLimit.BallControl <= 50 && x.unit.Limit.BallControl > 0) &&
-                        !(DeckPitcherLimit.Stamina <= 50 && x.unit.Limit.Stamina > 0))
+                        !(DeckLimit.Meet + x.unit.Limit.Meet <= 50 && x.unit.Limit.Meet > 0) &&
+                        !(DeckLimit.Power + x.unit.Limit.Power <= 50 && x.unit.Limit.Power > 0) &&
+                        !(DeckLimit.RunPower + x.unit.Limit.RunPower <= 50 && x.unit.Limit.RunPower > 0) &&
+                        !(DeckLimit.ShoulderPower + x.unit.Limit.ShoulderPower <= 50 && x.unit.Limit.ShoulderPower > 0) &&
+                        !(DeckLimit.Fielding + x.unit.Limit.Fielding <= 50 && x.unit.Limit.Fielding > 0) &&
+                        !(DeckLimit.Catching + x.unit.Limit.Catching <= 50 && x.unit.Limit.Catching > 0) &&
+                        !(DeckPitcherLimit.BallControl + x.unit.Limit.BallControl <= 50 && x.unit.Limit.BallControl > 0) &&
+                        !(DeckPitcherLimit.Stamina + x.unit.Limit.Stamina <= 50 && x.unit.Limit.Stamina > 0))
                         .ToList();
                 }
                 else
@@ -696,20 +696,24 @@
                     (4,InputStatus.ShoulderPower , DeckLimit.ShoulderPower),
                     (5,InputStatus.Fielding , DeckLimit.Fielding),
                     (6,InputStatus.Catching , DeckLimit.Catching),
-            };
+                    (7,InputPitcherStatus.BallControl, DeckPitcherLimit.BallControl),
+                    (8,InputPitcherStatus.Stamina, DeckPitcherLimit.Stamina),
+                };
+
                 var targetStatus = statusLimitIds.Where(x => x.limit < 50)
                     .OrderByDescending(x => x.limit)
                     .FirstOrDefault();
-
                 if (replaceableDeckUnits.Count <= 0 || targetStatus.id == 0){
                     break;
                 }
+
                 // 対象の上限が少ない順
                 var oldUnit = TargetLimitByIdOrder(replaceableDeckUnits, targetStatus.id)
                     // 野手上限合計が、一番低いやつ
                     .ThenBy(x => x.unit.Limit.SumFielder)
                     .ThenBy(x => x.unit.Limit.SumPicher)
                     .FirstOrDefault();
+
                 if (oldUnit == null) break;
                 changedUnits.Add(oldUnit.unit);
 
@@ -827,6 +831,10 @@
                 return deck.OrderBy(x => x.unit.Limit.Fielding);
             case 6:
                 return deck.OrderBy(x => x.unit.Limit.Catching);
+            case 7:
+                return deck.OrderBy(x => x.unit.Limit.BallControl);
+            case 8:
+                return deck.OrderBy(x => x.unit.Limit.Stamina);
         }
         return deck.OrderBy(x => x);
     }
