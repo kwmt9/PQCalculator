@@ -740,9 +740,11 @@
                 }
             }
         }
+        //
         //各デッキに割り振る
         List<Deck> tempDecks = decks.Where(x => x.Ability != null).ToList();
         var g = decks.Where(x => x.Ability == null).GroupBy(x => x.unit.Name).OrderByDescending(x => x.Count());
+        Console.WriteLine($"1 {g.Count()}");
         foreach (var item in g) {
             for (int k = 0; k < item.Count(); k++) {
                 var item2 = item.ElementAt(k);
@@ -751,9 +753,11 @@
                     .OrderBy(x => x.Count())
                     .Where(x => !x.Any(z => z.unit.Id == item2.unit.Id))
                     .First().Key;
+                Console.WriteLine($"2 {g.Count()}");
                 tempDecks.Add(new Deck(item2.unit, item2.Ability, num));
             }
         }
+        Console.WriteLine($"3 {tempDecks.Count()}");
         decks = tempDecks;
     }
     public int EvaluateDeckLmitScore(UnitFielderStatus flimit,UnitPitcherStatus plimit){
