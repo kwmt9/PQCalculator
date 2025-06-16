@@ -80,12 +80,12 @@
                 </label>
             </div>
             @if (isJukuren) {
-                <div class="d-flex">
+                <div class="d-flex row">
                     @for(int i = 0;i < JukurenInfos.Count;i++){
                         int index = i;
                         var jukurenInfo = JukurenInfos[index];
 
-                        <div class="form-check px-1">
+                        <div class="form-check px-1 col-3">
                             <input class="form-check-input mx-1 " type="checkbox" id="@($"sub-radio-{index}")" name="jukuren" @onchange="(e) => { if((bool)e.Value == true){SelectJukurenIndexes.Add(index);}else{SelectJukurenIndexes.Remove(index);};}">
                             <label class="form-check-label" for="@($"sub-radio-{index}")" style="user-select: none;">
                                 @jukurenInfo.Name
@@ -264,29 +264,28 @@
     List<int> SelectJukurenIndexes = new() { };
     List<Jukuren> JukurenInfos = new(){
         //熟練の打撃
-        new Jukuren(new UnitFielderStatus(0, 0, 7, 7, 0, 0, 0, 0),Jukuren.JukurenType.Dageki,1),
-        //new Jukuren(new UnitFielderStatus(0, 0, 0, 0, 0, 0, 0, 0),Jukuren.JukurenType.Dageki,2),
-        //new Jukuren(new UnitFielderStatus(0, 0, 0, 0, 0, 0, 0, 0),Jukuren.JukurenType.Dageki,3),
-        //new Jukuren(new UnitFielderStatus(0, 0, 0, 0, 0, 0, 0, 0),Jukuren.JukurenType.Dageki,4),
-        //new Jukuren(new UnitFielderStatus(0, 0, 0, 0, 0, 0, 0, 0),Jukuren.JukurenType.Dageki,5),
         //熟練の走塁
-        new Jukuren(new UnitFielderStatus(0, 0, 0, 0, 10, 0, 0, 0),Jukuren.JukurenType.Run,1),
-        //new Jukuren(new UnitFielderStatus(0, 0, 0, 0, 0, 0, 0, 0),Jukuren.JukurenType.Run,2),
-        //new Jukuren(new UnitFielderStatus(0, 0, 0, 0, 0, 0, 0, 0),Jukuren.JukurenType.Run,3),
-        //new Jukuren(new UnitFielderStatus(0, 0, 0, 0, 0, 0, 0, 0),Jukuren.JukurenType.Run,4),
-        //new Jukuren(new UnitFielderStatus(0, 0, 0, 0, 0, 0, 0, 0),Jukuren.JukurenType.Run,5),
         //熟練の守備
-        new Jukuren(new UnitFielderStatus(0, 0, 0, 0, 0, 6, 6, 6),Jukuren.JukurenType.Shubi,1),
-        //new Jukuren(new UnitFielderStatus(0, 0, 0, 0, 0, 8, 8, 8),Jukuren.JukurenType.Shubi,2),
-        //new Jukuren(new UnitFielderStatus(0, 0, 0, 0, 0, 0, 0, 0),Jukuren.JukurenType.Shubi,3),
-        //new Jukuren(new UnitFielderStatus(0, 0, 0, 0, 0, 0, 0, 0),Jukuren.JukurenType.Shubi,4),
-        //new Jukuren(new UnitFielderStatus(0, 0, 0, 0, 0, 0, 0, 0),Jukuren.JukurenType.Shubi,5),
         //熟練の投手
+        new Jukuren(new UnitFielderStatus(0, 0, 7, 7, 0, 0, 0, 0),Jukuren.JukurenType.Dageki,1),
+        new Jukuren(new UnitFielderStatus(0, 0, 0, 0, 10, 0, 0, 0),Jukuren.JukurenType.Run,1),
+        new Jukuren(new UnitFielderStatus(0, 0, 0, 0, 0, 6, 6, 6),Jukuren.JukurenType.Shubi,1),
         new Jukuren(new UnitPitcherStatus(0, 6, 6, 6),Jukuren.JukurenType.Pitcher,1),
-        //new Jukuren(new UnitPitcherStatus(0, 0, 0, 0),Jukuren.JukurenType.Pitcher,2),
-        //new Jukuren(new UnitPitcherStatus(0, 0, 0, 0),Jukuren.JukurenType.Pitcher,3),
-        //new Jukuren(new UnitPitcherStatus(0, 0, 0, 0),Jukuren.JukurenType.Pitcher,4),
-        //new Jukuren(new UnitPitcherStatus(0, 0, 0, 0),Jukuren.JukurenType.Pitcher,5),
+
+        new Jukuren(new UnitFielderStatus(0, 0, 9, 9, 0, 0, 0, 0),Jukuren.JukurenType.Dageki,2),
+        new Jukuren(new UnitFielderStatus(0, 0, 0, 0, 15, 0, 0, 0),Jukuren.JukurenType.Run,2),
+        new Jukuren(new UnitFielderStatus(0, 0, 0, 0, 0, 8, 8, 8),Jukuren.JukurenType.Shubi,2),
+        new Jukuren(new UnitPitcherStatus(0, 8, 8, 8),Jukuren.JukurenType.Pitcher,2),
+
+        new Jukuren(new UnitFielderStatus(0, 0,11,11, 0, 0, 0, 0),Jukuren.JukurenType.Dageki,3),
+        new Jukuren(new UnitFielderStatus(0, 0, 0, 0, 20, 0, 0, 0),Jukuren.JukurenType.Run,3),
+        new Jukuren(new UnitFielderStatus(0, 0, 0, 0, 0,10,10,10),Jukuren.JukurenType.Shubi,3),
+        new Jukuren(new UnitPitcherStatus(0,10,10,10),Jukuren.JukurenType.Pitcher,3),
+
+        new Jukuren(new UnitFielderStatus(0, 0,13,13, 0, 0, 0, 0),Jukuren.JukurenType.Dageki,4),
+        new Jukuren(new UnitFielderStatus(0, 0, 0, 0, 25, 0, 0, 0),Jukuren.JukurenType.Run,4),
+        new Jukuren(new UnitFielderStatus(0, 0, 0, 0, 0,12,12,12),Jukuren.JukurenType.Shubi,4),
+        new Jukuren(new UnitPitcherStatus(0,12,12,12),Jukuren.JukurenType.Pitcher,4),
     };
     public class Jukuren {
         public enum JukurenType {
@@ -300,7 +299,7 @@
         public JukurenType Type { get; set; }
         public int Level { get; set; }
         public string Name { get { return $"{names[(int)Type]}{Level}"; } }
-        string[] names = new string[4] { "熟練の打撃", "熟練の走塁", "熟練の守備", "熟練の投球" };
+        string[] names = new string[4] { "打撃", "走塁", "守備", "投球" };
 
         public Jukuren(UnitFielderStatus unitStatus, JukurenType type, int level) {
             Type = type;
@@ -592,8 +591,12 @@
     public (UnitFielderStatus fLimit, UnitPitcherStatus pLimit) CalucDeckLmit(List<Deck> pqdecks) {
         UnitFielderStatus fLimit = new(0, 0, 0, 0, 0, 0, 0, 0);
         UnitPitcherStatus pLimit = new(0, 0, 0, 0);
-        //熟練を入れる
-        var jukurenAdds = SelectJukurenIndexes.Select(x => JukurenInfos[x]);
+        //Type内で最大のレベルのものだけを使用する
+        var jukurenAdds = SelectJukurenIndexes.Select(x => JukurenInfos[x])
+            .GroupBy(j => j.Type)
+            .Select(g => g.OrderByDescending(j => j.Level).First())
+            .ToList();
+        //熟練の上限値を入れる
         foreach (var jukurenAdd in jukurenAdds) {
             fLimit.Meet += jukurenAdd.UnitFielderStatus.Meet;
             fLimit.Power += jukurenAdd.UnitFielderStatus.Power;
