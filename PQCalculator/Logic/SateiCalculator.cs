@@ -1,4 +1,5 @@
 ﻿using PQCalculator.Model;
+using System.Reflection.Emit;
 
 namespace PQCalculator.Logic {
 	public class SateiCalculator {
@@ -14,7 +15,7 @@ namespace PQCalculator.Logic {
 			}
 		}
 
-		public static (List<SateiInfo> sateiInfos, double score) SumPlayerBase_DeckScore(PQPlayerUnit PQPlayerUnit, List<PQAbility> PQAbilities, UnitFielderStatus DeckLimit, UnitFielderStatus InputStatus, UnitPitcherStatus DeckPitcherLimit, UnitPitcherStatus InputPitcherStatus, List<List<PQAbility>> deckAbilites, bool isBench,int SelectedSubpos) {
+		public static (List<SateiInfo> sateiInfos, double score) SumPlayerBase_DeckScore(PQPlayerUnit PQPlayerUnit, List<PQAbility> PQAbilities, UnitFielderStatus DeckLimit, UnitFielderStatus InputStatus, UnitPitcherStatus DeckPitcherLimit, UnitPitcherStatus InputPitcherStatus, List<List<PQAbility>> deckAbilites, bool isBench,int SelectedSubpos,int level, bool fmax = false, bool pmax = false) {
 			List<SateiInfo> sateiInfos = new();
 
 			double score = 0;
@@ -26,19 +27,19 @@ namespace PQCalculator.Logic {
 				//弾道の査定
 				sateiInfos.AddRange(CalucScoreByDandou(PQPlayerUnit.Status.Dandou, mulutiply));
 				//デッキの上限とキャラの能力を合わせた査定
-				sateiInfos.AddRange(CalucScoreByStatusFielder(Math.Min(DeckLimit.Meet, 50) + InputStatus.Meet, mulutiply, label: "ミート"));
-				sateiInfos.AddRange(CalucScoreByStatusFielder(Math.Min(DeckLimit.Power, 50) + InputStatus.Power, mulutiply, label: "パワー"));
-				sateiInfos.AddRange(CalucScoreByStatusFielder(Math.Min(DeckLimit.RunPower, 50) + InputStatus.RunPower, mulutiply, label: "走力"));
-				sateiInfos.AddRange(CalucScoreByStatusFielder(Math.Min(DeckLimit.ShoulderPower, 50) + InputStatus.ShoulderPower, mulutiply, label: "肩力"));
-				sateiInfos.AddRange(CalucScoreByStatusFielder(Math.Min(DeckLimit.Fielding, 50) + InputStatus.Fielding, mulutiply, label: "守備力"));
-				sateiInfos.AddRange(CalucScoreByStatusFielder(Math.Min(DeckLimit.Catching, 50) + InputStatus.Catching, mulutiply, label: "捕球"));
+				sateiInfos.AddRange(CalucScoreByStatusFielder((fmax ? 50 : Math.Min(DeckLimit.Meet, 50)) + InputStatus.Meet, mulutiply, label: "ミート"));
+				sateiInfos.AddRange(CalucScoreByStatusFielder((fmax ? 50 : Math.Min(DeckLimit.Power, 50)) + InputStatus.Power, mulutiply, label: "パワー"));
+				sateiInfos.AddRange(CalucScoreByStatusFielder((fmax ? 50 : Math.Min(DeckLimit.RunPower, 50)) + InputStatus.RunPower, mulutiply, label: "走力"));
+				sateiInfos.AddRange(CalucScoreByStatusFielder((fmax ? 50 : Math.Min(DeckLimit.ShoulderPower, 50)) + InputStatus.ShoulderPower, mulutiply, label: "肩力"));
+				sateiInfos.AddRange(CalucScoreByStatusFielder((fmax ? 50 : Math.Min(DeckLimit.Fielding, 50)) + InputStatus.Fielding, mulutiply, label: "守備力"));
+				sateiInfos.AddRange(CalucScoreByStatusFielder((fmax ? 50 : Math.Min(DeckLimit.Catching, 50)) + InputStatus.Catching, mulutiply, label: "捕球"));
 
 				mulutiply = 1;
 
-				sateiInfos.AddRange(CalucScoreByStatusSpeed(50 + InputPitcherStatus.BallSpeed, !isBench ? mulutiply : 1f / 2f));
-				sateiInfos.AddRange(CalucScoreByStatusPitcher(Math.Min(DeckPitcherLimit.BallControl, 50) + InputPitcherStatus.BallControl, !isBench ? mulutiply : 1f / 2f, label: "コントロール"));
-				sateiInfos.AddRange(CalucScoreByStatusPitcher(Math.Min(DeckPitcherLimit.Stamina, 50) + InputPitcherStatus.Stamina, !isBench ? mulutiply : 1f / 2f, label: "スタミナ"));
-				sateiInfos.AddRange(CalucScoreByCurves(PQPlayerUnit.Curves));
+				sateiInfos.AddRange(CalucScoreByStatusSpeed((pmax ? 50 : Math.Min(DeckPitcherLimit.BallSpeed, 50)) +  InputPitcherStatus.BallSpeed, !isBench ? mulutiply : 1f / 2f));
+				sateiInfos.AddRange(CalucScoreByStatusPitcher((pmax ? 50 : Math.Min(DeckPitcherLimit.BallControl, 50)) + InputPitcherStatus.BallControl, !isBench ? mulutiply : 1f / 2f, label: "コントロール"));
+				sateiInfos.AddRange(CalucScoreByStatusPitcher((pmax ? 50 : Math.Min(DeckPitcherLimit.Stamina, 50)) + InputPitcherStatus.Stamina, !isBench ? mulutiply : 1f / 2f, label: "スタミナ"));
+				sateiInfos.AddRange(CalucScoreByCurves(PQPlayerUnit.Curves, pmax,level,!isBench ? mulutiply : 1f / 2f));
 			}
 			else {
 				float fieldDeclineRate = 1f;
@@ -178,6 +179,8 @@ namespace PQCalculator.Logic {
 			score += baseScore * input;
 			//1分
 			score -= (baseScore);
+			//0→1の査定
+			score += baseScore;
 
 			score = (int)Math.Floor(score * multiplier);
 			sateiInfos.Add(new SateiInfo($"{label}({input})", score));
@@ -215,6 +218,8 @@ namespace PQCalculator.Logic {
 			score += baseScore * input;
 			//1分
 			score -= (baseScore);
+			//0→1の査定
+			score += baseScore;
 
 			score = (int)Math.Floor(score * multiplier);
 
@@ -240,6 +245,9 @@ namespace PQCalculator.Logic {
 			if (input >= 156) {
 				score += (72 - baseScore);
 			}
+			if (input >= 152) {
+				score += (72 - baseScore);
+			}
 			if (input >= 148) {
 				score += (42 - baseScore);
 			}
@@ -255,6 +263,8 @@ namespace PQCalculator.Logic {
 			//100から190までまとめて+baseScoreする。
 			score += baseScore * (input - SPEED_START);
 			score -= (baseScore);
+			//0→1の査定
+			score += baseScore;
 
 			score = (int)Math.Floor(score * multiplier);
 			sateiInfos.Add(new SateiInfo($"球速({input})", score));
@@ -270,17 +280,25 @@ namespace PQCalculator.Logic {
 			sateiInfos.Add(new SateiInfo($"弾道({statsu})", score));
 			return sateiInfos;
 		}
-		public static List<SateiInfo> CalucScoreByCurves(List<UnitStatusCurveBall> curves) {
+		public static List<SateiInfo> CalucScoreByCurves(List<UnitStatusCurveBall> curves, bool pmax, int level, float multiplier = 1) {
 			List<SateiInfo> sateiInfos = new();
 			int score = 0;
 			int count = 0;
-			foreach (var curve in curves) {
-				if (curve.Amount != 0)
-					count += 7;
+			if (pmax) {
+				foreach (var curve in curves) {
+					if (curve.Amount != 0)
+						count += 7;
+				}
 			}
-			//count = curves.Count(curve => curve.Amount != 0) * 7;
-
+			else {
+				foreach (var curve in curves) {
+					if (curve.Amount != 0)
+						count += curve.Amount;
+				}
+				count = CoachCaluclator.CalucStatusFromLevel(level,count);
+			}
 			score = count * 24;
+			score = (int)Math.Floor(score * multiplier);
 			sateiInfos.Add(new SateiInfo($"変化({count})", score));
 			//Console.WriteLine($"変化球{score}");
 			return sateiInfos;
