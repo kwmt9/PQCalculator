@@ -430,7 +430,7 @@
         //ポジションに応じて能力を消す
         canLearnAbilitys = await RemovePositionSpecificAbilities(canLearnAbilitys);
         //下位込みの査定を計算
-        //canLearnAbilitys = SateiCalculator.SumLowRankSatei(canLearnAbilitys);
+        canLearnAbilitys = SateiCalculator.SumLowRankSatei(canLearnAbilitys);
         //赤特を持っている場合は、上位の青特を削除する。
         canLearnAbilitys = await RemoveBlueIfHaveRed(canLearnAbilitys);
         //もってないキャラを除外
