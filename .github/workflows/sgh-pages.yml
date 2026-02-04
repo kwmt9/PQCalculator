@@ -17,6 +17,12 @@ jobs:
         uses: actions/setup-dotnet@v2
         with:
           dotnet-version: 6.0.x
+      # base href の置換
+      - name: Fix base href
+        run: sed -i 's|<base href="./" />|<base href="/PQCalculator/" />|g' PQCalculator/wwwroot/index.html
+      # index.html を 404.html としてコピー
+      - name: Create 404.html
+        run: cp PQCalculator/wwwroot/index.html PQCalculator/wwwroot/404.html
 
       # Publish the site
       - name: Publish
@@ -29,9 +35,3 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: public/wwwroot
           force_orphan: true
-      # base href の置換
-      - name: Fix base href
-        run: sed -i 's|<base href="./" />|<base href="/PQCalculator/" />|g' release/wwwroot/index.html
-      # index.html を 404.html としてコピー
-      - name: Create 404.html
-        run: cp release/wwwroot/index.html release/wwwroot/404.html
