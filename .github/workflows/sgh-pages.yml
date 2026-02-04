@@ -17,10 +17,10 @@ jobs:
         uses: actions/setup-dotnet@v2
         with:
           dotnet-version: 6.0.x
-      # base href の置換
+      # change base href
       - name: Fix base href
         run: sed -i 's|<base href="./" />|<base href="/PQCalculator/" />|g' PQCalculator/wwwroot/index.html
-      # index.html を 404.html としてコピー
+      # copy 404.html
       - name: Create 404.html
         run: cp PQCalculator/wwwroot/index.html PQCalculator/wwwroot/404.html
 
