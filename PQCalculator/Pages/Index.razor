@@ -901,7 +901,7 @@
 
     double CalucScore(){
         if (PQPlayerUnit == null){ return 0d; }
-        var sateiTaple = SateiCalculator.SumPlayerBase_DeckScore(PQPlayerUnit, PQAbilitys, DeckLimit, InputStatus, DeckPitcherLimit, InputPitcherStatus, deckAbilites, isBench, SelectedSubpos, Level, isFielderMax, isPitcherMax);
+        var sateiTaple = SateiCalculator.SumPlayerBase_DeckScore(PQPlayerUnit, PQAbilitys, DeckLimit, InputStatus, DeckPitcherLimit, InputPitcherStatus, deckAbilites, isBench, isSubPosition?SelectedSubpos:2, Level, isFielderMax, isPitcherMax);
         sateiInfos = sateiTaple.sateiInfos;
         return sateiTaple.score;
     }
