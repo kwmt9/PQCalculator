@@ -15,17 +15,17 @@ namespace PQCalculator.Logic {
 			}
 		}
 
-		public static (List<SateiInfo> sateiInfos, double score) SumPlayerBase_DeckScore(PQPlayerUnit PQPlayerUnit, List<PQAbility> PQAbilities, UnitFielderStatus DeckLimit, UnitFielderStatus InputStatus, UnitPitcherStatus DeckPitcherLimit, UnitPitcherStatus InputPitcherStatus, List<List<PQAbility>> deckAbilites, bool isBench,int SelectedSubpos,int level, bool fmax = false, bool pmax = false) {
+		public static (List<SateiInfo> sateiInfos, double score) SumPlayerBase_DeckScore(PQPlayerUnit unit, List<PQAbility> AllAbilities, UnitFielderStatus DeckLimit, UnitFielderStatus InputStatus, UnitPitcherStatus DeckPitcherLimit, UnitPitcherStatus InputPitcherStatus, List<List<PQAbility>> deckAbilites, bool isBench,int SelectedSubpos,int level, bool fmax = false, bool pmax = false) {
 			List<SateiInfo> sateiInfos = new();
 
 			double score = 0;
 			float mulutiply = 1;
 
-			if (PQPlayerUnit.Position == 1) {
+			if (unit.Position == 1) {
 				mulutiply = 1f / 5f;
 
 				//弾道の査定
-				sateiInfos.AddRange(CalucScoreByDandou(PQPlayerUnit.Status.Dandou, mulutiply));
+				sateiInfos.AddRange(CalucScoreByDandou(unit.Status.Dandou, mulutiply));
 				//デッキの上限とキャラの能力を合わせた査定
 				sateiInfos.AddRange(CalucScoreByStatusFielder((fmax ? 50 : Math.Min(DeckLimit.Meet, 50)) + InputStatus.Meet, mulutiply, label: "ミート"));
 				sateiInfos.AddRange(CalucScoreByStatusFielder((fmax ? 50 : Math.Min(DeckLimit.Power, 50)) + InputStatus.Power, mulutiply, label: "パワー"));
@@ -39,7 +39,7 @@ namespace PQCalculator.Logic {
 				sateiInfos.AddRange(CalucScoreByStatusSpeed((pmax ? 50 : Math.Min(DeckPitcherLimit.BallSpeed, 50)) +  InputPitcherStatus.BallSpeed, !isBench ? mulutiply : 1f / 2f));
 				sateiInfos.AddRange(CalucScoreByStatusPitcher((pmax ? 50 : Math.Min(DeckPitcherLimit.BallControl, 50)) + InputPitcherStatus.BallControl, !isBench ? mulutiply : 1f / 2f, label: "コントロール"));
 				sateiInfos.AddRange(CalucScoreByStatusPitcher((pmax ? 50 : Math.Min(DeckPitcherLimit.Stamina, 50)) + InputPitcherStatus.Stamina, !isBench ? mulutiply : 1f / 2f, label: "スタミナ"));
-				sateiInfos.AddRange(CalucScoreByCurves(PQPlayerUnit.Curves, pmax,level,!isBench ? mulutiply : 1f / 2f));
+				sateiInfos.AddRange(CalucScoreByCurves(unit.Curves, pmax,level,!isBench ? mulutiply : 1f / 2f));
 			}
 			else {
 				float fieldDeclineRate = 1f;
@@ -53,7 +53,7 @@ namespace PQCalculator.Logic {
 					fieldDeclineRate = 1f;
 				}
 
-				sateiInfos.AddRange(CalucScoreByDandou(PQPlayerUnit.Status.Dandou, !isBench ? mulutiply : 1f / 5f));
+				sateiInfos.AddRange(CalucScoreByDandou(unit.Status.Dandou, !isBench ? mulutiply : 1f / 5f));
 
 				sateiInfos.AddRange(CalucScoreByStatusFielder(Math.Min(DeckLimit.Meet, 50) + InputStatus.Meet, !isBench ? mulutiply : 1f / 5f, label: "ミート"));
 				sateiInfos.AddRange(CalucScoreByStatusFielder(Math.Min(DeckLimit.Power, 50) + InputStatus.Power, !isBench ? mulutiply : 1f / 5f, label: "パワー"));
@@ -64,13 +64,13 @@ namespace PQCalculator.Logic {
 			}
 			//キャラの能力と、コーチの能力を合わせて上位のみにする。
 			List<PQAbility> abilities = new();
-			abilities.AddRange(PQPlayerUnit.Abilities);
+			abilities.AddRange(unit.Abilities);
 			abilities.AddRange(deckAbilites.SelectMany(x => x));
 			abilities = abilities.GroupBy(a => a.GroupId)
 				.Select(g => g.OrderByDescending(a => a.Rank).First())
 				.ToList();
 			//特殊能力の計算
-			sateiInfos.AddRange(CalucScoreByAbility(PQPlayerUnit, PQAbilities, isBench, abilities.ToArray()));
+			sateiInfos.AddRange(CalucScoreByAbility(unit, AllAbilities, isBench, abilities.ToArray()));
 
 			foreach (var sateiInfo in sateiInfos) {
 				score += sateiInfo.Score;

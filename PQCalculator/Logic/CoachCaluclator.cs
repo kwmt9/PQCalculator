@@ -7,6 +7,5 @@ namespace PQCalculator.Logic {
 		public static int CalucStatusFromLevel(int level, int baseStatus) {
 			return (int)Math.Round(baseStatus * (0.5 + 0.01 * level));
 		}
-
 	}
 }
