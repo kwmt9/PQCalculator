@@ -1908,7 +1908,8 @@
     "colorType": 2,
     "playerType": 2,
     "groupId": 116,
-    "rank": 1
+    "rank": 1,
+    "pf": 21
   },
   {
     "id": 220,
@@ -1918,7 +1919,8 @@
     "colorType": 2,
     "playerType": 2,
     "groupId": 116,
-    "rank": 2
+    "rank": 2,
+    "pf": 0
   },
   {
     "id": 221,
@@ -1938,7 +1940,8 @@
     "colorType": 2,
     "playerType": 2,
     "groupId": 118,
-    "rank": 1
+    "rank": 1,
+    "pf": 15
   },
   {
     "id": 223,
@@ -2268,7 +2271,8 @@
     "colorType": 2,
     "playerType": 2,
     "groupId": 151,
-    "rank": 1
+    "rank": 1,
+    "pf": 15
   },
   {
     "id": 256,
@@ -2378,7 +2382,8 @@
     "colorType": 3,
     "playerType": 2,
     "groupId": 116,
-    "rank": 3
+    "rank": 3,
+    "pf": 105
   },
   {
     "id": 266,
