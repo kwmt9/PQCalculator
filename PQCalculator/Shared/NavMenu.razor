@@ -1,5 +1,5 @@
 ﻿﻿<div class="top-row pl-4 navbar navbar-dark" style="background:#666">
-	<a class="navbar-brand" href="">パワクエコーチ計算機(仮)</a>
+	<a class="navbar-brand px-3" href="">@(Title)</a>
 	<button class="navbar-toggler" @onclick="ToggleNavMenu">
 		<span class="navbar-toggler-icon"></span>
 	</button>
@@ -7,12 +7,12 @@
 <div class="sidebar-nav @NavMenuCssClass" @onclick="ToggleNavMenu">
 	<ul class="nav flex-column align-items-end" style=" background:#ddd">
 		<li class="nav-item px-3">
-			<NavLink class="nav-link" href="/PQCalculator/">
+			<NavLink class="nav-link" href="./">
 				<span class="oi oi-list-rich" aria-hidden="true"></span> パワクエコーチ計算機(仮)
 			</NavLink>
 		</li>
 		<li class="nav-item px-3">
-			<NavLink class="nav-link" href="/PQCalculator/compare">
+			<NavLink class="nav-link" href="./compare">
 				<span class="oi oi-list-rich" aria-hidden="true"></span> 契約書比較ツール
 			</NavLink>
 		</li>
@@ -22,6 +22,9 @@
 
 @code
 {
+	[Parameter]
+	public string Title { get; set; }
+
 	private bool collapseNavMenu = true;
 
 	private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;

@@ -5,9 +5,10 @@
 @page "/compare"
 
 <PageTitle>契約書比較ツール</PageTitle>
+<div class="mb-5">
+    <NavMenu Title="契約書比較ツール" />
+</div>
 <div class="container d-flex flex-column align-items-center">
-    <h1 class="mb-3">契約書比較ツール</h1>
-
     <div class="d-flex flex-column align-items-center mb-2">
         <div class="mb-3">
             <AutoCompleteInput @ref="AutoCompleteInput" StringList="Suggest" Placeholder="契約書キャラ選択"  TextChanged="@((s) => NewCharacter.Name = s)"></AutoCompleteInput>
