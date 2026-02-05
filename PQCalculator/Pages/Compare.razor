@@ -4,52 +4,74 @@
 @inject HttpClient Http
 @page "/compare"
 
-<PageTitle>Compare</PageTitle>
-
+<PageTitle>契約書比較ツール</PageTitle>
+<script>
+    window.copyTextToClipboard = function (text) {
+    if (navigator.clipboard) {
+    navigator.clipboard.writeText(text);
+    } else {
+    // Fallback for old browsers
+    var textarea = document.createElement("textarea");
+    textarea.value = text;
+    document.body.appendChild(textarea);
+    textarea.focus();
+    textarea.select();
+    document.execCommand("copy");
+    document.body.removeChild(textarea);
+    }
+    };
+</script>
 <div class="container d-flex flex-column align-items-center">
-    <h1 class="mb-1">契約書比較ツール</h1>
+    <h1 class="mb-3">契約書比較ツール</h1>
 
-    <div class="d-flex flex-row align-items-center mb-2">
-        <div>
+    <div class="d-flex flex-column align-items-center mb-2">
+        <div class="mb-3">
             <AutoCompleteInput @ref="AutoCompleteInput" StringList="Suggest" Placeholder="契約書キャラ選択"  TextChanged="@((s) => NewCharacter.Name = s)"></AutoCompleteInput>
         </div>
-        <div class="input-group ms-1">
+        <div class="input-group mb-1">
             <SpinnerInput Label="Lv" InputValue="@NewCharacter.Level" Min="1" Max="999" OnInput="@((e) => {if(!int.TryParse(e.Value?.ToString(),out int o)){return;}; NewCharacter.Level = o;})"></SpinnerInput>
         </div>
-        <div class="input-group ms-1">
+        <div class="input-group mb-1">
             <SpinnerInput Label="コスト" InputValue="@NewCharacter.Cost" Min="1" Max="999" OnInput="@((e) => {if(!int.TryParse(e.Value?.ToString(),out int o)){return;}; NewCharacter.Cost = o;})"></SpinnerInput>
         </div>
-        <div class="input-group ms-1">
+        <div class="input-group mb-1">
             <SpinnerInput Label="コーチ人数" InputValue="@NewCharacter.CoachCount" Min="1" Max="4" OnInput="@((e) => {if(!int.TryParse(e.Value?.ToString(),out int o)){return;}; NewCharacter.CoachCount = o;})"></SpinnerInput>
         </div>
-        <div class="ms-2">
+        <div class="mb-2">
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" id="main" value="Main")" />
-                <label class="form-check-label" for="main">メイン</label>
+                <input class="form-check-input" type="radio" id="main" name="usage" value="スタメン" @onchange="(e) => NewCharacter.Usage = e.Value.ToString()" />
+                <label class="form-check-label" for="main">スタメン</label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" id="sub1" value="Sub1"/>
-                <label class="form-check-label" for="sub1">サブ○</label>
+                <input class="form-check-input" type="radio" id="sub1" name="usage" value="サブポジ" @onchange="(e) => NewCharacter.Usage = e.Value.ToString()" />
+                <label class="form-check-label" for="sub1">サブポジ</label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" id="sub2" value="Sub2"/>
-                <label class="form-check-label" for="sub2">サブ◎</label>
+                <input class="form-check-input" type="radio" id="sub2" name="usage" value="サブポジ〇" @onchange="(e) => NewCharacter.Usage = e.Value.ToString()" />
+                <label class="form-check-label" for="sub2">サブポジ〇</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id="sub3" name="usage" value="サブポジ◎" @onchange="(e) => NewCharacter.Usage = e.Value.ToString()" />
+                <label class="form-check-label" for="sub3">サブポジ◎</label>
             </div>
         </div>
         <button class="btn btn-primary ms-2" @onclick="AddCharacter">＋</button>
     </div>
+</div>
 
-    <div class="w-100">
+       <div style="overflow-x: auto;min-width:600px;max-width:1200px; margin:auto;">
         <table class="table table-bordered table-sm align-middle">
             <thead>
                 <tr>
-                    <th @onclick="() => SortBy(nameof(CharacterView.Name))" style="cursor:pointer;">キャラ名</th>
-                    <th>レベル上限</th>
-                    <th>コーチ人数</th>
-                    <th>コスト</th>
-                    <th @onclick="() => SortBy(nameof(CharacterView.Evaluation))" style="cursor:pointer;">査定 ▲▼</th>
-                    <th @onclick="() => SortBy(nameof(CharacterView.CostPerformance))" style="cursor:pointer;">コスパ ▲▼</th>
-                    <th>使用</th>
+                    <th style="user-select: none;">キャラ名</th>
+                    <th style="user-select: none;">守備位置</th>
+                    <th style="user-select: none;cursor:pointer;" @onclick="() => SortBy(nameof(CharacterView.Evaluation))">査定 @(SortKey == nameof(CharacterView.Evaluation) ? SortDesc ? "▲" : "▼" : "")</th>
+                    <th style="user-select: none;cursor:pointer;" @onclick="() => SortBy(nameof(CharacterView.BenchEvaluation))">ベンチ査定 @(SortKey == nameof(CharacterView.BenchEvaluation) ? SortDesc ? "▲" : "▼" : "")</th>
+                    <th style="user-select: none;cursor:pointer;" @onclick="() => SortBy(nameof(CharacterView.CostPerformance))">コスパ @(SortKey == nameof(CharacterView.CostPerformance) ? SortDesc ? "▲" : "▼" : "")</th>
+                    <th style="user-select: none;">コーチ人数</th>
+                    <th style="user-select: none;">レベル上限</th>
+                    <th style="user-select: none;">コスト</th>
+                    <th style="user-select: none;"></th>
                 </tr>
             </thead>
             <tbody>
@@ -57,20 +79,32 @@
                 {
                     <tr>
                         <td>@c.Name</td>
-                        <td>@c.Level</td>
-                        <td>@c.CoachCount</td>
-                        <td>@c.Cost</td>
+                        <td>
+                            @if (c.Usage == "スタメン"){
+                                <PlayerPositionComponent Position="c.Position"></PlayerPositionComponent>
+                            }
+                            else{
+                                @c.Usage
+                            }
+                        </td>
                         <td>@c.Evaluation</td>
+                        <td>@c.BenchEvaluation</td>
                         <td>@c.CostPerformance</td>
-                        <td>@c.Usage</td>
+                        <td>@c.CoachCount</td>
+                        <td>@c.Level</td>
+                        <td>@c.Cost</td>
+                        <td><button class="btn btn-sm btn-danger" @onclick="() => RemoveCharacter(c)">×</button></td>
                     </tr>
                 }
             </tbody>
         </table>
-    </div>
+        <button class="btn btn-secondary mb-2" @onclick="CopyCharactersToClipboard">表をコピー</button>
 </div>
 
 @code {
+    [Inject]
+    private IJSRuntime JSRuntime { get; set; }
+
     public List<string>? Suggest { get; set; }
     AutoCompleteInput? AutoCompleteInput;
 
@@ -81,16 +115,18 @@
     public class CharacterView
     {
         public string Name { get; set; } = "";
+        public int Position { get; set; } = 1;
         public int Level { get; set; }
         public int CoachCount { get; set; }
         public int Cost { get; set; }
-        public string Usage { get; set; } = "Main";
+        public string Usage { get; set; } = "スタメン";
         public int Evaluation { get; set; }
+        public int BenchEvaluation { get; set; }
         public double CostPerformance { get; set; }
     }
 
     // 入力用
-    CharacterView NewCharacter { get; set; } = new CharacterView { Level = 50, CoachCount = 4, Cost = 20, Usage = "Main" };
+    CharacterView NewCharacter { get; set; } = new CharacterView { Level = 50, CoachCount = 4, Cost = 20, Usage = "スタメン" };
 
     // キャラリスト
     List<CharacterView> Characters { get; set; } = new();
@@ -107,6 +143,8 @@
                     SortDesc ? Characters.OrderByDescending(c => c.Name) : Characters.OrderBy(c => c.Name),
                 nameof(CharacterView.Evaluation) =>
                     SortDesc ? Characters.OrderByDescending(c => c.Evaluation) : Characters.OrderBy(c => c.Evaluation),
+                nameof(CharacterView.BenchEvaluation) =>
+                    SortDesc ? Characters.OrderByDescending(c => c.BenchEvaluation) : Characters.OrderBy(c => c.BenchEvaluation),
                 nameof(CharacterView.CostPerformance) =>
                     SortDesc ? Characters.OrderByDescending(c => c.CostPerformance) : Characters.OrderBy(c => c.CostPerformance),
                 _ =>
@@ -119,10 +157,11 @@
         PQPlayerUnits = await Http.GetFromJsonAsync<List<PQPlayerUnit>>($"json/playerUnit.json");
         AllAbilities = await Http.GetFromJsonAsync<List<PQAbility>>($"json/satei.json");
         Suggest = PQPlayerUnits?.Where(x => x.Position != 0).OrderByDescending(x => x.Id).Select(u => u.Name).ToList();
+
+        await LoadCharactersAsync();
     }
     // 追加処理
-    void AddCharacter()
-    {
+    async Task AddCharacter() {
         // ダミー計算: 査定=レベル*10, 戦闘力=レベル*コスト, コスパ=戦闘力/コスト
         PQPlayerUnit? unit = PQPlayerUnits?.FirstOrDefault(x => x.Name == NewCharacter.Name);
         if (unit == null)
@@ -178,10 +217,16 @@
         canLearnAbilitys = SateiCalculator.SumLowRankSatei(canLearnAbilitys);
         canLearnAbilitys = AbilitySelecter.RemoveBlueIfHaveRed(canLearnAbilitys, unit);
 
-
+        List<List<PQAbility>>? benchDeckAbilites = new();
+        foreach (var abilities in deckAbilites) {
+            benchDeckAbilites.Add(new List<PQAbility>(abilities));
+        }
         AbilitySelecter.AddAbility(canLearnAbilitys, AllAbilities, NewCharacter.CoachCount, isBench, deckAbilites);
+        AbilitySelecter.AddAbility(canLearnAbilitys, AllAbilities, NewCharacter.CoachCount, isBench, benchDeckAbilites);
         //ここまで
-        var sateiInfo = SateiCalculator.SumPlayerBase_DeckScore(unit, AllAbilities, coach, unitStatus, coachP, unitStatusP, deckAbilites, isBench, 2, NewCharacter.Level, true, true);
+        var sateiInfo = SateiCalculator.SumPlayerBase_DeckScore(unit, AllAbilities, coach, unitStatus, coachP, unitStatusP, deckAbilites, false, 2, NewCharacter.Level, true, true);
+        var benchSateiInfo = SateiCalculator.SumPlayerBase_DeckScore(unit, AllAbilities, coach, unitStatus, coachP, unitStatusP, benchDeckAbilites, true, 2, NewCharacter.Level, true, true);
+
         sateiInfo.sateiInfos = sateiInfo.sateiInfos.OrderByDescending(x => x.Ability?.SateiMain ?? 100000).ToList();
         foreach (var v in sateiInfo.sateiInfos) { Console.WriteLine($"{v.Label} : {v.Score}"); }
         var costPerf = NewCharacter.Cost != 0 ? sateiInfo.score / NewCharacter.Cost : 0f;
@@ -189,19 +234,24 @@
         Characters.Add(new CharacterView
         {
             Name = NewCharacter.Name,
+            Position = unit.Position,
             Level = NewCharacter.Level,
             Cost = NewCharacter.Cost,
             Usage = NewCharacter.Usage,
             CoachCount = NewCharacter.CoachCount,
             Evaluation = (int)sateiInfo.score,
+            BenchEvaluation = (int)benchSateiInfo.score,
             CostPerformance = Math.Round(costPerf, 2)
         });
-
+        await SaveCharactersAsync();
         // 入力欄リセット
-        NewCharacter = new CharacterView { Level = 50, Cost = 20,CoachCount = 4, Usage = "Main" };
+        NewCharacter = new CharacterView { Level = 50, Cost = 20, CoachCount = 4, Usage = "スタメン" };
         AutoCompleteInput.InputValue = "";
     }
-
+    async Task RemoveCharacter(CharacterView character) {
+        Characters.Remove(character);
+        await SaveCharactersAsync();
+    }
     // ソート切替
     void SortBy(string key)
     {
@@ -212,5 +262,34 @@
             SortKey = key;
             SortDesc = true;
         }
+    }
+
+    //セーブ
+    async Task SaveCharactersAsync() {
+        var json = JsonSerializer.Serialize(Characters);
+        await JSRuntime.InvokeVoidAsync("localStorage.setItem", "characters", json);
+    }
+
+    async Task LoadCharactersAsync() {
+        var json = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "characters");
+        if (!string.IsNullOrEmpty(json)) {
+            var list = JsonSerializer.Deserialize<List<CharacterView>>(json);
+            if (list != null)
+                Characters = list;
+        }
+    }
+    async Task CopyCharactersToClipboard() {
+        // ヘッダー
+        var lines = new List<string>
+                {
+        "キャラ名\t守備位置\t査定\tベンチ査定\tコスパ\tコーチ人数\tレベル上限\tコスト"
+    };
+        // データ
+        foreach (var c in SortedCharacters) {
+            lines.Add($"{c.Name}\t{(c.Usage == "スタメン" ? c.Position.ToString() : c.Usage)}\t{c.Evaluation}\t{c.BenchEvaluation}\t{c.CostPerformance}\t{c.CoachCount}\t{c.Level}\t{c.Cost}");
+        }
+
+        var tsv = string.Join("\n", lines);
+        await JSRuntime.InvokeVoidAsync("copyTextToClipboard", tsv);
     }
 }

@@ -27,6 +27,7 @@ namespace PQCalculator.Logic {
 				//弾道の査定
 				sateiInfos.AddRange(CalucScoreByDandou(unit.Status.Dandou, mulutiply));
 				//デッキの上限とキャラの能力を合わせた査定
+				Console.WriteLine(fmax ? 50 : Math.Min(DeckLimit.Meet, 50));
 				sateiInfos.AddRange(CalucScoreByStatusFielder((fmax ? 50 : Math.Min(DeckLimit.Meet, 50)) + InputStatus.Meet, mulutiply, label: "ミート"));
 				sateiInfos.AddRange(CalucScoreByStatusFielder((fmax ? 50 : Math.Min(DeckLimit.Power, 50)) + InputStatus.Power, mulutiply, label: "パワー"));
 				sateiInfos.AddRange(CalucScoreByStatusFielder((fmax ? 50 : Math.Min(DeckLimit.RunPower, 50)) + InputStatus.RunPower, mulutiply, label: "走力"));
@@ -55,12 +56,12 @@ namespace PQCalculator.Logic {
 
 				sateiInfos.AddRange(CalucScoreByDandou(unit.Status.Dandou, !isBench ? mulutiply : 1f / 5f));
 
-				sateiInfos.AddRange(CalucScoreByStatusFielder(Math.Min(DeckLimit.Meet, 50) + InputStatus.Meet, !isBench ? mulutiply : 1f / 5f, label: "ミート"));
-				sateiInfos.AddRange(CalucScoreByStatusFielder(Math.Min(DeckLimit.Power, 50) + InputStatus.Power, !isBench ? mulutiply : 1f / 5f, label: "パワー"));
-				sateiInfos.AddRange(CalucScoreByStatusFielder(Math.Min(DeckLimit.RunPower, 50) + InputStatus.RunPower, !isBench ? mulutiply : 2f / 5f, label: "走力"));
-				sateiInfos.AddRange(CalucScoreByStatusFielder(Math.Min(DeckLimit.ShoulderPower, 50) + InputStatus.ShoulderPower, !isBench ? mulutiply : 1f / 5f, label: "肩力"));
-				sateiInfos.AddRange(CalucScoreByStatusFielder((int)Math.Floor(Math.Min(DeckLimit.Fielding, 50) * fieldDeclineRate) + InputStatus.Fielding, !isBench ? mulutiply : 1f / 5f, label: "守備力"));
-				sateiInfos.AddRange(CalucScoreByStatusFielder(Math.Min(DeckLimit.Catching, 50) + InputStatus.Catching, !isBench ? mulutiply : 1f / 5f, label: "捕球"));
+				sateiInfos.AddRange(CalucScoreByStatusFielder((fmax ? 50 : Math.Min(DeckLimit.Meet, 50)) + InputStatus.Meet, !isBench ? mulutiply : 1f / 5f, label: "ミート"));
+				sateiInfos.AddRange(CalucScoreByStatusFielder((fmax ? 50 : Math.Min(DeckLimit.Power, 50)) + InputStatus.Power, !isBench ? mulutiply : 1f / 5f, label: "パワー"));
+				sateiInfos.AddRange(CalucScoreByStatusFielder((fmax ? 50 : Math.Min(DeckLimit.RunPower, 50)) + InputStatus.RunPower, !isBench ? mulutiply : 2f / 5f, label: "走力"));
+				sateiInfos.AddRange(CalucScoreByStatusFielder((fmax ? 50 : Math.Min(DeckLimit.ShoulderPower, 50)) + InputStatus.ShoulderPower, !isBench ? mulutiply : 1f / 5f, label: "肩力"));
+				sateiInfos.AddRange(CalucScoreByStatusFielder((int)Math.Floor((fmax ? 50 : Math.Min(DeckLimit.Fielding, 50)) * fieldDeclineRate) + InputStatus.Fielding, !isBench ? mulutiply : 1f / 5f, label: "守備力"));
+				sateiInfos.AddRange(CalucScoreByStatusFielder((fmax ? 50 : Math.Min(DeckLimit.Catching, 50)) + InputStatus.Catching, !isBench ? mulutiply : 1f / 5f, label: "捕球"));
 			}
 			//キャラの能力と、コーチの能力を合わせて上位のみにする。
 			List<PQAbility> abilities = new();

@@ -13,9 +13,9 @@ namespace PQCalculator.Model {
         [JsonIgnore]
         public int UnitId { get; set; }
         /// 
-        public int BallSpeed { get; set; }
-        public int BallControl { get; set; }
-        public int Stamina { get; set; }
+		public int BallSpeed { get; set; }
+		public int BallControl { get; set; }
+		public int Stamina { get; set; }
 
     }
 }
