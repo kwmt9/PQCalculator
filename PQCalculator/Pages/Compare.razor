@@ -44,46 +44,46 @@
     </div>
 </div>
 
-       <div style="overflow-x: auto;min-width:600px;max-width:1200px; margin:auto;">
-        <table class="table table-bordered table-sm align-middle">
-            <thead>
+<div style="overflow-x: auto;min-width:600px;max-width:1200px; margin:auto;">
+    <table class="table table-bordered table-sm align-middle">
+        <thead>
+            <tr>
+                <th style="user-select: none;">キャラ名</th>
+                <th style="user-select: none;">守備位置</th>
+                <th style="user-select: none;cursor:pointer;" @onclick="() => SortBy(nameof(CharacterView.Evaluation))">査定 @(SortKey == nameof(CharacterView.Evaluation) ? SortDesc ? "▲" : "▼" : "")</th>
+                <th style="user-select: none;cursor:pointer;" @onclick="() => SortBy(nameof(CharacterView.BenchEvaluation))">ベンチ査定 @(SortKey == nameof(CharacterView.BenchEvaluation) ? SortDesc ? "▲" : "▼" : "")</th>
+                <th style="user-select: none;cursor:pointer;" @onclick="() => SortBy(nameof(CharacterView.CostPerformance))">コスパ @(SortKey == nameof(CharacterView.CostPerformance) ? SortDesc ? "▲" : "▼" : "")</th>
+                <th style="user-select: none;">コーチ人数</th>
+                <th style="user-select: none;">レベル上限</th>
+                <th style="user-select: none;">コスト</th>
+                <th style="user-select: none;"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var c in SortedCharacters)
+            {
                 <tr>
-                    <th style="user-select: none;">キャラ名</th>
-                    <th style="user-select: none;">守備位置</th>
-                    <th style="user-select: none;cursor:pointer;" @onclick="() => SortBy(nameof(CharacterView.Evaluation))">査定 @(SortKey == nameof(CharacterView.Evaluation) ? SortDesc ? "▲" : "▼" : "")</th>
-                    <th style="user-select: none;cursor:pointer;" @onclick="() => SortBy(nameof(CharacterView.BenchEvaluation))">ベンチ査定 @(SortKey == nameof(CharacterView.BenchEvaluation) ? SortDesc ? "▲" : "▼" : "")</th>
-                    <th style="user-select: none;cursor:pointer;" @onclick="() => SortBy(nameof(CharacterView.CostPerformance))">コスパ @(SortKey == nameof(CharacterView.CostPerformance) ? SortDesc ? "▲" : "▼" : "")</th>
-                    <th style="user-select: none;">コーチ人数</th>
-                    <th style="user-select: none;">レベル上限</th>
-                    <th style="user-select: none;">コスト</th>
-                    <th style="user-select: none;"></th>
+                    <td>@c.Name</td>
+                    <td>
+                        @if (c.Usage == "スタメン"){
+                            <PlayerPositionComponent Position="c.Position"></PlayerPositionComponent>
+                        }
+                        else{
+                            @c.Usage
+                        }
+                    </td>
+                    <td>@c.Evaluation</td>
+                    <td>@c.BenchEvaluation</td>
+                    <td>@c.CostPerformance</td>
+                    <td>@c.CoachCount</td>
+                    <td>@c.Level</td>
+                    <td>@c.Cost</td>
+                    <td><button class="btn btn-sm btn-danger" @onclick="() => RemoveCharacter(c)">×</button></td>
                 </tr>
-            </thead>
-            <tbody>
-                @foreach (var c in SortedCharacters)
-                {
-                    <tr>
-                        <td>@c.Name</td>
-                        <td>
-                            @if (c.Usage == "スタメン"){
-                                <PlayerPositionComponent Position="c.Position"></PlayerPositionComponent>
-                            }
-                            else{
-                                @c.Usage
-                            }
-                        </td>
-                        <td>@c.Evaluation</td>
-                        <td>@c.BenchEvaluation</td>
-                        <td>@c.CostPerformance</td>
-                        <td>@c.CoachCount</td>
-                        <td>@c.Level</td>
-                        <td>@c.Cost</td>
-                        <td><button class="btn btn-sm btn-danger" @onclick="() => RemoveCharacter(c)">×</button></td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-        <!--<button class="btn btn-secondary mb-2" @onclick="CopyCharactersToClipboard">表をコピー</button>-->
+            }
+        </tbody>
+    </table>
+    <!--<button class="btn btn-secondary mb-2" @onclick="CopyCharactersToClipboard">表をコピー</button>-->
 </div>
 
 @code {
@@ -145,15 +145,18 @@
 
         await LoadCharactersAsync();
     }
-    // 追加処理
     async Task AddCharacter() {
-        // ダミー計算: 査定=レベル*10, 戦闘力=レベル*コスト, コスパ=戦闘力/コスト
         PQPlayerUnit? unit = PQPlayerUnits?.FirstOrDefault(x => x.Name == NewCharacter.Name);
         if (unit == null)
             return;
 
         bool isSubPosition = true;
         int SelectedSubpos = 2;
+        if (NewCharacter.Usage == "スタメン") { SelectedSubpos = 2; }
+        if (NewCharacter.Usage == "サブポジ") { SelectedSubpos = 1; }
+        if (NewCharacter.Usage == "サブポジ〇") { SelectedSubpos = 0; }
+        if (NewCharacter.Usage == "サブポジ◎") { SelectedSubpos = 2; }
+
         float fieldDeclineRate = 1f;
         if (isSubPosition) {
             if (SelectedSubpos == 0) {
@@ -208,9 +211,12 @@
         }
         AbilitySelecter.AddAbility(canLearnAbilitys, AllAbilities, NewCharacter.CoachCount, isBench, deckAbilites);
         AbilitySelecter.AddAbility(canLearnAbilitys, AllAbilities, NewCharacter.CoachCount, isBench, benchDeckAbilites);
+        
+
+
         //ここまで
-        var sateiInfo = SateiCalculator.SumPlayerBase_DeckScore(unit, AllAbilities, coach, unitStatus, coachP, unitStatusP, deckAbilites, false, 2, NewCharacter.Level, true, true);
-        var benchSateiInfo = SateiCalculator.SumPlayerBase_DeckScore(unit, AllAbilities, coach, unitStatus, coachP, unitStatusP, benchDeckAbilites, true, 2, NewCharacter.Level, true, true);
+        var sateiInfo = SateiCalculator.SumPlayerBase_DeckScore(unit, AllAbilities, coach, unitStatus, coachP, unitStatusP, deckAbilites, false, SelectedSubpos, NewCharacter.Level, true, true);
+        var benchSateiInfo = SateiCalculator.SumPlayerBase_DeckScore(unit, AllAbilities, coach, unitStatus, coachP, unitStatusP, benchDeckAbilites, true, SelectedSubpos, NewCharacter.Level, true, true);
 
         sateiInfo.sateiInfos = sateiInfo.sateiInfos.OrderByDescending(x => x.Ability?.SateiMain ?? 100000).ToList();
         foreach (var v in sateiInfo.sateiInfos) { Console.WriteLine($"{v.Label} : {v.Score}"); }
