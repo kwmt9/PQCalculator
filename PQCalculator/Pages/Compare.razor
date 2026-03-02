@@ -212,8 +212,6 @@
         AbilitySelecter.AddAbility(canLearnAbilitys, AllAbilities, NewCharacter.CoachCount, isBench, deckAbilites);
         AbilitySelecter.AddAbility(canLearnAbilitys, AllAbilities, NewCharacter.CoachCount, isBench, benchDeckAbilites);
         
-
-
         //ここまで
         var sateiInfo = SateiCalculator.SumPlayerBase_DeckScore(unit, AllAbilities, coach, unitStatus, coachP, unitStatusP, deckAbilites, false, SelectedSubpos, NewCharacter.Level, true, true);
         var benchSateiInfo = SateiCalculator.SumPlayerBase_DeckScore(unit, AllAbilities, coach, unitStatus, coachP, unitStatusP, benchDeckAbilites, true, SelectedSubpos, NewCharacter.Level, true, true);
