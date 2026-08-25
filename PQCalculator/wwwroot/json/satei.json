@@ -2335,6 +2335,16 @@
     "rank": 1
   },
   {
+    "id": 309,
+    "name": "気丈夫",
+    "sateiMain": 36,
+    "sateiSub": 18,
+    "colorType": 2,
+    "playerType": 2,
+    "groupId": 165,
+    "rank": 1
+  },
+  {
     "id": 261,
     "name": "不屈の魂",
     "sateiMain": 270,
