@@ -29,3 +29,4 @@ body{font-size:17px}
 .empty-result{display:none}
 .table-panel th,.table-panel td{font-size:15px}.table-panel td:first-child b{font-size:15px}.table-panel .position-mark{font-size:14px;display:inline-block}.table-panel th button{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}.sort-indicator{display:inline-block;width:1em;flex:none;text-align:center;visibility:hidden}.sort-indicator.active{visibility:visible}
 .app-footer{display:block;flex:none;width:100%;padding:12px max(16px,calc((100% - 960px)/2));border-top:1px solid var(--line);font-size:14px;color:var(--muted)}.app-footer details{width:100%;max-width:960px;margin:0 auto}.app-footer summary{cursor:pointer;font-weight:500;color:#495057}.app-footer ul{margin:8px 0 0;padding-left:22px}.app-footer li{line-height:1.7}@media(max-width:600px){.app-footer{padding:12px}}
+@media(max-width:600px){.status-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
