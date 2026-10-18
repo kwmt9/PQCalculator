@@ -12,6 +12,38 @@ function readStored<T>(key: string, fallback: T): T {
   try { const raw = localStorage.getItem(key); return raw ? JSON.parse(raw) as T : fallback; } catch { return fallback; }
 }
 
+function readSavedComparisons(): SavedComparison[] {
+  try {
+    const raw = localStorage.getItem('characters');
+    if (!raw) return [];
+    const saved: unknown = JSON.parse(raw);
+    if (!Array.isArray(saved)) return [];
+
+    return saved
+      .filter((item): item is Record<string, unknown> => typeof item === 'object' && item !== null)
+      .map((item) => {
+        const number = (camelCase: string, pascalCase: string, fallback: number) => {
+          const value = Number(item[camelCase] ?? item[pascalCase]);
+          return Number.isFinite(value) ? value : fallback;
+        };
+        return {
+          name: String(item.name ?? item.Name ?? ''),
+          position: number('position', 'Position', 1),
+          level: number('level', 'Level', 50),
+          cost: number('cost', 'Cost', 20),
+          usage: String(item.usage ?? item.Usage ?? 'スタメン'),
+          coachCount: number('coachCount', 'CoachCount', 4),
+          evaluation: number('evaluation', 'Evaluation', 0),
+          benchEvaluation: number('benchEvaluation', 'BenchEvaluation', 0),
+          costPerformance: number('costPerformance', 'CostPerformance', 0),
+        };
+      })
+      .filter((item) => item.name.length > 0);
+  } catch {
+    return [];
+  }
+}
+
 export default function App() {
   const [players, setPlayers] = useState<Player[]>([]);
   const [events, setEvents] = useState<EventUnit[]>([]);
@@ -162,7 +194,7 @@ function CalculatorPage({ players, abilities, events }: { players: Player[]; abi
 }
 
 function ComparePage({ players, abilities, events }: { players: Player[]; abilities: Ability[]; events: EventUnit[] }) {
-  const [rows, setRows] = useState<SavedComparison[]>(() => readStored('characters', []));
+  const [rows, setRows] = useState<SavedComparison[]>(readSavedComparisons);
   const [name, setName] = useState('');
   const [level, setLevel] = useState(50);
   const [cost, setCost] = useState(20);
