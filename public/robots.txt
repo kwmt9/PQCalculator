@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://kwmt9.github.io/PQCalculator/sitemap.xml

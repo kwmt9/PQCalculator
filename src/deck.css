@@ -1,0 +1,32 @@
+.deck-units .deck-unit{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:start;gap:4px 6px;min-height:26px;padding:2px 0 5px;border-bottom:1px solid #f1f1f1}
+.deck-units .deck-unit>span:first-child{grid-column:1;min-width:0;overflow:visible;text-overflow:clip;white-space:normal;overflow-wrap:anywhere}
+.deck-units .deck-unit .skill-chip{justify-self:start;width:fit-content;max-width:100%;font-size:10px;padding:1px 4px;border-bottom:1px solid rgba(0,0,0,.15)}
+.deck-units .deck-unit{min-width:0}
+.deck-units .deck-unit .deck-remove{grid-column:2;grid-row:1;justify-self:end;align-self:start;border:0;background:transparent;color:#b02a37;font-size:17px;line-height:1;padding:1px 5px;cursor:pointer}
+.deck-units .deck-unit .deck-remove:hover{background:#f8d7da;border-radius:3px}
+.deck-units .deck-unit .supexp-label{grid-column:1 / -1;justify-self:start;border:1px solid #b6d4fe;border-radius:3px;background:#e7f1ff;color:#084298;font-size:9px;line-height:1.2;padding:2px 4px}
+.deck-abilities{border-top:1px solid var(--line);margin-top:8px;padding-top:7px;display:flex;flex-direction:column;gap:4px}
+.deck-abilities-title{font-size:12px;font-weight:600;color:#495057;margin-bottom:2px}
+.deck-ability{display:flex;align-items:center;justify-content:space-between;gap:5px}
+.deck-ability .skill-chip{font-size:10px;padding:1px 4px;overflow:hidden;text-overflow:ellipsis}
+.deck-ability b{flex:none;font-size:11px;font-weight:500;color:#495057}
+.limit-strip.pitcher-limits{grid-template-columns:repeat(3,1fr)}
+.position-mark.bg-pitcher{background-color:#ffaea7}
+.position-mark.bg-chatcher{background-color:#80eaff}
+.position-mark.bg-infielder{background-color:#ffec74}
+.position-mark.bg-outfielder{background-color:#84e480}
+.player-summary{display:block}
+.player-summary-head{display:flex;align-items:center;gap:10px}
+.player-summary .ability-card{padding:9px 0 0;margin-top:8px}
+.number-stepper{display:flex;align-items:stretch;width:100%;gap:5px}
+.number-stepper input{flex:1;min-width:0}
+.number-stepper button{display:none}
+@media(max-width:600px){
+  .number-stepper{gap:6px}
+  .number-stepper button{display:inline-flex;align-items:center;justify-content:center;flex:none;width:40px;min-height:38px;border:1px solid #ced4da;border-radius:4px;background:#f8f9fa;color:#212529;font-size:21px;line-height:1;touch-action:none;user-select:none}
+  .number-stepper button:active:not(:disabled){background:#e2e6ea}
+  .number-stepper button:disabled{color:#adb5bd;background:#f1f3f5}
+  .number-stepper input{text-align:center}
+  .number-stepper input::-webkit-inner-spin-button,.number-stepper input::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+  .number-stepper input[type=number]{-moz-appearance:textfield}
+}
