@@ -119,18 +119,19 @@ function Field({ label, value, onInput, min = 0, max = 999 }: { label: string; v
     onPointerCancel: stopRepeat,
     onContextMenu: (event: Event) => event.preventDefault(),
   });
-  return <label class="field"><span>{label}</span><div class="number-stepper"><button type="button" aria-label={`${label}を1減らす`} {...pressHandlers(-1)}>−</button><input type="number" inputMode="numeric" min={min} max={max} value={value} onInput={(event) => update(Number((event.currentTarget as HTMLInputElement).value) || min)} /><button type="button" aria-label={`${label}を1増やす`} {...pressHandlers(1)}>＋</button></div></label>;
+  return <div class="field"><span>{label}</span><div class="number-stepper"><button type="button" aria-label={`${label}を1減らす`} {...pressHandlers(-1)}>−</button><input type="number" inputMode="numeric" aria-label={label} min={min} max={max} value={value} onInput={(event) => update(Number((event.currentTarget as HTMLInputElement).value) || min)} /><button type="button" aria-label={`${label}を1増やす`} {...pressHandlers(1)}>＋</button></div></div>;
 }
 
 function PlayerPicker({ players, value, onChange }: { players: Player[]; value: string; onChange: (name: string) => void }) {
   const options = useMemo(() => players.filter((p) => p.position !== 0).sort((a, b) => b.id - a.id), [players]);
+  const inputRef = useRef<HTMLInputElement>(null);
   const [open, setOpen] = useState(false);
   const suggestions = value.trim()
     ? options.filter((player) => player.name.toLocaleLowerCase().includes(value.trim().toLocaleLowerCase()))
     : options;
-  const select = (name: string) => { onChange(name); setOpen(false); };
+  const select = (name: string) => { onChange(name); setOpen(false); inputRef.current?.blur(); };
   return <div class="player-picker">
-    <input class="player-search" placeholder={String.fromCharCode(0x30ad,0x30e3,0x30e9,0x30af,0x30bf,0x30fc,0x540d,0x3092,0x5165,0x529b)} value={value} role="combobox" aria-autocomplete="list" aria-expanded={open && suggestions.length > 0} onFocus={() => setOpen(true)} onBlur={() => setOpen(false)} onKeyDown={(event) => { if (event.key === 'Enter' && open && suggestions.length) { event.preventDefault(); select(suggestions[0].name); } else if (event.key === 'Escape') setOpen(false); }} onInput={(event) => { onChange((event.currentTarget as HTMLInputElement).value); setOpen(true); }} />
+    <input ref={inputRef} class="player-search" placeholder={String.fromCharCode(0x30ad,0x30e3,0x30e9,0x30af,0x30bf,0x30fc,0x540d,0x3092,0x5165,0x529b)} value={value} role="combobox" aria-autocomplete="list" aria-expanded={open && suggestions.length > 0} onFocus={() => setOpen(true)} onBlur={() => setOpen(false)} onKeyDown={(event) => { if (event.key === 'Enter' && open && suggestions.length) { event.preventDefault(); select(suggestions[0].name); } else if (event.key === 'Escape') setOpen(false); }} onInput={(event) => { onChange((event.currentTarget as HTMLInputElement).value); setOpen(true); }} />
     {value && <button type="button" class="player-search-clear" aria-label="入力を消去" title="入力を消去" onMouseDown={(event) => event.preventDefault()} onClick={() => { onChange(''); setOpen(false); }}>×</button>}
     {open && suggestions.length > 0 && <div class="player-suggestions" role="listbox">{suggestions.map((player) => <button type="button" class="player-suggestion" role="option" aria-selected="false" onMouseDown={(event) => event.preventDefault()} onClick={() => select(player.name)}>{player.name}</button>)}</div>}
   </div>;
