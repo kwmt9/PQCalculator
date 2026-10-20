@@ -60609,8 +60609,150 @@
       "fielding": 55,
       "catching": 20
     },
-    "pitcherStatus": null,
-    "abilities": [],
-    "curves": []
+    "pitcherStatus": {
+      "ballSpeed": 136,
+      "ballControl": 30,
+      "stamina": 45
+    },
+    "abilities": [
+      {
+        "id": 222,
+        "name": "打球反応◯",
+        "groupId": 118,
+        "rank": 1,
+        "playerType": 2,
+        "colorType": 2
+      },
+      {
+        "id": 246,
+        "name": "手応え",
+        "groupId": 142,
+        "rank": 1,
+        "playerType": 2,
+        "colorType": 2
+      },
+      {
+        "id": 245,
+        "name": "先制ストライク",
+        "groupId": 141,
+        "rank": 1,
+        "playerType": 2,
+        "colorType": 2
+      },
+      {
+        "id": 253,
+        "name": "全開",
+        "groupId": 149,
+        "rank": 1,
+        "playerType": 2,
+        "colorType": 2
+      },
+      {
+        "id": 255,
+        "name": "投打躍動",
+        "groupId": 151,
+        "rank": 1,
+        "playerType": 2,
+        "colorType": 2
+      },
+      {
+        "id": 2,
+        "name": "チャンス◎",
+        "groupId": 1,
+        "rank": 2,
+        "playerType": 1,
+        "colorType": 2
+      },
+      {
+        "id": 16,
+        "name": "パワーヒッター",
+        "groupId": 9,
+        "rank": 1,
+        "playerType": 1,
+        "colorType": 2
+      },
+      {
+        "id": 25,
+        "name": "意外性",
+        "groupId": 18,
+        "rank": 1,
+        "playerType": 1,
+        "colorType": 2
+      },
+      {
+        "id": 48,
+        "name": "気分屋",
+        "groupId": 40,
+        "rank": 1,
+        "playerType": 1,
+        "colorType": 2
+      },
+      {
+        "id": 56,
+        "name": "ラッキーセブン",
+        "groupId": 48,
+        "rank": 1,
+        "playerType": 1,
+        "colorType": 2
+      },
+      {
+        "id": 85,
+        "name": "対変化球○",
+        "groupId": 76,
+        "rank": 1,
+        "playerType": 1,
+        "colorType": 2
+      },
+      {
+        "id": 197,
+        "name": "強振多用",
+        "groupId": 98,
+        "rank": 1,
+        "playerType": 1,
+        "colorType": 5
+      },
+      {
+        "id": 201,
+        "name": "積極盗塁",
+        "groupId": 102,
+        "rank": 1,
+        "playerType": 1,
+        "colorType": 5
+      },
+      {
+        "id": 203,
+        "name": "積極走塁",
+        "groupId": 104,
+        "rank": 1,
+        "playerType": 1,
+        "colorType": 5
+      },
+      {
+        "id": 204,
+        "name": "積極守備",
+        "groupId": 105,
+        "rank": 1,
+        "playerType": 1,
+        "colorType": 5
+      },
+      {
+        "id": 207,
+        "name": "選球眼",
+        "groupId": 108,
+        "rank": 1,
+        "playerType": 1,
+        "colorType": 5
+      }
+    ],
+    "curves": [
+      {
+        "curveId": 18,
+        "amount": 2
+      },
+      {
+        "curveId": 14,
+        "amount": 2
+      }
+    ]
   }
 ]
