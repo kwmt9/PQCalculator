@@ -60595,5 +60595,22 @@
       }
     ],
     "curves": []
+  },
+  {
+    "id": 789,
+    "name": "[わんこだよ！]パーちゃん",
+    "position": 5,
+    "status": {
+      "dandou": 4,
+      "meet": 20,
+      "power": 70,
+      "runPower": 70,
+      "shoulderPower": 50,
+      "fielding": 55,
+      "catching": 20
+    },
+    "pitcherStatus": null,
+    "abilities": [],
+    "curves": []
   }
 ]

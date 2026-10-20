@@ -1,5 +1,49 @@
 [
   {
+    "id": 789,
+    "name": "[わんこだよ！]パーちゃん",
+    "org": 448,
+    "limit": {
+      "meet": 0,
+      "power": 0,
+      "runPower": 10,
+      "shoulderPower": 0,
+      "fielding": 0,
+      "catching": 0,
+      "ballSpeed": 0,
+      "ballControl": 0,
+      "stamina": 0,
+      "sumFielder": 10,
+      "sumPicher": 0
+    },
+    "abilities": [
+      {
+        "id": 147,
+        "name": "洗礼の一撃",
+        "groupId": 61,
+        "rank": 2,
+        "playerType": 1,
+        "colorType": 3
+      },
+      {
+        "id": 135,
+        "name": "ブリッツ",
+        "groupId": 52,
+        "rank": 2,
+        "playerType": 1,
+        "colorType": 3
+      },
+      {
+        "id": 287,
+        "name": "意気揚々",
+        "groupId": 142,
+        "rank": 2,
+        "playerType": 2,
+        "colorType": 3
+      }
+    ]
+  },
+  {
     "id": 788,
     "name": "[キャプテン]御幸一也",
     "org": 788,
