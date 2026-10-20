@@ -66,14 +66,19 @@ export default function App() {
   }, []);
 
   return <div class="app-shell">
-    <header class="topbar"><a class="brand" href="#/" aria-label="パワクエコーチ計算機 ホーム"><span><strong>{route === '/compare' ? '契約書比較ツール' : 'パワクエコーチ計算機(仮)'}</strong></span></a>
-      <nav><a class={route === '/' ? 'active' : ''} href="#/">査定計算</a><a class={route === '/compare' ? 'active' : ''} href="#/compare">契約書比較</a></nav>
+    <header class="topbar"><a class="brand" href="#/" aria-label="パワクエコーチ計算機 ホーム"><span><strong>{route === '/compare' ? '契約書比較ツール' : route === '/satei' ? '査定データ' : 'パワクエコーチ計算機(仮)'}</strong></span></a>
+      <nav><a class={route === '/' ? 'active' : ''} href="#/">コーチ計算</a><a class={route === '/compare' ? 'active' : ''} href="#/compare">契約書比較</a><a class={route === '/satei' ? 'active' : ''} href="#/satei">査定データ</a></nav>
     </header>
     {loading ? <main class="loading"><span class="spinner" /><p>読み込み中</p></main>
       : loadError ? <main class="loading"><p class="error-text">{loadError}</p></main>
       : route === '/compare' ? <ComparePage players={players} abilities={abilities} events={events} />
+      : route === '/satei' ? <SateiDataPage abilities={abilities} />
       : <CalculatorPage players={players} abilities={abilities} events={events} />}
-    <footer class="app-footer"><details><summary>更新履歴</summary><ul><li><time dateTime="2026-10-19">2026/10/19</time> デッキに経験点上限キャラが入るようにしました。別Verのキャラが被らないようにしました</li><li><time dateTime="2026-01-01">2026/01/01</time> ああああ</li></ul></details></footer>
+    <footer class="app-footer"><details><summary>更新履歴</summary><ul>
+    <li><time dateTime="2026-10-20">2026/10/20</time> サブポジ関連の計算式を修正</li>
+    <li><time dateTime="2026-10-19">2026/10/19</time> デッキに経験点上限キャラが入るようにしました。別Verのキャラが被らないようにしました</li>
+    <li><time dateTime="2026-01-01">2026/01/01</time> ああああ</li>
+    </ul></details></footer>
   </div>;
 }
 
@@ -119,13 +124,22 @@ function Field({ label, value, onInput, min = 0, max = 999 }: { label: string; v
 
 function PlayerPicker({ players, value, onChange }: { players: Player[]; value: string; onChange: (name: string) => void }) {
   const options = useMemo(() => players.filter((p) => p.position !== 0).sort((a, b) => b.id - a.id), [players]);
-  return <><input class="player-search" list="player-options" placeholder={String.fromCharCode(0x30ad,0x30e3,0x30e9,0x30af,0x30bf,0x30fc,0x540d,0x3092,0x5165,0x529b)} value={value} onInput={(e) => onChange((e.currentTarget as HTMLInputElement).value)} /><datalist id="player-options">{options.map((player) => <option value={player.name} />)}</datalist></>;
+  const [open, setOpen] = useState(false);
+  const suggestions = value.trim()
+    ? options.filter((player) => player.name.toLocaleLowerCase().includes(value.trim().toLocaleLowerCase()))
+    : options;
+  const select = (name: string) => { onChange(name); setOpen(false); };
+  return <div class="player-picker">
+    <input class="player-search" placeholder={String.fromCharCode(0x30ad,0x30e3,0x30e9,0x30af,0x30bf,0x30fc,0x540d,0x3092,0x5165,0x529b)} value={value} role="combobox" aria-autocomplete="list" aria-expanded={open && suggestions.length > 0} onFocus={() => setOpen(true)} onBlur={() => setOpen(false)} onKeyDown={(event) => { if (event.key === 'Enter' && open && suggestions.length) { event.preventDefault(); select(suggestions[0].name); } else if (event.key === 'Escape') setOpen(false); }} onInput={(event) => { onChange((event.currentTarget as HTMLInputElement).value); setOpen(true); }} />
+    {value && <button type="button" class="player-search-clear" aria-label="入力を消去" title="入力を消去" onMouseDown={(event) => event.preventDefault()} onClick={() => { onChange(''); setOpen(false); }}>×</button>}
+    {open && suggestions.length > 0 && <div class="player-suggestions" role="listbox">{suggestions.map((player) => <button type="button" class="player-suggestion" role="option" aria-selected="false" onMouseDown={(event) => event.preventDefault()} onClick={() => select(player.name)}>{player.name}</button>)}</div>}
+  </div>;
 }
 function ResultPanel({ result, isBench, position, onExcludeUnit }: { result: ReturnType<typeof calculate>; isBench: boolean; position: number; onExcludeUnit: (id: number) => void }) {
   const [showDetails, setShowDetails] = useState(false);
   const detailLines = [...result.lines.filter((line) => !line.ability), ...result.lines.filter((line) => line.ability).sort((a, b) => b.score - a.score)];
   return <section class="result-panel">
-    <div class="result-head"><div><span class="eyebrow">{isBench ? 'BENCH SCORE' : 'ESTIMATED SCORE'}</span><div class="score-number">{Math.round(result.score).toLocaleString()}</div></div><div class="score-secondary"><span>{isBench ? '通常査定' : 'ベンチ査定'}</span><b>{Math.round(isBench ? result.normalScore : result.benchScore).toLocaleString()}</b></div></div>
+    <div class="result-head"><div><span class="eyebrow">{isBench ? 'BENCH SCORE' : 'ESTIMATED SCORE'}</span><div class="score-number">{Math.round(result.score).toLocaleString()}</div></div><div class="score-secondary"><span>{isBench ? '通常査定' : '控え査定'}</span><b>{Math.round(isBench ? result.normalScore : result.benchScore).toLocaleString()}</b></div></div>
     <div class={`limit-strip ${position === 1 ? 'pitcher-limits' : ''}`}>{fielderLabels.map(([key, label]) => <span><small>{label}</small><b>+{result.fielderLimit[key] ?? 0}</b></span>)}{position === 1 && <><span><small>{'\u7403\u901f'}</small><b>+{result.pitcherLimit.ballSpeed}</b></span><span><small>{'\u30b3\u30f3\u30c8\u30ed\u30fc\u30eb'}</small><b>+{result.pitcherLimit.ballControl}</b></span><span><small>{'\u30b9\u30bf\u30df\u30ca'}</small><b>+{result.pitcherLimit.stamina}</b></span></>}</div>
     <button class="text-button" onClick={() => setShowDetails(!showDetails)}>{showDetails ? '内訳を閉じる' : '査定の内訳を見る'} <span>{showDetails ? '−' : '+'}</span></button>
     {showDetails && <div class="score-lines">{detailLines.map((line) => <div><span>{line.ability ? <span class={`skill-chip type-${line.ability.colorType}`}>{line.label}</span> : line.label}</span><b>{line.score.toLocaleString()}</b></div>)}</div>}
@@ -160,6 +174,11 @@ function CalculatorPage({ players, abilities, events }: { players: Player[]; abi
     setExcluded(next);
     if (player) setResult(calculate({ player, allAbilities: abilities, eventUnits: events, level, coachCount, usage, isBench, fielderMax, pitcherMax, selectedMastery: mastery, excludedUnits: next, customStatus: statusOverrides }));
   };
+  const restoreAllDeckUnits = () => {
+    localStorage.setItem('notOwnUnit', JSON.stringify([]));
+    setExcluded([]);
+    if (player && result) setResult(calculate({ player, allAbilities: abilities, eventUnits: events, level, coachCount, usage, isBench, fielderMax, pitcherMax, selectedMastery: mastery, excludedUnits: [], customStatus: statusOverrides }));
+  };
   const runCalculation = () => {
     if (!player) return;
     const calculated = calculate({ player, allAbilities: abilities, eventUnits: events, level, coachCount, usage, isBench, fielderMax, pitcherMax, selectedMastery: mastery, excludedUnits: excluded, customStatus: statusOverrides });
@@ -179,7 +198,7 @@ function CalculatorPage({ players, abilities, events }: { players: Player[]; abi
         <div class="field-grid"><Field label="契約書Lv" value={level} min={1} onInput={(value) => { setLevel(value); setStatusOverrides({}); }} /><Field label="コーチ人数" value={coachCount} min={0} max={4} onInput={setCoachCount} /></div>
         {player && <div class="status-editor"><div class="section-caption">査定対象能力値 <small>編集できます</small></div><div class="status-grid">{fielderLabels.map(([key, label]) => <Field label={label} value={statusOverrides[key] ?? atLevel(level, player.status?.[key] ?? 0)} onInput={(value) => setStatusOverrides((current) => ({ ...current, [key]: value }))} min={1} />)}{player.position === 1 && pitcherLabels.map(([key, label]) => <Field label={label} value={statusOverrides[key] ?? atLevel(level, player.pitcherStatus?.[key] ?? 0)} onInput={(value) => setStatusOverrides((current) => ({ ...current, [key]: value }))} min={1} />)}{player.position === 1 && <Field label="球速" value={statusOverrides.ballSpeed ?? (player.pitcherStatus ? 100 + atLevel(level, player.pitcherStatus.ballSpeed - 100) : 120)} onInput={(value) => setStatusOverrides((current) => ({ ...current, ballSpeed: value }))} min={100} />}</div></div>}
         <div class="field field-wide"><span>起用方法</span><div class="segmented">{['スタメン', 'サブポジ', 'サブポジ〇', 'サブポジ◎'].map((item) => <button class={usage === item ? 'selected' : ''} onClick={() => setUsage(item)}>{item}</button>)}</div></div>
-        <div class="option-list"><label class="toggle-row"><span><b>ベンチ運用</b><small>ベンチ査定で編成を評価</small></span><input type="checkbox" checked={isBench} onChange={(e) => setIsBench((e.currentTarget as HTMLInputElement).checked)} /></label>
+        <div class="option-list"><label class="toggle-row"><span><b>控え運用</b><small>控え査定で編成を評価</small></span><input type="checkbox" checked={isBench} onChange={(e) => setIsBench((e.currentTarget as HTMLInputElement).checked)} /></label>
           <label class="toggle-row"><span><b>野手能力上限を最大化</b><small>野手上限が不足する分を補い査定を計算</small></span><input type="checkbox" checked={fielderMax} onChange={(e) => setFielderMax((e.currentTarget as HTMLInputElement).checked)} /></label>
           {player?.position === 1 && <label class="toggle-row"><span><b>投手能力上限を最大化</b><small>投手上限が不足する分を補う</small></span><input type="checkbox" checked={pitcherMax} onChange={(e) => setPitcherMax((e.currentTarget as HTMLInputElement).checked)} /></label>}
         </div>
@@ -188,7 +207,7 @@ function CalculatorPage({ players, abilities, events }: { players: Player[]; abi
         {!player && <p class="helper-text">キャラクターを選択すると計算できます。</p>}
       </section>
       <section class="result-column">{result ? <ResultPanel result={result} isBench={isBench} position={player?.position ?? 0} onExcludeUnit={excludeDeckUnit} /> : <div class="empty-result"></div>}</section>
-        <section class="unowned-list"><h3>未所持キャラ <small>{excluded.length}</small></h3>{excluded.length ? <ul>{excluded.map((id) => { const unit = events.find((item) => item.id === id); return unit ? <li><span>{unit.name}</span><button type="button" class="restore-button" aria-label="所持キャラに戻す" title="所持キャラに戻す" onClick={() => restoreDeckUnit(id)}>×</button></li> : null; })}</ul> : <p>未所持キャラはありません。</p>}</section>
+        <section class="unowned-list"><div class="unowned-heading"><h3>未所持キャラ <small>{excluded.length}</small></h3>{excluded.length > 0 && <button type="button" class="secondary-button" onClick={restoreAllDeckUnits}>すべて所持に戻す</button>}</div>{excluded.length ? <ul>{excluded.map((id) => { const unit = events.find((item) => item.id === id); return unit ? <li><span>{unit.name}</span><button type="button" class="restore-button" aria-label="所持キャラに戻す" title="所持キャラに戻す" onClick={() => restoreDeckUnit(id)}>×</button></li> : null; })}</ul> : <p>未所持キャラはありません。</p>}</section>
     </div>
   </main>;
 }
@@ -216,18 +235,46 @@ function ComparePage({ players, abilities, events }: { players: Player[]; abilit
     setName('');
   };
   const copy = async () => {
-    const heading = 'キャラ名\t守備位置\t査定\tベンチ査定\tコスパ\tコーチ人数\tレベル上限\tコスト';
+    const heading = 'キャラ名\t守備位置\t査定\t控え査定\tコスパ\tコーチ人数\tレベル上限\tコスト';
     const lines = sorted.map((row) => `${row.name}\t${row.usage === 'スタメン' ? positionNames[row.position] ?? row.position : row.usage}\t${row.evaluation}\t${row.benchEvaluation}\t${row.costPerformance}\t${row.coachCount}\t${row.level}\t${row.cost}`);
     await navigator.clipboard.writeText([heading, ...lines].join('\n'));
   };
   const remove = (index: number) => persist(rows.filter((_, rowIndex) => rowIndex !== index));
   const th = (key: keyof SavedComparison, title: string) => <th><button onClick={() => { if (sort === key) setDescending(!descending); else { setSort(key); setDescending(true); } }}><span>{title}</span><span class={`sort-indicator ${sort === key ? 'active' : ''}`} aria-hidden="true">{sort === key ? descending ? '▼' : '▲' : '\u00a0'}</span></button></th>;
-  return <main class="page-wrap compare-page"><section class="hero"><div><h1>契約書比較ツール</h1><p>査定、ベンチ査定、コストパフォーマンスを比較できます。</p></div></section>
+  return <main class="page-wrap compare-page"><section class="hero"><div><h1>契約書比較ツール</h1><p>査定、控え査定、コストパフォーマンスを比較できます。</p></div></section>
     <section class="panel compare-form"><div class="panel-heading"><div><span class="eyebrow">ADD PLAYER</span><h2>比較するキャラクター</h2></div></div>
       <div class="compare-fields"><label class="field field-wide"><span>キャラクター</span><PlayerPicker players={players} value={name} onChange={setName} /></label><Field label="Lv" value={level} min={1} onInput={setLevel} /><Field label="コスト" value={cost} min={1} onInput={setCost} /><Field label="コーチ人数" value={coachCount} min={1} max={4} onInput={setCoachCount} /><div class="field field-wide"><span>起用方法</span><div class="segmented">{['スタメン', 'サブポジ', 'サブポジ〇', 'サブポジ◎'].map((item) => <button type="button" class={usage === item ? 'selected' : ''} onClick={() => setUsage(item)}>{item}</button>)}</div></div><button class="primary-button add-button" disabled={!player} onClick={add}>比較に追加 <b>＋</b></button></div>
     </section>
     <section class="panel table-panel"><div class="table-heading"><div><span class="eyebrow">RANKING</span><h2>比較リスト <small>{rows.length}</small></h2></div><div class="table-actions"><button class="secondary-button" disabled={!rows.length} onClick={copy}>表をコピー</button><button class="text-button danger" disabled={!rows.length} onClick={() => persist([])}>すべて削除</button></div></div>
-      {rows.length ? <div class="table-scroll"><table><thead><tr>{th('name', 'キャラクター')}{th('position', 'ポジション')}{th('usage', '起用')}{th('evaluation', '査定')}{th('benchEvaluation', 'ベンチ査定')}{th('costPerformance', 'コスパ')}{th('coachCount', 'コーチ')}{th('level', 'Lv')}{th('cost', 'コスト')}<th /></tr></thead><tbody>{sorted.map((row) => <tr><td><b>{row.name}</b></td><td><span class={`position-mark ${positionClasses[row.position] ?? ''}`}>{positionNames[row.position] ?? '選手'}</span></td><td>{row.usage}</td><td class="numeric"><b>{row.evaluation.toLocaleString()}</b></td><td class="numeric">{row.benchEvaluation.toLocaleString()}</td><td class="numeric">{row.costPerformance.toFixed(2)}</td><td class="numeric">{row.coachCount}</td><td class="numeric">{row.level}</td><td class="numeric">{row.cost}</td><td><button class="remove-button" aria-label={`${row.name}を削除`} onClick={() => remove(rows.indexOf(row))}>×</button></td></tr>)}</tbody></table></div> : <div class="table-empty"><span>比較リストは空です</span><p>上のフォームからキャラクターを追加してください。</p></div>}
+      {rows.length ? <div class="table-scroll"><table><thead><tr>{th('name', 'キャラクター')}{th('position', 'ポジション')}{th('usage', '起用')}{th('evaluation', '査定')}{th('benchEvaluation', '控え査定')}{th('costPerformance', 'コスパ')}{th('coachCount', 'コーチ')}{th('level', 'Lv')}{th('cost', 'コスト')}<th /></tr></thead><tbody>{sorted.map((row) => <tr><td><b>{row.name}</b></td><td><span class={`position-mark ${positionClasses[row.position] ?? ''}`}>{positionNames[row.position] ?? '選手'}</span></td><td>{row.usage}</td><td class="numeric"><b>{row.evaluation.toLocaleString()}</b></td><td class="numeric">{row.benchEvaluation.toLocaleString()}</td><td class="numeric">{row.costPerformance.toFixed(2)}</td><td class="numeric">{row.coachCount}</td><td class="numeric">{row.level}</td><td class="numeric">{row.cost}</td><td><button class="remove-button" aria-label={`${row.name}を削除`} onClick={() => remove(rows.indexOf(row))}>×</button></td></tr>)}</tbody></table></div> : <div class="table-empty"><span>比較リストは空です</span><p>上のフォームからキャラクターを追加してください。</p></div>}
     </section>
+  </main>;
+}
+
+function SateiDataPage({ abilities }: { abilities: Ability[] }) {
+  const fielders = abilities.filter((ability) => ability.playerType === 1);
+  const pitchers = abilities.filter((ability) => ability.playerType === 2);
+  const table = (title: string, rows: Ability[], isFielder: boolean) => <details class="satei-table-collapse">
+    <summary>{title}</summary>
+    <section class="panel table-panel satei-table-panel">
+    <div class="table-scroll"><table class="satei-data-table"><thead><tr><th>特殊能力名</th><th>通常査定</th><th>通常査定（合計）</th><th>控え査定</th><th>控え査定（合計）</th><th>{isFielder ? '投手時' : '野手時'}</th><th>{isFielder ? '投手時（合計）' : '野手時（合計）'}</th></tr></thead><tbody>
+      {rows.map((ability) => <tr>
+        <td><span class={`skill-chip type-${ability.colorType}`}>{ability.name}</span></td>
+        <td class="numeric">{ability.sateiMain}</td>
+        <td class="numeric">{rows.filter((lower) => lower.groupId === ability.groupId && lower.rank > 0 && lower.rank <= ability.rank).reduce((sum, lower) => sum + lower.sateiMain, 0)}</td>
+        <td class="numeric">{ability.sateiSub}</td>
+        <td class="numeric">{rows.filter((lower) => lower.groupId === ability.groupId && lower.rank > 0 && lower.rank <= ability.rank).reduce((sum, lower) => sum + lower.sateiSub, 0)}</td>
+        <td class="numeric">{(isFielder ? ability.fp : ability.pf) ?? ''}</td>
+        <td class="numeric">{rows.filter((lower) => lower.groupId === ability.groupId && lower.rank > 0 && lower.rank <= ability.rank).reduce((sum, lower) => sum + (isFielder ? lower.fp ?? 0 : lower.pf ?? 0), 0)}</td>
+      </tr>)}
+    </tbody></table></div>
+    {!rows.length && <div class="table-empty">該当するデータがありません。</div>}
+    </section>
+  </details>;
+
+  return <main class="page-wrap compare-page satei-data-page">
+    <section class="hero"><div><h1>査定データ</h1><p>査定計算に使用しているデータです。</p></div></section>
+    {table('野手', fielders, true)}
+    {table('投手', pitchers, false)}
   </main>;
 }

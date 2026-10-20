@@ -24,6 +24,10 @@ function fieldScore(value: number, mult = 1, label = ''): ScoreLine {
   return { label: `${label}(${value})`, score: Math.floor(score * mult) };
 }
 
+function roundDownToFive(value: number): number {
+  return Math.floor(value / 5) * 5;
+}
+
 function pitcherScore(value: number, mult = 1, label = ''): ScoreLine {
   let score = 6 * value;
   for (const [threshold, points] of [[101, 126], [90, 66], [80, 66], [70, 36], [60, 18], [50, 18], [40, 12]]) {
@@ -187,7 +191,7 @@ function evaluatePlayer(player: Player, all: Ability[], f: FielderStatus, p: Pit
   const bench = options.isBench ?? false;
   const pitcher = player.position === 1;
   const subQuality = options.usage === 'サブポジ' ? 0 : options.usage === 'サブポジ〇' ? 1 : 2;
-  const fieldRate = options.usage === 'サブポジ' ? 0.7 : options.usage === 'サブポジ〇' ? 0.8 : 1;
+  const subpositionRate = options.usage === 'サブポジ' ? 0.8 : options.usage === 'サブポジ〇' ? 0.9 : 1;
   if (pitcher) {
     lines.push({ label: `弾道(${player.status?.dandou ?? 1})`, score: Math.floor(((player.status?.dandou ?? 1) - 1) * 50 / 5) });
     for (const [key, label] of fielderLabels) lines.push(fieldScore((options.fielderMax ? 50 : Math.min(limits[key] ?? 0, 50)) + f[key], 0.2, label));
@@ -200,9 +204,13 @@ function evaluatePlayer(player: Player, all: Ability[], f: FielderStatus, p: Pit
     lines.push({ label: `弾道(${player.status?.dandou ?? 1})`, score: Math.floor(((player.status?.dandou ?? 1) - 1) * 50 * (bench ? 0.2 : 1)) });
     for (const [key, label] of fielderLabels) {
       const limit = options.fielderMax ? 50 : Math.min(limits[key] ?? 0, 50);
-      const adjusted = key === 'fielding' && options.usage !== 'スタメン' ? Math.floor(limit * fieldRate) : limit;
       const multiplier = !bench ? 1 : key === 'runPower' ? 0.4 : 0.2;
-      lines.push(fieldScore(adjusted + f[key], multiplier, label));
+      const score = fieldScore(limit + f[key], multiplier, label);
+      const subpositionAdjusted = ['shoulderPower', 'fielding', 'catching'].includes(key)
+        && options.usage !== 'スタメン';
+      lines.push(subpositionAdjusted
+        ? { ...score, score: roundDownToFive(score.score * subpositionRate) }
+        : score);
     }
   }
 
@@ -249,7 +257,6 @@ export function calculate(options: CalcOptions): CalculationResult {
     runPower: atLevel(level, player.status?.runPower ?? 0), shoulderPower: atLevel(level, player.status?.shoulderPower ?? 0),
     fielding: atLevel(level, player.status?.fielding ?? 0), catching: atLevel(level, player.status?.catching ?? 0),
   };
-  if (usage !== 'スタメン') baseF.fielding = Math.floor(baseF.fielding * (subQuality === 0 ? 0.7 : subQuality === 1 ? 0.8 : 1));
   const baseP: PitcherStatus = {
     ballSpeed: player.pitcherStatus ? 100 + atLevel(level, player.pitcherStatus.ballSpeed - 100) : 120,
     ballControl: atLevel(level, player.pitcherStatus?.ballControl ?? 0),
