@@ -2,7 +2,7 @@ name: Deploy static app to GitHub Pages
 
 on:
   push:
-    branches: [main, master]
+    branches: [pages-vite]
   workflow_dispatch:
 
 permissions:
