@@ -45,13 +45,19 @@ function speedScore(value: number, mult = 1): ScoreLine {
   return { label: `球速(${input})`, score: Math.floor(score * mult) };
 }
 
-function sumLowRank(abilities: Ability[]): Ability[] {
+function sumLowRank(abilities: Ability[], position?: number): Ability[] {
   return abilities.map((ability) => {
     const lower = abilities.filter((item) => item.groupId === ability.groupId && item.rank > 0 && item.rank <= ability.rank);
+    const scoreForPosition = (item: Ability, kind: 'sateiMain' | 'sateiSub') => {
+      const rate = position === undefined ? undefined : item.pos_rate?.find((entry) => entry.pos === position);
+      return kind === 'sateiMain'
+        ? rate?.sateiMain ?? rate?.score ?? item[kind]
+        : rate?.sateiSub ?? rate?.scoreSub ?? item[kind];
+    };
     return {
       ...ability,
-      sateiMain: lower.reduce((sum, item) => sum + item.sateiMain, 0),
-      sateiSub: lower.reduce((sum, item) => sum + item.sateiSub, 0),
+      sateiMain: lower.reduce((sum, item) => sum + scoreForPosition(item, 'sateiMain'), 0),
+      sateiSub: lower.reduce((sum, item) => sum + scoreForPosition(item, 'sateiSub'), 0),
       pf: lower.reduce((sum, item) => sum + (item.pf ?? 0), 0),
       fp: lower.reduce((sum, item) => sum + (item.fp ?? 0), 0),
     };
@@ -92,7 +98,6 @@ const positionRules: [string, number][] = [
   ['球界の頭脳', 2], ['キャッチャー◯', 2], ['至高の一塁手', 3], ['ファースト○', 3],
   ['至高の二塁手', 4], ['セカンド○', 4], ['至高の遊撃手', 5], ['ショート○', 5],
   ['至高の三塁手', 6], ['サード○', 6], ['至高の外野手', 7], ['アウトフィールダー○', 7],
-  ['高速レーザー', 7], ['レーザービーム', 7],
 ];
 
 function eligibleAbilities(player: Player, all: Ability[], isSub: boolean, subQuality: number): Ability[] {
@@ -100,11 +105,11 @@ function eligibleAbilities(player: Player, all: Ability[], isSub: boolean, subQu
   candidates = candidates.filter((item) => !player.abilities.some((owned) => owned.groupId === item.groupId && owned.rank >= item.rank));
   for (const ability of player.abilities) candidates = removeIncompatible(candidates, ability, all);
   const excludedIds = new Set(positionRules.filter(([name]) => all.some((a) => a.name === name)).flatMap(([name, position]) =>
-    all.filter((item) => item.name === name && (isSub && subQuality !== 2 ? true : position !== player.position)).map((item) => item.id)));
+    all.filter((item) => item.name === name && (position !== player.position)).map((item) => item.id)));
   candidates = candidates.filter((item) => !excludedIds.has(item.id));
   const redGroups = new Set(player.abilities.filter((item) => item.colorType === 1).map((item) => item.groupId));
   candidates = candidates.filter((item) => !(item.colorType === 2 && redGroups.has(item.groupId)));
-  return sumLowRank(candidates);
+  return sumLowRank(candidates, player.position);
 }
 
 export interface CalcOptions {
@@ -198,8 +203,7 @@ function evaluatePlayer(player: Player, all: Ability[], f: FielderStatus, p: Pit
     lines.push(speedScore((options.pitcherMax ? 50 : Math.min(pitcherLimits.ballSpeed, 50)) + p.ballSpeed, bench ? 0.5 : 1));
     lines.push(pitcherScore((options.pitcherMax ? 50 : Math.min(pitcherLimits.ballControl, 50)) + p.ballControl, bench ? 0.5 : 1, 'コントロール'));
     lines.push(pitcherScore((options.pitcherMax ? 50 : Math.min(pitcherLimits.stamina, 50)) + p.stamina, bench ? 0.5 : 1, 'スタミナ'));
-    const curveTotal = options.pitcherMax ? player.curves.filter((c) => c.amount !== 0).length * 7 : atLevel(options.level, player.curves.reduce((sum, c) => sum + c.amount, 0));
-    lines.push({ label: `変化(${curveTotal})`, score: Math.floor(curveTotal * 24 * (bench ? 0.5 : 1)) });
+    const curveTotal = options.pitcherMax ? player.curves.filter((c) => c.amount !== 0).length * 7 + player.curves.filter((c) => c.amount === 0).length : atLevel(options.level, player.curves.reduce((sum, c) => sum + (c.amount === 0 ? 1 : c.amount), 0));    lines.push({ label: `変化(${curveTotal})`, score: Math.floor(curveTotal * 24 * (bench ? 0.5 : 1)) });
   } else {
     lines.push({ label: `弾道(${player.status?.dandou ?? 1})`, score: Math.floor(((player.status?.dandou ?? 1) - 1) * 50 * (bench ? 0.2 : 1)) });
     for (const [key, label] of fielderLabels) {
@@ -219,7 +223,7 @@ function evaluatePlayer(player: Player, all: Ability[], f: FielderStatus, p: Pit
     const current = bestByGroup.get(ability.groupId);
     if (!current || current.rank < ability.rank) bestByGroup.set(ability.groupId, ability);
   }
-  const fullTable = sumLowRank(all);
+  const fullTable = sumLowRank(all, player.position);
   for (const ability of bestByGroup.values()) {
     if (ability.name === '調子安定') {
       const value = pitcher ? (bench ? 3 : 6) : (bench ? 4 : 15);
@@ -230,7 +234,8 @@ function evaluatePlayer(player: Player, all: Ability[], f: FielderStatus, p: Pit
     if (!row) continue;
     const type = pitcher ? 2 : 1;
     let value = bench ? Math.trunc(row.sateiSub) : Math.trunc(row.sateiMain);
-    if (row.playerType !== type) value = Math.trunc(type === 1 ? row.pf ?? 0 : row.fp ?? 0);
+    const positionRate = row.pos_rate?.find((rate) => rate.pos === player.position);
+    if (row.playerType !== type && !positionRate) value = Math.trunc(type === 1 ? row.pf ?? 0 : row.fp ?? 0);
     if (value) lines.push({ label: ability.name, score: value, ability: row });
   }
   return lines;

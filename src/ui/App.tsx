@@ -255,6 +255,7 @@ function ComparePage({ players, abilities, events }: { players: Player[]; abilit
 function SateiDataPage({ abilities }: { abilities: Ability[] }) {
   const fielders = abilities.filter((ability) => ability.playerType === 1);
   const pitchers = abilities.filter((ability) => ability.playerType === 2);
+  const positionRates = abilities.flatMap((ability) => (ability.pos_rate ?? []).map((rate) => ({ ability, rate })));
   const table = (title: string, rows: Ability[], isFielder: boolean) => <details class="satei-table-collapse">
     <summary>{title}</summary>
     <section class="panel table-panel satei-table-panel">
@@ -277,5 +278,19 @@ function SateiDataPage({ abilities }: { abilities: Ability[] }) {
     <section class="hero"><div><h1>査定データ</h1><p>査定計算に使用しているデータです。</p></div></section>
     {table('野手', fielders, true)}
     {table('投手', pitchers, false)}
+    <details class="satei-table-collapse">
+      <summary>ポジション別</summary>
+      <section class="panel table-panel satei-table-panel">
+        <div class="table-scroll"><table class="satei-data-table"><thead><tr><th>特殊能力</th><th>ポジション</th><th>通常査定</th><th>ベンチ査定</th></tr></thead><tbody>
+          {positionRates.map(({ ability, rate }) => <tr>
+            <td><span class={`skill-chip type-${ability.colorType}`}>{ability.name}</span></td>
+            <td><span class={`position-mark ${positionClasses[rate.pos] ?? ''}`}>{positionNames[rate.pos] ?? ''}</span></td>
+            <td class="numeric">{rate.sateiMain ?? rate.score ?? ''}</td>
+            <td class="numeric">{rate.sateiSub ?? rate.scoreSub ?? ''}</td>
+          </tr>)}
+        </tbody></table></div>
+        {!positionRates.length && <div class="table-empty">ポジション別査定データがありません。</div>}
+      </section>
+    </details>
   </main>;
 }
