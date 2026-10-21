@@ -9,7 +9,9 @@ export interface Ability {
   sateiSub: number;
   pos_rate?: { pos: number; sateiMain?: number; sateiSub?: number; score?: number; scoreSub?: number }[] | null;
   pf?: number | null;
+  pfSub?: number | null;
   fp?: number | null;
+  fpSub?: number | null;
 }
 
 export interface FielderStatus {

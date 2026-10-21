@@ -59,7 +59,9 @@ function sumLowRank(abilities: Ability[], position?: number): Ability[] {
       sateiMain: lower.reduce((sum, item) => sum + scoreForPosition(item, 'sateiMain'), 0),
       sateiSub: lower.reduce((sum, item) => sum + scoreForPosition(item, 'sateiSub'), 0),
       pf: lower.reduce((sum, item) => sum + (item.pf ?? 0), 0),
+      pfSub: lower.reduce((sum, item) => sum + (item.pfSub ?? item.pf ?? 0), 0),
       fp: lower.reduce((sum, item) => sum + (item.fp ?? 0), 0),
+      fpSub: lower.reduce((sum, item) => sum + (item.fpSub ?? item.fp ?? 0), 0),
     };
   });
 }
@@ -235,7 +237,11 @@ function evaluatePlayer(player: Player, all: Ability[], f: FielderStatus, p: Pit
     const type = pitcher ? 2 : 1;
     let value = bench ? Math.trunc(row.sateiSub) : Math.trunc(row.sateiMain);
     const positionRate = row.pos_rate?.find((rate) => rate.pos === player.position);
-    if (row.playerType !== type && !positionRate) value = Math.trunc(type === 1 ? row.pf ?? 0 : row.fp ?? 0);
+    if (row.playerType !== type && !positionRate) {
+      value = Math.trunc(type === 1
+        ? bench ? row.pfSub ?? row.pf ?? 0 : row.pf ?? 0
+        : bench ? row.fpSub ?? row.fp ?? 0 : row.fp ?? 0);
+    }
     if (value) lines.push({ label: ability.name, score: value, ability: row });
   }
   return lines;

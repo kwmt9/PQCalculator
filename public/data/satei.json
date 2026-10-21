@@ -424,7 +424,8 @@
     "rank": 1,
     "sateiMain": 15,
     "sateiSub": 4,
-    "fp": 4
+    "fp": 9,
+    "fpSub": 6
   },
   {
     "id": 40,
@@ -493,7 +494,7 @@
     "rank": 1,
     "sateiMain": 15,
     "sateiSub": 6,
-    "fp": 4
+    "fp": 3
   },
   {
     "id": 45,
@@ -1418,7 +1419,7 @@
     "rank": 2,
     "sateiMain": 175,
     "sateiSub": 35,
-    "fp": 36
+    "fp": 35
   },
   {
     "id": 121,
