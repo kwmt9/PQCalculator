@@ -30,7 +30,7 @@
     "rank": 1,
     "sateiMain": 30,
     "sateiSub": 6,
-    "fp": 4
+    "fp": 6
   },
   {
     "id": 4,
@@ -63,7 +63,7 @@
     "rank": 2,
     "sateiMain": 5,
     "sateiSub": 2,
-    "fp": 9
+    "fp": 1
   },
   {
     "id": 7,
@@ -96,7 +96,7 @@
     "rank": 1,
     "sateiMain": 30,
     "sateiSub": 6,
-    "fp": 4
+    "fp": 5
   },
   {
     "id": 10,
@@ -193,7 +193,7 @@
     "rank": 1,
     "sateiMain": 25,
     "sateiSub": 5,
-    "fp": 4
+    "fp": 5
   },
   {
     "id": 19,
@@ -259,7 +259,7 @@
     "rank": 1,
     "sateiMain": 15,
     "sateiSub": 4,
-    "fp": 4
+    "fp": 3
   },
   {
     "id": 25,
@@ -433,8 +433,15 @@
     "playerType": 1,
     "groupId": 32,
     "rank": 1,
-    "sateiMain": 30,
-    "sateiSub": 6,
+    "sateiMain": 20,
+    "sateiSub": 4,
+    "pos_rate": [
+      {
+        "pos": 7,
+        "sateiMain": 30,
+        "sateiSub": 6
+      }
+    ],
     "fp": 4
   },
   {
@@ -468,6 +475,13 @@
     "rank": 1,
     "sateiMain": 10,
     "sateiSub": 2,
+    "pos_rate": [
+      {
+        "pos": 2,
+        "sateiMain": 30,
+        "sateiSub": 6
+      }
+    ],
     "fp": 4
   },
   {
@@ -1061,7 +1075,7 @@
     "rank": 3,
     "sateiMain": 225,
     "sateiSub": 90,
-    "fp": 31
+    "fp": 45
   },
   {
     "id": 160,
@@ -1103,8 +1117,15 @@
     "playerType": 1,
     "groupId": 32,
     "rank": 2,
-    "sateiMain": 225,
-    "sateiSub": 45,
+    "sateiMain": 125,
+    "sateiSub": 25,
+    "pos_rate": [
+      {
+        "pos": 7,
+        "sateiMain": 225,
+        "sateiSub": 45
+      }
+    ],
     "fp": 36
   },
   {
@@ -1226,7 +1247,7 @@
     "rank": 2,
     "sateiMain": 175,
     "sateiSub": 35,
-    "fp": 33
+    "fp": 35
   },
   {
     "id": 165,
@@ -1268,8 +1289,15 @@
     "playerType": 1,
     "groupId": 85,
     "rank": 1,
-    "sateiMain": 200,
-    "sateiSub": 40,
+    "sateiMain": 50,
+    "sateiSub": 10,
+    "pos_rate": [
+      {
+        "pos": 2,
+        "sateiMain": 200,
+        "sateiSub": 40
+      }
+    ],
     "fp": 40
   },
   {
@@ -1303,7 +1331,7 @@
     "rank": 2,
     "sateiMain": 175,
     "sateiSub": 35,
-    "fp": 36
+    "fp": 35
   },
   {
     "id": 96,
@@ -1456,7 +1484,7 @@
     "rank": 1,
     "sateiMain": 175,
     "sateiSub": 35,
-    "fp": 40
+    "fp": 35
   },
   {
     "id": 103,
@@ -1489,7 +1517,7 @@
     "rank": 2,
     "sateiMain": 150,
     "sateiSub": 30,
-    "fp": 36
+    "fp": 30
   },
   {
     "id": 111,
@@ -1500,7 +1528,7 @@
     "rank": 2,
     "sateiMain": 150,
     "sateiSub": 30,
-    "fp": 36
+    "fp": 30
   },
   {
     "id": 145,
@@ -1621,7 +1649,7 @@
     "rank": 2,
     "sateiMain": 150,
     "sateiSub": 30,
-    "fp": 36
+    "fp": 30
   },
   {
     "id": 113,
@@ -1632,7 +1660,7 @@
     "rank": 2,
     "sateiMain": 150,
     "sateiSub": 30,
-    "fp": 36
+    "fp": 30
   },
   {
     "id": 115,
@@ -1720,7 +1748,7 @@
     "rank": 2,
     "sateiMain": 150,
     "sateiSub": 30,
-    "fp": 36
+    "fp": 30
   },
   {
     "id": 110,
@@ -2794,5 +2822,25 @@
     "rank": 1,
     "sateiMain": 36,
     "sateiSub": 18
+  },
+  {
+    "id": 304,
+    "name": "至高のクローザー",
+    "colorType": 3,
+    "playerType": 2,
+    "groupId": 165,
+    "rank": 1,
+    "sateiMain": 180,
+    "sateiSub": 90
+  },
+  {
+    "id": 305,
+    "name": "至高のリリーバー",
+    "colorType": 3,
+    "playerType": 2,
+    "groupId": 166,
+    "rank": 1,
+    "sateiMain": 180,
+    "sateiSub": 90
   }
 ]

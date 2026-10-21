@@ -49848,6 +49848,30 @@
         "rank": 1,
         "playerType": 1,
         "colorType": 2
+      },
+      {
+        "id": 208,
+        "name": "人気者",
+        "groupId": 109,
+        "rank": 1,
+        "playerType": 1,
+        "colorType": 5
+      },
+      {
+        "id": 197,
+        "name": "強振多用",
+        "groupId": 98,
+        "rank": 1,
+        "playerType": 1,
+        "colorType": 5
+      },
+      {
+        "id": 117,
+        "name": "精神的支柱",
+        "groupId": 31,
+        "rank": 2,
+        "playerType": 1,
+        "colorType": 3
       }
     ],
     "curves": [
