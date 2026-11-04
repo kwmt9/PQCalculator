@@ -12,7 +12,6 @@
       "fielding": 71,
       "catching": 51
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 1,
@@ -482,7 +481,6 @@
       "fielding": 65,
       "catching": 60
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 7,
@@ -540,7 +538,6 @@
       "fielding": 84,
       "catching": 63
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 26,
@@ -590,7 +587,6 @@
       "fielding": 50,
       "catching": 50
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 118,
@@ -671,7 +667,6 @@
       "fielding": 52,
       "catching": 38
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 1,
@@ -729,7 +724,6 @@
       "fielding": 72,
       "catching": 90
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 14,
@@ -779,7 +773,6 @@
       "fielding": 60,
       "catching": 60
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 16,
@@ -879,8 +872,6 @@
     "id": 14,
     "name": "京野小筆",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -888,8 +879,6 @@
     "id": 15,
     "name": "春野千優",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -1111,7 +1100,6 @@
       "fielding": 68,
       "catching": 32
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 5,
@@ -1278,7 +1266,6 @@
       "fielding": 65,
       "catching": 55
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 5,
@@ -1336,7 +1323,6 @@
       "fielding": 70,
       "catching": 60
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 15,
@@ -1378,7 +1364,6 @@
       "fielding": 55,
       "catching": 50
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 16,
@@ -1693,7 +1678,6 @@
       "fielding": 70,
       "catching": 65
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 9,
@@ -1802,7 +1786,6 @@
       "fielding": 66,
       "catching": 66
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 21,
@@ -2088,7 +2071,6 @@
       "fielding": 86,
       "catching": 88
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 14,
@@ -2162,7 +2144,6 @@
       "fielding": 73,
       "catching": 56
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 2,
@@ -2212,7 +2193,6 @@
       "fielding": 70,
       "catching": 40
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 9,
@@ -2270,7 +2250,6 @@
       "fielding": 82,
       "catching": 77
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 37,
@@ -2344,7 +2323,6 @@
       "fielding": 64,
       "catching": 40
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 2,
@@ -2458,7 +2436,6 @@
       "fielding": 60,
       "catching": 50
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 15,
@@ -2500,7 +2477,6 @@
       "fielding": 68,
       "catching": 52
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 34,
@@ -2550,7 +2526,6 @@
       "fielding": 86,
       "catching": 88
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 14,
@@ -2703,7 +2678,6 @@
       "fielding": 60,
       "catching": 60
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 2,
@@ -2753,7 +2727,6 @@
       "fielding": 65,
       "catching": 55
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 5,
@@ -2878,7 +2851,6 @@
       "fielding": 65,
       "catching": 38
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 1,
@@ -3047,7 +3019,6 @@
       "fielding": 69,
       "catching": 46
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 21,
@@ -3196,7 +3167,6 @@
       "fielding": 62,
       "catching": 50
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 23,
@@ -3254,7 +3224,6 @@
       "fielding": 58,
       "catching": 55
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 2,
@@ -3344,7 +3313,6 @@
       "fielding": 86,
       "catching": 88
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 14,
@@ -3418,7 +3386,6 @@
       "fielding": 62,
       "catching": 45
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 1,
@@ -3586,7 +3553,6 @@
       "fielding": 75,
       "catching": 65
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 9,
@@ -3699,7 +3665,6 @@
       "fielding": 65,
       "catching": 65
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 1,
@@ -3773,7 +3738,6 @@
       "fielding": 60,
       "catching": 40
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 13,
@@ -3823,7 +3787,6 @@
       "fielding": 72,
       "catching": 10
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 1,
@@ -3896,8 +3859,6 @@
     "id": 62,
     "name": "明星雪華",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -3914,7 +3875,6 @@
       "fielding": 69,
       "catching": 53
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 5,
@@ -3980,7 +3940,6 @@
       "fielding": 40,
       "catching": 20
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 23,
@@ -4116,8 +4075,6 @@
     "id": 66,
     "name": "調子くん",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -4261,7 +4218,6 @@
       "fielding": 65,
       "catching": 60
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 2,
@@ -4343,7 +4299,6 @@
       "fielding": 70,
       "catching": 85
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 2,
@@ -4591,7 +4546,6 @@
       "fielding": 60,
       "catching": 50
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 15,
@@ -4617,7 +4571,6 @@
       "fielding": 40,
       "catching": 30
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 99,
@@ -4873,7 +4826,6 @@
       "fielding": 70,
       "catching": 70
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 6,
@@ -4979,7 +4931,6 @@
       "fielding": 50,
       "catching": 50
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 13,
@@ -5005,7 +4956,6 @@
       "fielding": 70,
       "catching": 60
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 23,
@@ -5039,7 +4989,6 @@
       "fielding": 70,
       "catching": 60
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 6,
@@ -5256,7 +5205,6 @@
       "fielding": 73,
       "catching": 73
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 2,
@@ -5314,7 +5262,6 @@
       "fielding": 60,
       "catching": 50
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 9,
@@ -5404,7 +5351,6 @@
       "fielding": 55,
       "catching": 50
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 16,
@@ -5446,7 +5392,6 @@
       "fielding": 80,
       "catching": 80
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 5,
@@ -5646,7 +5591,6 @@
       "fielding": 50,
       "catching": 50
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 2,
@@ -5727,8 +5671,6 @@
     "id": 88,
     "name": "氷上聡里",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -5745,7 +5687,6 @@
       "fielding": 65,
       "catching": 30
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 14,
@@ -5795,7 +5736,6 @@
       "fielding": 70,
       "catching": 65
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 1,
@@ -5960,7 +5900,6 @@
       "fielding": 70,
       "catching": 70
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 16,
@@ -6010,7 +5949,6 @@
       "fielding": 50,
       "catching": 55
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 16,
@@ -6068,7 +6006,6 @@
       "fielding": 65,
       "catching": 55
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 15,
@@ -6251,8 +6188,6 @@
     "id": 97,
     "name": "エミリ",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -6269,7 +6204,6 @@
       "fielding": 76,
       "catching": 71
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 5,
@@ -6525,7 +6459,6 @@
       "fielding": 50,
       "catching": 40
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 5,
@@ -6615,7 +6548,6 @@
       "fielding": 70,
       "catching": 50
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 122,
@@ -6680,8 +6612,6 @@
     "id": 103,
     "name": "木場静火",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -6793,7 +6723,6 @@
       "fielding": 60,
       "catching": 60
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 105,
@@ -6842,8 +6771,6 @@
     "id": 106,
     "name": "滝川・クリス・優",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -6860,7 +6787,6 @@
       "fielding": 53,
       "catching": 35
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 8,
@@ -6902,7 +6828,6 @@
       "fielding": 33,
       "catching": 44
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 1,
@@ -6976,7 +6901,6 @@
       "fielding": 60,
       "catching": 60
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 16,
@@ -7168,8 +7092,6 @@
     "id": 111,
     "name": "安内なみき",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -7177,8 +7099,6 @@
     "id": 112,
     "name": "鴨川しぐれ",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -7294,7 +7214,6 @@
       "fielding": 70,
       "catching": 60
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 1,
@@ -7344,7 +7263,6 @@
       "fielding": 67,
       "catching": 60
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 342,
@@ -7433,8 +7351,6 @@
     "id": 116,
     "name": "木村美香",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -7451,7 +7367,6 @@
       "fielding": 66,
       "catching": 66
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 12,
@@ -7501,7 +7416,6 @@
       "fielding": 60,
       "catching": 70
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 16,
@@ -7622,7 +7536,6 @@
       "fielding": 70,
       "catching": 75
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 9,
@@ -7664,7 +7577,6 @@
       "fielding": 58,
       "catching": 10
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 2,
@@ -7956,7 +7868,6 @@
       "fielding": 60,
       "catching": 75
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 4,
@@ -8105,7 +8016,6 @@
       "fielding": 85,
       "catching": 75
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 5,
@@ -8399,8 +8309,6 @@
     "id": 130,
     "name": "片桐恋",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -8417,7 +8325,6 @@
       "fielding": 80,
       "catching": 70
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 6,
@@ -8578,7 +8485,6 @@
       "fielding": 75,
       "catching": 85
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 97,
@@ -9157,7 +9063,6 @@
       "fielding": 50,
       "catching": 55
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 99,
@@ -9215,7 +9120,6 @@
       "fielding": 58,
       "catching": 55
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 109,
@@ -9816,7 +9720,6 @@
       "fielding": 60,
       "catching": 60
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 15,
@@ -9890,7 +9793,6 @@
       "fielding": 70,
       "catching": 30
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 7,
@@ -10074,8 +9976,6 @@
     "id": 147,
     "name": "比良女木美々",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -10146,8 +10046,6 @@
     "id": 149,
     "name": "[ユニフォーム]春野千優",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -10164,7 +10062,6 @@
       "fielding": 77,
       "catching": 76
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 26,
@@ -10272,8 +10169,6 @@
     "id": 152,
     "name": "[チア]明星雪華",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -10281,8 +10176,6 @@
     "id": 153,
     "name": "猫塚かりん",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -10299,7 +10192,6 @@
       "fielding": 61,
       "catching": 55
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 30,
@@ -10387,8 +10279,6 @@
     "id": 156,
     "name": "百屋縁",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -10396,8 +10286,6 @@
     "id": 157,
     "name": "賀真口摩音",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -10505,7 +10393,6 @@
       "fielding": 70,
       "catching": 80
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 25,
@@ -10563,7 +10450,6 @@
       "fielding": 60,
       "catching": 50
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 1,
@@ -10596,8 +10482,6 @@
     "id": 161,
     "name": "[ユニフォーム]京野小筆",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -10668,8 +10552,6 @@
     "id": 163,
     "name": "[ユニフォーム]氷上聡里",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -10686,7 +10568,6 @@
       "fielding": 65,
       "catching": 35
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 15,
@@ -10728,7 +10609,6 @@
       "fielding": 70,
       "catching": 70
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 12,
@@ -10865,7 +10745,6 @@
       "fielding": 50,
       "catching": 45
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 16,
@@ -10931,7 +10810,6 @@
       "fielding": 65,
       "catching": 78
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 1,
@@ -11020,8 +10898,6 @@
     "id": 169,
     "name": "相良識",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -11029,8 +10905,6 @@
     "id": 170,
     "name": "光野聖良",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -11038,8 +10912,6 @@
     "id": 171,
     "name": "[ユニフォーム]明星雪華",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -11056,7 +10928,6 @@
       "fielding": 60,
       "catching": 60
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 3,
@@ -11209,7 +11080,6 @@
       "fielding": 60,
       "catching": 60
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 98,
@@ -11307,7 +11177,6 @@
       "fielding": 47,
       "catching": 50
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 16,
@@ -11357,7 +11226,6 @@
       "fielding": 65,
       "catching": 90
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 5,
@@ -11415,7 +11283,6 @@
       "fielding": 90,
       "catching": 80
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 41,
@@ -11432,8 +11299,6 @@
     "id": 178,
     "name": "四条澄香",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -11545,7 +11410,6 @@
       "fielding": 42,
       "catching": 47
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 16,
@@ -11587,7 +11451,6 @@
       "fielding": 78,
       "catching": 90
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 134,
@@ -11724,7 +11587,6 @@
       "fielding": 60,
       "catching": 40
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 5,
@@ -11782,7 +11644,6 @@
       "fielding": 86,
       "catching": 88
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 122,
@@ -11902,8 +11763,6 @@
     "id": 186,
     "name": "紺野美崎",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -11920,7 +11779,6 @@
       "fielding": 35,
       "catching": 35
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 15,
@@ -11969,8 +11827,6 @@
     "id": 188,
     "name": "魔近ルウ",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -11987,7 +11843,6 @@
       "fielding": 86,
       "catching": 88
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 122,
@@ -12068,8 +11923,6 @@
     "id": 190,
     "name": "神良美砂",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -12086,7 +11939,6 @@
       "fielding": 40,
       "catching": 60
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 1,
@@ -12239,7 +12091,6 @@
       "fielding": 60,
       "catching": 20
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 20,
@@ -12439,8 +12290,6 @@
     "id": 195,
     "name": "[デスノート]京野小筆",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -12457,7 +12306,6 @@
       "fielding": 46,
       "catching": 49
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 341,
@@ -12832,7 +12680,6 @@
       "fielding": 65,
       "catching": 65
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 1,
@@ -12898,7 +12745,6 @@
       "fielding": 80,
       "catching": 70
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 9,
@@ -12947,8 +12793,6 @@
     "id": 202,
     "name": "虹谷彩理",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -12956,8 +12800,6 @@
     "id": 203,
     "name": "吉岡里帆",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -12974,7 +12816,6 @@
       "fielding": 67,
       "catching": 61
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 16,
@@ -13330,7 +13171,6 @@
       "fielding": 78,
       "catching": 90
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 120,
@@ -13387,8 +13227,6 @@
     "id": 208,
     "name": "大洲真実",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -13480,7 +13318,6 @@
       "fielding": 80,
       "catching": 70
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 5,
@@ -13709,7 +13546,6 @@
       "fielding": 70,
       "catching": 50
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 15,
@@ -13799,7 +13635,6 @@
       "fielding": 60,
       "catching": 60
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 1,
@@ -13840,8 +13675,6 @@
     "id": 214,
     "name": "倉家凪",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -13858,7 +13691,6 @@
       "fielding": 65,
       "catching": 65
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 95,
@@ -13995,7 +13827,6 @@
       "fielding": 66,
       "catching": 22
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 6,
@@ -14117,7 +13948,6 @@
       "fielding": 70,
       "catching": 55
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 2,
@@ -14182,8 +14012,6 @@
     "id": 219,
     "name": "緒川未羽",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -14267,7 +14095,6 @@
       "fielding": 53,
       "catching": 53
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 11,
@@ -14325,7 +14152,6 @@
       "fielding": 61,
       "catching": 55
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 30,
@@ -14481,8 +14307,6 @@
     "id": 224,
     "name": "ガブリエル",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -14499,7 +14323,6 @@
       "fielding": 60,
       "catching": 60
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 40,
@@ -14540,8 +14363,6 @@
     "id": 226,
     "name": "[ユニフォーム]エミリ",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -14558,7 +14379,6 @@
       "fielding": 72,
       "catching": 63
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 225,
@@ -14600,7 +14420,6 @@
       "fielding": 60,
       "catching": 70
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 16,
@@ -14725,7 +14544,6 @@
       "fielding": 64,
       "catching": 55
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 34,
@@ -14783,7 +14601,6 @@
       "fielding": 70,
       "catching": 80
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 3,
@@ -14848,8 +14665,6 @@
     "id": 232,
     "name": "NCM-753",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -14866,7 +14681,6 @@
       "fielding": 72,
       "catching": 36
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 6,
@@ -15138,7 +14952,6 @@
       "fielding": 61,
       "catching": 63
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 13,
@@ -15180,7 +14993,6 @@
       "fielding": 50,
       "catching": 30
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 143,
@@ -15253,8 +15065,6 @@
     "id": 238,
     "name": "銀崎ゆうる",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -15262,8 +15072,6 @@
     "id": 239,
     "name": "[ユニフォーム]木場静火",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -15271,8 +15079,6 @@
     "id": 240,
     "name": "[ユニフォーム]木村美香",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -15289,7 +15095,6 @@
       "fielding": 72,
       "catching": 90
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 14,
@@ -15339,7 +15144,6 @@
       "fielding": 55,
       "catching": 10
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 35,
@@ -15528,7 +15332,6 @@
       "fielding": 40,
       "catching": 20
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 23,
@@ -15701,7 +15504,6 @@
       "fielding": 60,
       "catching": 35
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 16,
@@ -15735,7 +15537,6 @@
       "fielding": 70,
       "catching": 52
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 7,
@@ -15800,8 +15601,6 @@
     "id": 248,
     "name": "音吹奏",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -15908,8 +15707,6 @@
     "id": 250,
     "name": "津乃田梨亜",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -16045,7 +15842,6 @@
       "fielding": 55,
       "catching": 55
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 22,
@@ -16087,7 +15883,6 @@
       "fielding": 65,
       "catching": 60
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 15,
@@ -16145,7 +15940,6 @@
       "fielding": 50,
       "catching": 40
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 28,
@@ -16171,7 +15965,6 @@
       "fielding": 50,
       "catching": 40
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 1,
@@ -16245,7 +16038,6 @@
       "fielding": 44,
       "catching": 53
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 2,
@@ -16294,8 +16086,6 @@
     "id": 257,
     "name": "[ユニフォーム]鴨川しぐれ",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -16312,7 +16102,6 @@
       "fielding": 60,
       "catching": 40
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 13,
@@ -16362,7 +16151,6 @@
       "fielding": 72,
       "catching": 10
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 1,
@@ -16444,7 +16232,6 @@
       "fielding": 50,
       "catching": 60
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 16,
@@ -16485,8 +16272,6 @@
     "id": 261,
     "name": "御厨真歩",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -16565,8 +16350,6 @@
     "id": 263,
     "name": "[ユニフォーム]相良識",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -16583,7 +16366,6 @@
       "fielding": 60,
       "catching": 51
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 22,
@@ -16665,7 +16447,6 @@
       "fielding": 90,
       "catching": 86
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 9,
@@ -16961,7 +16742,6 @@
       "fielding": 70,
       "catching": 20
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 16,
@@ -17019,7 +16799,6 @@
       "fielding": 50,
       "catching": 50
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 2,
@@ -17231,8 +17010,6 @@
     "id": 271,
     "name": "久根美亜",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -17249,7 +17026,6 @@
       "fielding": 70,
       "catching": 70
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 98,
@@ -17315,7 +17091,6 @@
       "fielding": 58,
       "catching": 55
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 109,
@@ -17397,7 +17172,6 @@
       "fielding": 70,
       "catching": 43
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 6,
@@ -17486,8 +17260,6 @@
     "id": 275,
     "name": "[にゃんこ]氷上聡里",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -17603,7 +17375,6 @@
       "fielding": 50,
       "catching": 55
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 145,
@@ -17669,7 +17440,6 @@
       "fielding": 70,
       "catching": 52
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 7,
@@ -17742,8 +17512,6 @@
     "id": 279,
     "name": "[バニー]虹谷彩理",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -17895,7 +17663,6 @@
       "fielding": 60,
       "catching": 60
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 21,
@@ -17996,7 +17763,6 @@
       "fielding": 75,
       "catching": 85
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 97,
@@ -18368,8 +18134,6 @@
     "id": 285,
     "name": "月田明子",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -18386,7 +18150,6 @@
       "fielding": 60,
       "catching": 50
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 41,
@@ -18573,8 +18336,6 @@
     "id": 289,
     "name": "[袴]津乃田梨亜",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -18582,8 +18343,6 @@
     "id": 290,
     "name": "[私服]賀真口摩音",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -18820,8 +18579,6 @@
     "id": 294,
     "name": "榎下舞那美",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -18921,7 +18678,6 @@
       "fielding": 70,
       "catching": 45
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 13,
@@ -18963,7 +18719,6 @@
       "fielding": 80,
       "catching": 70
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 134,
@@ -19037,7 +18792,6 @@
       "fielding": 65,
       "catching": 65
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 99,
@@ -19271,8 +19025,6 @@
     "id": 301,
     "name": "茂野大吾",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -19280,8 +19032,6 @@
     "id": 302,
     "name": "佐倉睦子",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -19289,8 +19039,6 @@
     "id": 303,
     "name": "佐藤光",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -19307,7 +19055,6 @@
       "fielding": 75,
       "catching": 64
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 122,
@@ -19357,7 +19104,6 @@
       "fielding": 78,
       "catching": 50
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 7,
@@ -19704,7 +19450,6 @@
       "fielding": 72,
       "catching": 60
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 218,
@@ -19961,7 +19706,6 @@
       "fielding": 72,
       "catching": 78
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 138,
@@ -20157,8 +19901,6 @@
     "id": 313,
     "name": "沢樹末璃",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -20175,7 +19917,6 @@
       "fielding": 56,
       "catching": 50
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 2,
@@ -20430,8 +20171,6 @@
     "id": 317,
     "name": "黒戸もね",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -20439,8 +20178,6 @@
     "id": 318,
     "name": "須神絵久",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -20448,8 +20185,6 @@
     "id": 319,
     "name": "[ユニフォーム]比良女木美々",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -20457,8 +20192,6 @@
     "id": 320,
     "name": "眉村道塁",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -20466,8 +20199,6 @@
     "id": 321,
     "name": "眉村渉",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -20658,7 +20389,6 @@
       "fielding": 66,
       "catching": 60
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 341,
@@ -20724,7 +20454,6 @@
       "fielding": 65,
       "catching": 60
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 225,
@@ -20900,7 +20629,6 @@
       "fielding": 73,
       "catching": 90
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 15,
@@ -20990,7 +20718,6 @@
       "fielding": 80,
       "catching": 70
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 336,
@@ -21079,8 +20806,6 @@
     "id": 330,
     "name": "土村乃夢",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -21220,7 +20945,6 @@
       "fielding": 64,
       "catching": 40
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 2,
@@ -21508,7 +21232,6 @@
       "fielding": 60,
       "catching": 60
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 105,
@@ -21573,8 +21296,6 @@
     "id": 336,
     "name": "高嶺愛花",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -21582,8 +21303,6 @@
     "id": 337,
     "name": "小早川凛子",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -21591,8 +21310,6 @@
     "id": 338,
     "name": "姉ヶ崎寧々",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -21609,7 +21326,6 @@
       "fielding": 59,
       "catching": 67
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 3,
@@ -21852,8 +21568,6 @@
     "id": 342,
     "name": "トラッキー",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -22031,8 +21745,6 @@
     "id": 345,
     "name": "リン",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -22049,7 +21761,6 @@
       "fielding": 60,
       "catching": 25
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 54,
@@ -22107,7 +21818,6 @@
       "fielding": 80,
       "catching": 70
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 342,
@@ -22220,7 +21930,6 @@
       "fielding": 70,
       "catching": 43
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 15,
@@ -22379,8 +22088,6 @@
     "id": 352,
     "name": "立花音美",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -22551,7 +22258,6 @@
       "fielding": 70,
       "catching": 50
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 120,
@@ -22641,7 +22347,6 @@
       "fielding": 62,
       "catching": 60
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 5,
@@ -22674,8 +22379,6 @@
     "id": 357,
     "name": "照守亜珠美",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -22683,8 +22386,6 @@
     "id": 358,
     "name": "七瀬はるか",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -22701,7 +22402,6 @@
       "fielding": 78,
       "catching": 90
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 225,
@@ -22924,8 +22624,6 @@
     "id": 362,
     "name": "浅倉南",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -22942,7 +22640,6 @@
       "fielding": 60,
       "catching": 60
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 98,
@@ -22976,7 +22673,6 @@
       "fielding": 67,
       "catching": 80
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 139,
@@ -23132,8 +22828,6 @@
     "id": 366,
     "name": "泡瀬満里南",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -23150,7 +22844,6 @@
       "fielding": 52,
       "catching": 60
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 16,
@@ -23216,7 +22909,6 @@
       "fielding": 83,
       "catching": 82
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 117,
@@ -23306,7 +22998,6 @@
       "fielding": 50,
       "catching": 35
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 1,
@@ -23638,7 +23329,6 @@
       "fielding": 69,
       "catching": 75
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 341,
@@ -23720,7 +23410,6 @@
       "fielding": 70,
       "catching": 65
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 98,
@@ -23794,7 +23483,6 @@
       "fielding": 75,
       "catching": 87
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 97,
@@ -23852,7 +23540,6 @@
       "fielding": 50,
       "catching": 50
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 16,
@@ -23886,7 +23573,6 @@
       "fielding": 60,
       "catching": 75
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 14,
@@ -24380,7 +24066,6 @@
       "fielding": 84,
       "catching": 63
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 26,
@@ -24565,7 +24250,6 @@
       "fielding": 68,
       "catching": 60
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 15,
@@ -24639,7 +24323,6 @@
       "fielding": 63,
       "catching": 55
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 7,
@@ -24713,7 +24396,6 @@
       "fielding": 50,
       "catching": 40
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 16,
@@ -24770,8 +24452,6 @@
     "id": 386,
     "name": "[アンドロメダ]加藤京子",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -24847,7 +24527,6 @@
       "fielding": 75,
       "catching": 70
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 1,
@@ -24955,8 +24634,6 @@
     "id": 390,
     "name": "[トレーナー]加藤理香",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -25214,7 +24891,6 @@
       "fielding": 50,
       "catching": 40
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 2,
@@ -25502,7 +25178,6 @@
       "fielding": 65,
       "catching": 65
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 16,
@@ -25535,8 +25210,6 @@
     "id": 398,
     "name": "黒周成穂",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -25544,8 +25217,6 @@
     "id": 399,
     "name": "小井川乃蒼",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -25553,8 +25224,6 @@
     "id": 400,
     "name": "[パジャマ]泡瀬満里南",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -25633,8 +25302,6 @@
     "id": 402,
     "name": "神条紫杏",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -25651,7 +25318,6 @@
       "fielding": 70,
       "catching": 50
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 152,
@@ -25840,7 +25506,6 @@
       "fielding": 65,
       "catching": 35
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 15,
@@ -25944,8 +25609,6 @@
     "id": 407,
     "name": "椛島アニータ",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -25953,8 +25616,6 @@
     "id": 408,
     "name": "[キャプテン]茂野大吾",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -26084,8 +25745,6 @@
     "id": 411,
     "name": "[ドラムメジャー]音吹奏",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -26102,7 +25761,6 @@
       "fielding": 56,
       "catching": 50
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 2,
@@ -26151,8 +25809,6 @@
     "id": 413,
     "name": "[織姫]土村乃夢",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -26275,8 +25931,6 @@
     "id": 415,
     "name": "カリーナ",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -26293,7 +25947,6 @@
       "fielding": 65,
       "catching": 60
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 105,
@@ -26454,7 +26107,6 @@
       "fielding": 80,
       "catching": 60
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 94,
@@ -26671,7 +26323,6 @@
       "fielding": 48,
       "catching": 40
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 96,
@@ -26736,8 +26387,6 @@
     "id": 421,
     "name": "戸内聖華",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -26754,7 +26403,6 @@
       "fielding": 72,
       "catching": 90
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 14,
@@ -26804,7 +26452,6 @@
       "fielding": 54,
       "catching": 54
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 16,
@@ -26945,7 +26592,6 @@
       "fielding": 65,
       "catching": 60
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 99,
@@ -26994,8 +26640,6 @@
     "id": 426,
     "name": "雨宮ひかり",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -27003,8 +26647,6 @@
     "id": 427,
     "name": "古賀春華",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -27012,8 +26654,6 @@
     "id": 428,
     "name": "[ユニフォーム]片桐恋",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -27129,7 +26769,6 @@
       "fielding": 65,
       "catching": 45
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 7,
@@ -27381,7 +27020,6 @@
       "fielding": 30,
       "catching": 10
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 24,
@@ -27463,7 +27101,6 @@
       "fielding": 81,
       "catching": 40
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 157,
@@ -27596,7 +27233,6 @@
       "fielding": 65,
       "catching": 40
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 144,
@@ -27646,7 +27282,6 @@
       "fielding": 72,
       "catching": 20
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 120,
@@ -27859,7 +27494,6 @@
       "fielding": 37,
       "catching": 57
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 16,
@@ -27941,7 +27575,6 @@
       "fielding": 70,
       "catching": 70
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 140,
@@ -27983,7 +27616,6 @@
       "fielding": 45,
       "catching": 50
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 15,
@@ -28148,7 +27780,6 @@
       "fielding": 60,
       "catching": 60
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 23,
@@ -28206,7 +27837,6 @@
       "fielding": 78,
       "catching": 90
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 34,
@@ -28256,7 +27886,6 @@
       "fielding": 76,
       "catching": 66
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 25,
@@ -28872,7 +28501,6 @@
       "fielding": 88,
       "catching": 78
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 101,
@@ -29025,7 +28653,6 @@
       "fielding": 35,
       "catching": 35
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 15,
@@ -29074,8 +28701,6 @@
     "id": 454,
     "name": "[袴]明星雪華",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -29441,7 +29066,6 @@
       "fielding": 58,
       "catching": 58
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 342,
@@ -29514,8 +29138,6 @@
     "id": 459,
     "name": "天本玲泉",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -30059,7 +29681,6 @@
       "fielding": 66,
       "catching": 60
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 341,
@@ -30125,7 +29746,6 @@
       "fielding": 40,
       "catching": 30
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 40,
@@ -30201,8 +29821,6 @@
     "id": 468,
     "name": "羽吹一歩",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -30219,7 +29837,6 @@
       "fielding": 70,
       "catching": 60
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 5,
@@ -30277,7 +29894,6 @@
       "fielding": 60,
       "catching": 25
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 108,
@@ -30359,7 +29975,6 @@
       "fielding": 58,
       "catching": 10
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 91,
@@ -30417,7 +30032,6 @@
       "fielding": 42,
       "catching": 47
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 16,
@@ -30526,7 +30140,6 @@
       "fielding": 67,
       "catching": 80
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 139,
@@ -30624,7 +30237,6 @@
       "fielding": 47,
       "catching": 50
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 16,
@@ -30674,7 +30286,6 @@
       "fielding": 65,
       "catching": 55
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 1,
@@ -30716,7 +30327,6 @@
       "fielding": 72,
       "catching": 74
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 144,
@@ -30782,7 +30392,6 @@
       "fielding": 72,
       "catching": 75
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 91,
@@ -31026,7 +30635,6 @@
       "fielding": 72,
       "catching": 60
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 236,
@@ -31353,8 +30961,6 @@
     "id": 484,
     "name": "忠主七緒",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -31371,7 +30977,6 @@
       "fielding": 68,
       "catching": 52
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 5,
@@ -31982,8 +31587,6 @@
     "id": 491,
     "name": "竈門禰豆子",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -32000,7 +31603,6 @@
       "fielding": 70,
       "catching": 70
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 113,
@@ -32098,7 +31700,6 @@
       "fielding": 60,
       "catching": 65
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 225,
@@ -32271,7 +31872,6 @@
       "fielding": 72,
       "catching": 78
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 138,
@@ -32344,8 +31944,6 @@
     "id": 496,
     "name": "諏訪野君子",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -32679,7 +32277,6 @@
       "fielding": 80,
       "catching": 50
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 138,
@@ -32736,8 +32333,6 @@
     "id": 501,
     "name": "広川武美",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -32754,7 +32349,6 @@
       "fielding": 70,
       "catching": 80
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 163,
@@ -32820,7 +32414,6 @@
       "fielding": 60,
       "catching": 50
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 27,
@@ -32878,7 +32471,6 @@
       "fielding": 34,
       "catching": 34
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 110,
@@ -32911,8 +32503,6 @@
     "id": 505,
     "name": "ラミィ",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -32929,7 +32519,6 @@
       "fielding": 35,
       "catching": 40
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 27,
@@ -32979,7 +32568,6 @@
       "fielding": 65,
       "catching": 65
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 95,
@@ -33160,7 +32748,6 @@
       "fielding": 63,
       "catching": 55
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 140,
@@ -33250,7 +32837,6 @@
       "fielding": 68,
       "catching": 78
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 120,
@@ -34203,7 +33789,6 @@
       "fielding": 65,
       "catching": 55
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 98,
@@ -34364,7 +33949,6 @@
       "fielding": 91,
       "catching": 84
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 98,
@@ -34775,8 +34359,6 @@
     "id": 524,
     "name": "雉田直実",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -35340,7 +34922,6 @@
       "fielding": 75,
       "catching": 60
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 1,
@@ -35668,7 +35249,6 @@
       "fielding": 75,
       "catching": 74
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 225,
@@ -35750,7 +35330,6 @@
       "fielding": 60,
       "catching": 60
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 101,
@@ -35816,7 +35395,6 @@
       "fielding": 72,
       "catching": 70
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 120,
@@ -36176,7 +35754,6 @@
       "fielding": 70,
       "catching": 80
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 104,
@@ -36242,7 +35819,6 @@
       "fielding": 60,
       "catching": 60
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 265,
@@ -36840,7 +36416,6 @@
       "fielding": 65,
       "catching": 70
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 122,
@@ -36921,8 +36496,6 @@
     "id": 545,
     "name": "鈴島紫音",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -36939,7 +36512,6 @@
       "fielding": 65,
       "catching": 60
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 98,
@@ -37140,7 +36712,6 @@
       "fielding": 78,
       "catching": 90
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 34,
@@ -37190,7 +36761,6 @@
       "fielding": 70,
       "catching": 70
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 99,
@@ -37331,7 +36901,6 @@
       "fielding": 55,
       "catching": 55
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 91,
@@ -37512,7 +37081,6 @@
       "fielding": 65,
       "catching": 55
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 99,
@@ -37804,7 +37372,6 @@
       "fielding": 65,
       "catching": 60
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 126,
@@ -37862,7 +37429,6 @@
       "fielding": 65,
       "catching": 50
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 1,
@@ -38126,7 +37692,6 @@
       "fielding": 70,
       "catching": 70
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 140,
@@ -38283,7 +37848,6 @@
       "fielding": 20,
       "catching": 15
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 124,
@@ -38574,8 +38138,6 @@
     "id": 565,
     "name": "天宮コノハ",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -38592,7 +38154,6 @@
       "fielding": 70,
       "catching": 70
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 99,
@@ -38674,7 +38235,6 @@
       "fielding": 70,
       "catching": 25
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 35,
@@ -38756,7 +38316,6 @@
       "fielding": 70,
       "catching": 60
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 120,
@@ -38838,7 +38397,6 @@
       "fielding": 70,
       "catching": 60
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 5,
@@ -38983,7 +38541,6 @@
       "fielding": 70,
       "catching": 52
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 7,
@@ -39568,7 +39125,6 @@
       "fielding": 55,
       "catching": 15
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 116,
@@ -39634,7 +39190,6 @@
       "fielding": 65,
       "catching": 65
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 138,
@@ -39807,7 +39362,6 @@
       "fielding": 54,
       "catching": 54
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 16,
@@ -40165,8 +39719,6 @@
     "id": 584,
     "name": "蔦枝心音",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -40264,7 +39816,6 @@
       "fielding": 55,
       "catching": 60
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 96,
@@ -40477,7 +40028,6 @@
       "fielding": 80,
       "catching": 90
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 95,
@@ -40542,8 +40092,6 @@
     "id": 590,
     "name": "マキマ",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -40651,7 +40199,6 @@
       "fielding": 75,
       "catching": 90
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 97,
@@ -40733,7 +40280,6 @@
       "fielding": 80,
       "catching": 80
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 93,
@@ -41288,7 +40834,6 @@
       "fielding": 70,
       "catching": 60
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 9,
@@ -41544,7 +41089,6 @@
       "fielding": 65,
       "catching": 65
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 161,
@@ -41770,8 +41314,6 @@
     "id": 603,
     "name": "[鬼化進行時]竈門禰豆子",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -41903,7 +41445,6 @@
       "fielding": 70,
       "catching": 70
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 144,
@@ -41953,7 +41494,6 @@
       "fielding": 60,
       "catching": 55
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 139,
@@ -42101,8 +41641,6 @@
     "id": 608,
     "name": "響乃こころ",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -42119,7 +41657,6 @@
       "fielding": 68,
       "catching": 60
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 134,
@@ -42177,7 +41714,6 @@
       "fielding": 41,
       "catching": 39
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 15,
@@ -42326,7 +41862,6 @@
       "fielding": 51,
       "catching": 49
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 11,
@@ -42376,7 +41911,6 @@
       "fielding": 70,
       "catching": 60
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 93,
@@ -42505,7 +42039,6 @@
       "fielding": 90,
       "catching": 74
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 143,
@@ -42579,7 +42112,6 @@
       "fielding": 50,
       "catching": 44
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 149,
@@ -42636,8 +42168,6 @@
     "id": 617,
     "name": "大山春夏",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -42654,7 +42184,6 @@
       "fielding": 60,
       "catching": 60
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 16,
@@ -42888,8 +42417,6 @@
     "id": 622,
     "name": "矢部徳子",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -43021,7 +42548,6 @@
       "fielding": 80,
       "catching": 70
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 4,
@@ -43174,7 +42700,6 @@
       "fielding": 50,
       "catching": 40
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 11,
@@ -43371,7 +42896,6 @@
       "fielding": 74,
       "catching": 56
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 249,
@@ -43533,7 +43057,6 @@
       "fielding": 61,
       "catching": 72
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 142,
@@ -43599,7 +43122,6 @@
       "fielding": 60,
       "catching": 50
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 99,
@@ -43868,7 +43390,6 @@
       "fielding": 68,
       "catching": 65
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 341,
@@ -44436,7 +43957,6 @@
       "fielding": 90,
       "catching": 80
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 308,
@@ -44581,7 +44101,6 @@
       "fielding": 70,
       "catching": 65
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 147,
@@ -44631,7 +44150,6 @@
       "fielding": 70,
       "catching": 60
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 134,
@@ -44680,8 +44198,6 @@
     "id": 641,
     "name": "藤崎詩織",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -45155,7 +44671,6 @@
       "fielding": 67,
       "catching": 66
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 1,
@@ -45359,8 +44874,6 @@
     "id": 647,
     "name": "夏目鳳梨",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -45456,7 +44969,6 @@
       "fielding": 60,
       "catching": 60
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 98,
@@ -45728,7 +45240,6 @@
       "fielding": 60,
       "catching": 40
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 101,
@@ -45972,7 +45483,6 @@
       "fielding": 65,
       "catching": 61
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 142,
@@ -46086,7 +45596,6 @@
       "fielding": 73,
       "catching": 52
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 114,
@@ -46343,7 +45852,6 @@
       "fielding": 70,
       "catching": 55
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 15,
@@ -46559,7 +46067,6 @@
       "fielding": 80,
       "catching": 75
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 120,
@@ -46617,7 +46124,6 @@
       "fielding": 70,
       "catching": 70
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 97,
@@ -46675,7 +46181,6 @@
       "fielding": 70,
       "catching": 65
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 135,
@@ -46725,7 +46230,6 @@
       "fielding": 80,
       "catching": 80
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 93,
@@ -46998,7 +46502,6 @@
       "fielding": 72,
       "catching": 65
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 16,
@@ -47179,7 +46682,6 @@
       "fielding": 66,
       "catching": 81
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 15,
@@ -47320,7 +46822,6 @@
       "fielding": 86,
       "catching": 88
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 122,
@@ -47394,7 +46895,6 @@
       "fielding": 82,
       "catching": 77
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 37,
@@ -47468,7 +46968,6 @@
       "fielding": 60,
       "catching": 80
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 10,
@@ -47597,7 +47096,6 @@
       "fielding": 22,
       "catching": 11
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 211,
@@ -47767,7 +47265,6 @@
       "fielding": 78,
       "catching": 32
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 179,
@@ -47817,7 +47314,6 @@
       "fielding": 50,
       "catching": 55
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 1,
@@ -47859,7 +47355,6 @@
       "fielding": 90,
       "catching": 74
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 6,
@@ -48032,7 +47527,6 @@
       "fielding": 35,
       "catching": 35
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 7,
@@ -48296,7 +47790,6 @@
       "fielding": 55,
       "catching": 55
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 30,
@@ -48493,7 +47986,6 @@
       "fielding": 65,
       "catching": 60
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 259,
@@ -48694,7 +48186,6 @@
       "fielding": 47,
       "catching": 54
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 22,
@@ -48816,7 +48307,6 @@
       "fielding": 90,
       "catching": 80
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 41,
@@ -48981,7 +48471,6 @@
       "fielding": 69,
       "catching": 74
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 209,
@@ -49047,7 +48536,6 @@
       "fielding": 62,
       "catching": 65
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 23,
@@ -49104,8 +48592,6 @@
     "id": 691,
     "name": "羊ヶ丘千歳",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -49580,7 +49066,6 @@
       "fielding": 65,
       "catching": 80
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 98,
@@ -49638,7 +49123,6 @@
       "fielding": 90,
       "catching": 90
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 97,
@@ -49696,7 +49180,6 @@
       "fielding": 80,
       "catching": 70
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 118,
@@ -49745,8 +49228,6 @@
     "id": 700,
     "name": "雨崎千羽矢",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -50326,8 +49807,6 @@
     "id": 705,
     "name": "白井雪",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -50662,7 +50141,6 @@
       "fielding": 54,
       "catching": 68
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 341,
@@ -50744,7 +50222,6 @@
       "fielding": 43,
       "catching": 38
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 1,
@@ -50802,7 +50279,6 @@
       "fielding": 44,
       "catching": 66
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 310,
@@ -50916,7 +50392,6 @@
       "fielding": 54,
       "catching": 44
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 259,
@@ -51705,7 +51180,6 @@
       "fielding": 73,
       "catching": 52
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 114,
@@ -51795,7 +51269,6 @@
       "fielding": 78,
       "catching": 90
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 19,
@@ -52000,7 +51473,6 @@
       "fielding": 69,
       "catching": 67
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 5,
@@ -52058,7 +51530,6 @@
       "fielding": 41,
       "catching": 65
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 2,
@@ -52172,7 +51643,6 @@
       "fielding": 60,
       "catching": 75
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 4,
@@ -52377,7 +51847,6 @@
       "fielding": 63,
       "catching": 64
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 213,
@@ -52880,7 +52349,6 @@
       "fielding": 71,
       "catching": 76
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 9,
@@ -53292,7 +52760,6 @@
       "fielding": 75,
       "catching": 80
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 261,
@@ -53438,7 +52905,6 @@
       "fielding": 65,
       "catching": 75
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 95,
@@ -53699,7 +53165,6 @@
       "fielding": 80,
       "catching": 70
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 320,
@@ -53853,7 +53318,6 @@
       "fielding": 65,
       "catching": 56
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 260,
@@ -54190,7 +53654,6 @@
       "fielding": 50,
       "catching": 44
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 1,
@@ -54578,7 +54041,6 @@
       "fielding": 60,
       "catching": 50
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 1,
@@ -55172,7 +54634,6 @@
       "fielding": 60,
       "catching": 60
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 14,
@@ -56172,7 +55633,6 @@
       "fielding": 60,
       "catching": 80
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 231,
@@ -56985,7 +56445,6 @@
       "fielding": 71,
       "catching": 76
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 9,
@@ -58211,7 +57670,6 @@
       "fielding": 50,
       "catching": 40
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 186,
@@ -58284,8 +57742,6 @@
     "id": 768,
     "name": "神埼こりす",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -58302,7 +57758,6 @@
       "fielding": 60,
       "catching": 40
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 278,
@@ -58400,7 +57855,6 @@
       "fielding": 75,
       "catching": 90
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 14,
@@ -58620,8 +58074,6 @@
     "id": 772,
     "name": "大家まどか",
     "position": 0,
-    "status": null,
-    "pitcherStatus": null,
     "abilities": [],
     "curves": []
   },
@@ -58896,7 +58348,6 @@
       "fielding": 70,
       "catching": 70
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 1,
@@ -59303,7 +58754,6 @@
       "fielding": 60,
       "catching": 55
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 213,
@@ -59600,7 +59050,6 @@
       "fielding": 66,
       "catching": 77
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 14,
@@ -59865,7 +59314,6 @@
       "fielding": 70,
       "catching": 52
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 7,
@@ -60551,7 +59999,6 @@
       "fielding": 75,
       "catching": 90
     },
-    "pitcherStatus": null,
     "abilities": [
       {
         "id": 2,
@@ -60778,5 +60225,425 @@
         "amount": 2
       }
     ]
+  },
+  {
+    "id": 790,
+    "name": "天道あかね",
+    "position": 6,
+    "status": {
+      "dandou": 3,
+      "meet": 65,
+      "power": 55,
+      "runPower": 55,
+      "shoulderPower": 60,
+      "fielding": 60,
+      "catching": 70
+    },
+    "abilities": [
+      {
+        "id": 113,
+        "name": "火事場の馬鹿力",
+        "groupId": 27,
+        "rank": 2,
+        "playerType": 1,
+        "colorType": 3
+      },
+      {
+        "id": 25,
+        "name": "意外性",
+        "groupId": 18,
+        "rank": 1,
+        "playerType": 1,
+        "colorType": 2
+      },
+      {
+        "id": 49,
+        "name": "ラッキーボーイ",
+        "groupId": 41,
+        "rank": 1,
+        "playerType": 1,
+        "colorType": 2
+      },
+      {
+        "id": 57,
+        "name": "競争心",
+        "groupId": 49,
+        "rank": 1,
+        "playerType": 1,
+        "colorType": 2
+      },
+      {
+        "id": 139,
+        "name": "情熱エール",
+        "groupId": 88,
+        "rank": 1,
+        "playerType": 1,
+        "colorType": 3
+      },
+      {
+        "id": 84,
+        "name": "対ストレート○",
+        "groupId": 75,
+        "rank": 1,
+        "playerType": 1,
+        "colorType": 2
+      }
+    ],
+    "curves": []
+  },
+  {
+    "id": 791,
+    "name": "早乙女乱馬",
+    "position": 1,
+    "status": {
+      "dandou": 3,
+      "meet": 85,
+      "power": 75,
+      "runPower": 90,
+      "shoulderPower": 70,
+      "fielding": 70,
+      "catching": 70
+    },
+    "pitcherStatus": {
+      "ballSpeed": 150,
+      "ballControl": 85,
+      "stamina": 75
+    },
+    "abilities": [
+      {
+        "id": 214,
+        "name": "対ピンチ◎",
+        "groupId": 113,
+        "rank": 2,
+        "playerType": 2,
+        "colorType": 2
+      },
+      {
+        "id": 217,
+        "name": "ノビ◯",
+        "groupId": 115,
+        "rank": 1,
+        "playerType": 2,
+        "colorType": 2
+      },
+      {
+        "id": 221,
+        "name": "キレ◯",
+        "groupId": 117,
+        "rank": 1,
+        "playerType": 2,
+        "colorType": 2
+      },
+      {
+        "id": 222,
+        "name": "打球反応◯",
+        "groupId": 118,
+        "rank": 1,
+        "playerType": 2,
+        "colorType": 2
+      },
+      {
+        "id": 267,
+        "name": "変幻自在",
+        "groupId": 120,
+        "rank": 2,
+        "playerType": 2,
+        "colorType": 3
+      },
+      {
+        "id": 239,
+        "name": "要所◯",
+        "groupId": 135,
+        "rank": 1,
+        "playerType": 2,
+        "colorType": 2
+      },
+      {
+        "id": 298,
+        "name": "二刀流",
+        "groupId": 151,
+        "rank": 2,
+        "playerType": 2,
+        "colorType": 3
+      },
+      {
+        "id": 93,
+        "name": "電光石火",
+        "groupId": 3,
+        "rank": 3,
+        "playerType": 1,
+        "colorType": 3
+      },
+      {
+        "id": 15,
+        "name": "アベレージヒッター",
+        "groupId": 8,
+        "rank": 1,
+        "playerType": 1,
+        "colorType": 2
+      },
+      {
+        "id": 136,
+        "name": "昇り龍",
+        "groupId": 53,
+        "rank": 2,
+        "playerType": 1,
+        "colorType": 3
+      },
+      {
+        "id": 64,
+        "name": "接戦◯",
+        "groupId": 55,
+        "rank": 1,
+        "playerType": 1,
+        "colorType": 2
+      },
+      {
+        "id": 67,
+        "name": "かく乱",
+        "groupId": 58,
+        "rank": 1,
+        "playerType": 1,
+        "colorType": 2
+      },
+      {
+        "id": 207,
+        "name": "選球眼",
+        "groupId": 108,
+        "rank": 1,
+        "playerType": 1,
+        "colorType": 5
+      },
+      {
+        "id": 345,
+        "name": "テンポ○",
+        "groupId": 177,
+        "rank": 1,
+        "playerType": 2,
+        "colorType": 5
+      }
+    ],
+    "curves": [
+      {
+        "curveId": 5,
+        "amount": 3
+      },
+      {
+        "curveId": 8,
+        "amount": 5
+      },
+      {
+        "curveId": 21,
+        "amount": 4
+      }
+    ]
+  },
+  {
+    "id": 792,
+    "name": "響良牙",
+    "position": 1,
+    "status": {
+      "dandou": 4,
+      "meet": 60,
+      "power": 90,
+      "runPower": 65,
+      "shoulderPower": 80,
+      "fielding": 65,
+      "catching": 45
+    },
+    "pitcherStatus": {
+      "ballSpeed": 160,
+      "ballControl": 90,
+      "stamina": 60
+    },
+    "abilities": [
+      {
+        "id": 262,
+        "name": "強心臓",
+        "groupId": 113,
+        "rank": 3,
+        "playerType": 2,
+        "colorType": 3
+      },
+      {
+        "id": 212,
+        "name": "打たれ強さ◎",
+        "groupId": 112,
+        "rank": 2,
+        "playerType": 2,
+        "colorType": 2
+      },
+      {
+        "id": 260,
+        "name": "ケガしにくさ◎(投手)",
+        "groupId": 155,
+        "rank": 2,
+        "playerType": 2,
+        "colorType": 2
+      },
+      {
+        "id": 228,
+        "name": "重い球",
+        "groupId": 124,
+        "rank": 1,
+        "playerType": 2,
+        "colorType": 2
+      },
+      {
+        "id": 226,
+        "name": "闘志",
+        "groupId": 122,
+        "rank": 1,
+        "playerType": 2,
+        "colorType": 2
+      },
+      {
+        "id": 273,
+        "name": "ド根性",
+        "groupId": 126,
+        "rank": 2,
+        "playerType": 2,
+        "colorType": 3
+      },
+      {
+        "id": 16,
+        "name": "パワーヒッター",
+        "groupId": 9,
+        "rank": 1,
+        "playerType": 1,
+        "colorType": 2
+      },
+      {
+        "id": 23,
+        "name": "粘り打ち",
+        "groupId": 16,
+        "rank": 1,
+        "playerType": 1,
+        "colorType": 2
+      },
+      {
+        "id": 109,
+        "name": "気迫ヘッド",
+        "groupId": 23,
+        "rank": 2,
+        "playerType": 1,
+        "colorType": 3
+      },
+      {
+        "id": 51,
+        "name": "リベンジ",
+        "groupId": 43,
+        "rank": 1,
+        "playerType": 1,
+        "colorType": 2
+      },
+      {
+        "id": 196,
+        "name": "ハードラック",
+        "groupId": 97,
+        "rank": 1,
+        "playerType": 1,
+        "colorType": 1
+      },
+      {
+        "id": 137,
+        "name": "ヒートアップ",
+        "groupId": 54,
+        "rank": 2,
+        "playerType": 1,
+        "colorType": 3
+      },
+      {
+        "id": 197,
+        "name": "強振多用",
+        "groupId": 98,
+        "rank": 1,
+        "playerType": 1,
+        "colorType": 5
+      },
+      {
+        "id": 343,
+        "name": "速球中心",
+        "groupId": 175,
+        "rank": 1,
+        "playerType": 2,
+        "colorType": 5
+      }
+    ],
+    "curves": [
+      {
+        "curveId": 9,
+        "amount": 3
+      },
+      {
+        "curveId": 13,
+        "amount": 4
+      }
+    ]
+  },
+  {
+    "id": 793,
+    "name": "シャンプー",
+    "position": 3,
+    "status": {
+      "dandou": 2,
+      "meet": 80,
+      "power": 60,
+      "runPower": 80,
+      "shoulderPower": 64,
+      "fielding": 70,
+      "catching": 60
+    },
+    "abilities": [
+      {
+        "id": 8,
+        "name": "走塁◎",
+        "groupId": 4,
+        "rank": 2,
+        "playerType": 1,
+        "colorType": 2
+      },
+      {
+        "id": 46,
+        "name": "追い打ち",
+        "groupId": 38,
+        "rank": 1,
+        "playerType": 1,
+        "colorType": 2
+      },
+      {
+        "id": 51,
+        "name": "リベンジ",
+        "groupId": 43,
+        "rank": 1,
+        "playerType": 1,
+        "colorType": 2
+      },
+      {
+        "id": 61,
+        "name": "速攻◯",
+        "groupId": 52,
+        "rank": 1,
+        "playerType": 1,
+        "colorType": 2
+      },
+      {
+        "id": 144,
+        "name": "挑発",
+        "groupId": 90,
+        "rank": 1,
+        "playerType": 1,
+        "colorType": 3
+      },
+      {
+        "id": 156,
+        "name": "牛若丸",
+        "groupId": 70,
+        "rank": 2,
+        "playerType": 1,
+        "colorType": 3
+      }
+    ],
+    "curves": []
   }
 ]
