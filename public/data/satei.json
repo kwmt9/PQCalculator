@@ -2843,5 +2843,145 @@
     "rank": 1,
     "sateiMain": 180,
     "sateiSub": 90
+  },
+  {
+    "id": 350,
+    "name": "立ち上がり◯",
+    "colorType": 2,
+    "playerType": 2,
+    "groupId": 181,
+    "rank": 1,
+    "sateiMain": 42,
+    "sateiSub": 21
+  },
+  {
+    "id": 352,
+    "name": "回またぎ◯",
+    "colorType": 2,
+    "playerType": 2,
+    "groupId": 182,
+    "rank": 1,
+    "sateiMain": 42,
+    "sateiSub": 21
+  },
+  {
+    "id": 353,
+    "name": "抑制",
+    "colorType": 2,
+    "playerType": 2,
+    "groupId": 183,
+    "rank": 1,
+    "sateiMain": 48,
+    "sateiSub": 24
+  },
+  {
+    "id": 355,
+    "name": "力押し",
+    "colorType": 2,
+    "playerType": 2,
+    "groupId": 184,
+    "rank": 1,
+    "sateiMain": 60,
+    "sateiSub": 30
+  },
+  {
+    "id": 348,
+    "name": "危地脱出",
+    "colorType": 3,
+    "playerType": 2,
+    "groupId": 135,
+    "rank": 2,
+    "sateiMain": 180,
+    "sateiSub": 90
+  },
+  {
+    "id": 356,
+    "name": "スクランブル",
+    "colorType": 3,
+    "playerType": 2,
+    "groupId": 136,
+    "rank": 2,
+    "sateiMain": 150,
+    "sateiSub": 75
+  },
+  {
+    "id": 357,
+    "name": "泰然自若",
+    "colorType": 3,
+    "playerType": 2,
+    "groupId": 138,
+    "rank": 2,
+    "sateiMain": 258,
+    "sateiSub": 129
+  },
+  {
+    "id": 351,
+    "name": "トップギア",
+    "colorType": 3,
+    "playerType": 2,
+    "groupId": 181,
+    "rank": 2,
+    "sateiMain": 240,
+    "sateiSub": 120
+  },
+  {
+    "id": 354,
+    "name": "鎮圧",
+    "colorType": 3,
+    "playerType": 2,
+    "groupId": 183,
+    "rank": 2,
+    "sateiMain": 198,
+    "sateiSub": 99
+  },
+  {
+    "id": 90,
+    "name": "堅実な守備",
+    "colorType": 2,
+    "playerType": 1,
+    "groupId": 81,
+    "rank": 1,
+    "sateiMain": 25,
+    "sateiSub": 5
+  },
+  {
+    "id": 358,
+    "name": "守備力ブースト",
+    "colorType": 2,
+    "playerType": 1,
+    "groupId": 185,
+    "rank": 1,
+    "sateiMain": 30,
+    "sateiSub": 6
+  },
+  {
+    "id": 359,
+    "name": "守備固め",
+    "colorType": 2,
+    "playerType": 1,
+    "groupId": 186,
+    "rank": 1,
+    "sateiMain": 40,
+    "sateiSub": 8
+  },
+  {
+    "id": 360,
+    "name": "接戦巧者",
+    "colorType": 3,
+    "playerType": 1,
+    "groupId": 55,
+    "rank": 2,
+    "sateiMain": 200,
+    "sateiSub": 40
+  },
+  {
+    "id": 168,
+    "name": "ストーンウォール",
+    "colorType": 3,
+    "playerType": 1,
+    "groupId": 81,
+    "rank": 2,
+    "sateiMain": 125,
+    "sateiSub": 30
   }
 ]
